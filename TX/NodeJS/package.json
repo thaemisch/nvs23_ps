@@ -1,0 +1,23 @@
+{
+  "name": "tx-nodejs",
+  "version": "1.0.0",
+  "description": "A Netze PS Project",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haemtim/nvs23_ps.git"
+  },
+  "keywords": [
+    "Netzte",
+    "PS"
+  ],
+  "author": "Julian Oberhofer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haemtim/nvs23_ps/issues"
+  },
+  "homepage": "https://github.com/haemtim/nvs23_ps#readme"
+}
