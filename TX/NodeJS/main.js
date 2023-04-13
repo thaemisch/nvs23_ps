@@ -8,12 +8,12 @@ const MAX_PACKET_SIZE = 1472; // Maximale Größe eines UDP-Pakets (mit IPv4) is
 const file = 'test.txt'; // Datei, die übertragen werden soll
 
 // Funktion zum Senden eines Pakets
-function sendPacket(socket, packet, seqNum) {
+async function sendPacket(socket, packet, seqNum) {
   packet['Sequence Number'] = seqNum;
   const packetData = JSON.stringify(packet);
   const buffer = Buffer.from(packetData);
   console.log(`Paket ${seqNum} wird gesendet: ${packetData}`);
-  socket.send(buffer, 0, buffer.length, PORT, HOST, (err) => {
+  await socket.send(buffer, 0, buffer.length, PORT, HOST, (err) => {
     if (err) {
       console.error(`Fehler beim Senden von Paket ${seqNum}: ${err}`);
     } else {
@@ -53,7 +53,7 @@ function sendFile(filename) {
   });
 
   // Senden des letzten Pakets mit der MD5-Prüfsumme
-  fileStream.on('close', () => {
+  fileStream.on('close', async () => {
     const fileData = fs.readFileSync(filename);
     const md5sum = crypto.createHash('md5').update(fileData).digest('hex');
     const md5Packet = {
@@ -61,10 +61,10 @@ function sendFile(filename) {
       'Sequence Number': seqNum,
       'MD5': md5sum
     };
-    sendPacket(socket, md5Packet, seqNum);
-    seqNum++;
+    await sendPacket(socket, md5Packet, seqNum);
     console.log('Datei erfolgreich übertragen');
     socket.close();
+    console.log('UDP-Socket geschlossen');
   });
 }
 
