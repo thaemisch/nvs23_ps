@@ -12,7 +12,7 @@ print(f'Listening on {HOST}:{PORT}')
 print('---------------------------------')
 
 # Receive the first packet
-data, addr = sock.recvfrom(1024)  # 1024 is the buffer size
+data, addr = sock.recvfrom(1472)
 id = int.from_bytes(data[0:2], byteorder='big')
 max_seq_num = int.from_bytes(data[6:10], byteorder='big')
 file_name_length = len(data) - 10
@@ -20,14 +20,14 @@ file_name = data[10:10+file_name_length].decode('utf-8')
 print(f'Packet 0: id={id}, maxSeqNum={max_seq_num}, fileName={file_name}')
 
 # Receive the second packet
-data, addr = sock.recvfrom(1024)
+data, addr = sock.recvfrom(1472)
 id = int.from_bytes(data[0:2], byteorder='big')
 seq_num = int.from_bytes(data[2:6], byteorder='big')
 packet_data = (data[6:])
 print(f'Packet 1: {seq_num}: id={id}, data={packet_data}')
 
 # Receive the third packet
-data, addr = sock.recvfrom(1024)
+data, addr = sock.recvfrom(1472)
 id = int.from_bytes(data[0:2], byteorder='big')
 seq_num = int.from_bytes(data[2:6], byteorder='big')
 md5 = data[6:22].hex()
