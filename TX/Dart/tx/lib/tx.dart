@@ -59,15 +59,15 @@ void main() async {
     final data = fileBytes.sublist(start, end);
     await sendPacket(socket, id, seqNum, data);
     if (seqNum == 1) {
-      print('erstes Datenpaket Paket $seqNum erfolgreich gesendet');
+      print('erstes Datenpaket $seqNum erfolgreich gesendet');
     }
     if (seqNum == maxSeqNum) {
-      print('letztes Datenpaket Paket $seqNum erfolgreich gesendet');
+      print('letztes Datenpaket $seqNum erfolgreich gesendet');
     }
   }
 
   // Send the MD5 hash as the last packet
-  final md5Packet = Uint8List.fromList(md5Hash.codeUnits);
+  final md5Packet = Uint8List.fromList(utf8.encode(md5Hash));
   await sendPacket(socket, id, maxSeqNum + 1, md5Packet);
 
   socket.close();
