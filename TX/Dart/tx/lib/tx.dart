@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
+import 'dart:math';
 
 const int PORT = 12345;
 const String HOST = '127.0.0.1';
@@ -47,20 +48,26 @@ void main() async {
   final id = DateTime.now().millisecondsSinceEpoch % 65536;
   final fileBytes = await File(file).readAsBytes(); // File as bytes
   final maxSeqNum = (fileBytes.length + MAX_PACKET_SIZE - 1) ~/ MAX_PACKET_SIZE;
-  final md5Hash = md5.convert(fileBytes); // MD5 hash of the file
+  final md5Hash = md5.convert(fileBytes).toString(); // MD5 hash of the file
 
   await sendFirstPacket(socket, id, maxSeqNum, file); // Send the first packet
 
   for (int seqNum = 1; seqNum <= maxSeqNum; seqNum++) {
     // Send the data packets
     final start = (seqNum - 1) * MAX_PACKET_SIZE;
-    final end = seqNum * MAX_PACKET_SIZE;
+    final end = min(seqNum * MAX_PACKET_SIZE, fileBytes.length);
     final data = fileBytes.sublist(start, end);
     await sendPacket(socket, id, seqNum, data);
+    if (seqNum == 1) {
+      print('erstes Datenpaket Paket $seqNum erfolgreich gesendet');
+    }
+    if (seqNum == maxSeqNum) {
+      print('letztes Datenpaket Paket $seqNum erfolgreich gesendet');
+    }
   }
 
   // Send the MD5 hash as the last packet
-  final md5Packet = Uint8List.fromList(md5Hash.bytes);
+  final md5Packet = Uint8List.fromList(md5Hash.codeUnits);
   await sendPacket(socket, id, maxSeqNum + 1, md5Packet);
 
   socket.close();
