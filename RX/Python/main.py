@@ -7,7 +7,7 @@ HOST = '127.0.0.1'
 PORT = 12345
 
 # Define the variables
-seq_num = 1
+seq_num = 0
 final_data = b''
 
 # Create a UDP socket and bind it to the host and port
@@ -26,7 +26,7 @@ file_name = re.sub(r'.*/', '', file_nameU)
 print(f'Packet 0 (init): id={id}, maxSeqNum={max_seq_num}, fileName={file_name}')
 
 # Receive the data packet(s)
-while seq_num < max_seq_num - 1:
+while seq_num < max_seq_num:
     data, addr = sock.recvfrom(1472)
     id = int.from_bytes(data[0:2], byteorder='big')
     seq_num = int.from_bytes(data[2:6], byteorder='big')
