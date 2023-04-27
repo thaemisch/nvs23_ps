@@ -27,7 +27,7 @@ print(f'Packet 0 (init): id={id}, maxSeqNum={max_seq_num}, fileName={file_name}'
 
 # Receive the data packet(s)
 while seq_num < max_seq_num:
-    data, addr = sock.recvfrom(1472)
+    data, addr = sock.recvfrom(1500)
     id = int.from_bytes(data[0:2], byteorder='big')
     seq_num = int.from_bytes(data[2:6], byteorder='big')
     packet_data = (data[6:])
