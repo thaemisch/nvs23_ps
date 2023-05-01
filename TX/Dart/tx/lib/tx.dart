@@ -63,7 +63,7 @@ Future<void> sendPacket(
       result != 0
           ? {
               md5
-                  ? print('MD5-Paket $seqNum erfolgereich gesendet')
+                  ? print('MD5-Paket $seqNum erfolgreich gesendet')
                   : print('Paket $seqNum erfolgreich gesendet')
             }
           : {
