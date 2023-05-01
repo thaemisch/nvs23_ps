@@ -9,7 +9,11 @@ import 'dart:math';
 const int PORT = 12345;
 const String HOST = '127.0.0.1';
 const int MAX_PACKET_SIZE = 1472;
-const String file = 'D:/Program Files/Netze-PS/nvs23_ps/TX/Dart/tx/test.txt';
+const String file =
+    'D:/Program Files/Netze-PS/nvs23_ps/TX/Dart/tx/test.txt'; // Change this to the path of the file you want to send
+const int MAXTRYCOUNT =
+    10; // the number of tries to send one packet, if it fails more than maxTryCount times, the packet will not be sent
+const Duration INTERVAL = Duration(seconds: 1); // the interval between tries
 
 Future<void> sendFirstPacket(
     RawDatagramSocket socket, int id, int maxSeqNum, String fileName) async {
@@ -22,28 +26,57 @@ Future<void> sendFirstPacket(
   buffer.setRange(10, 10 + fileNameBytes.length, fileNameBytes);
 
   final result = socket.send(buffer, InternetAddress(HOST), PORT);
-  if (result != 0) {
-    print('Paket 0 (init) erfolgreich gesendet');
+  int tryCount = 1;
+  if (result == 0) {
+    print(
+        'Fehler beim Senden vom Initial Paket 0: Versuch $tryCount von $MAXTRYCOUNT');
+    while (tryCount <= MAXTRYCOUNT && result == 0) {
+      await Future.delayed(INTERVAL);
+      result != 0
+          ? print('Paket 0 (init) erfolgreich gesendet')
+          : print(
+              'Fehler beim Senden vom Initial Paket 0: Versuch $tryCount von $MAXTRYCOUNT');
+      tryCount++;
+    }
   } else {
-    print('Fehler beim Senden vom Initial Paket 0');
+    print('Paket 0 (init) erfolgreich gesendet');
   }
 }
 
 Future<void> sendPacket(
-    RawDatagramSocket socket, int id, int seqNum, Uint8List data) async {
+    RawDatagramSocket socket, int id, int seqNum, Uint8List data,
+    [bool md5 = false]) async {
   final buffer = Uint8List(6 + data.length);
   ByteData.view(buffer.buffer)
     ..setUint16(0, id)
     ..setUint32(2, seqNum);
   buffer.setRange(6, 6 + data.length, data);
-
   var result = socket.send(buffer, InternetAddress(HOST), PORT);
+  int tryCount = 1;
   if (result == 0) {
-    print('Fehler beim Senden von Paket $seqNum');
-    while (result == 0) {
+    print(
+        'Fehler beim Senden von Paket $seqNum: Versuch $tryCount von $MAXTRYCOUNT');
+    while (tryCount <= MAXTRYCOUNT && result == 0) {
       result = socket.send(buffer, InternetAddress(HOST), PORT);
-      await Future.delayed(const Duration(seconds: 1));
+      tryCount++;
+      await Future.delayed(INTERVAL);
+      result != 0
+          ? {
+              md5
+                  ? print('MD5-Paket $seqNum erfolgereich gesendet')
+                  : print('Paket $seqNum erfolgreich gesendet')
+            }
+          : {
+              md5
+                  ? print('Fehler beim Senden von MD5-Paket $seqNum')
+                  : print(
+                      'Fehler beim Senden von Paket $seqNum: Versuch $tryCount von $MAXTRYCOUNT')
+            };
     }
+  } else {
+    md5
+        ? print('MD5-Paket $seqNum erfolgereich gesendet')
+        : print('Paket $seqNum erfolgreich gesendet');
   }
 }
 
@@ -62,16 +95,10 @@ void main() async {
     final end = min(seqNum * MAX_PACKET_SIZE, fileBytes.length);
     final data = fileBytes.sublist(start, end);
     await sendPacket(socket, id, seqNum, data);
-    if (seqNum == 1) {
-      print('erstes Datenpaket $seqNum erfolgreich gesendet');
-    }
-    if (seqNum == maxSeqNum) {
-      print('letztes Datenpaket $seqNum erfolgreich gesendet');
-    }
   }
   // Send the MD5 hash as the last packet
   final md5Packet = Uint8List.fromList(md5Hash);
-  await sendPacket(socket, id, maxSeqNum + 1, md5Packet);
+  await sendPacket(socket, id, maxSeqNum + 1, md5Packet, true);
 
   socket.close();
 }
