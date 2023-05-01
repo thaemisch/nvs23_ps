@@ -9,7 +9,7 @@ import 'dart:math';
 const int PORT = 12345;
 const String HOST = '127.0.0.1';
 const int MAX_PACKET_SIZE = 1472;
-const String file = 'test.txt';
+const String file = 'D:/Program Files/Netze-PS/nvs23_ps/TX/Dart/tx/test.txt';
 
 Future<void> sendFirstPacket(
     RawDatagramSocket socket, int id, int maxSeqNum, String fileName) async {
@@ -37,17 +37,21 @@ Future<void> sendPacket(
     ..setUint32(2, seqNum);
   buffer.setRange(6, 6 + data.length, data);
 
-  final result = socket.send(buffer, InternetAddress(HOST), PORT);
+  var result = socket.send(buffer, InternetAddress(HOST), PORT);
   if (result == 0) {
     print('Fehler beim Senden von Paket $seqNum');
+    while (result == 0) {
+      result = socket.send(buffer, InternetAddress(HOST), PORT);
+      await Future.delayed(const Duration(seconds: 1));
+    }
   }
 }
 
 void main() async {
-  final socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 0);
+  final socket = await RawDatagramSocket.bind(InternetAddress(HOST), 0);
   final id = DateTime.now().millisecondsSinceEpoch % 65536;
   final fileBytes = await File(file).readAsBytes(); // File as bytes
-  final maxSeqNum = (fileBytes.length + MAX_PACKET_SIZE - 1) ~/ MAX_PACKET_SIZE;
+  final maxSeqNum = (fileBytes.length / MAX_PACKET_SIZE).ceil();
   final md5Hash = md5.convert(fileBytes).bytes; // MD5 hash of the file
 
   await sendFirstPacket(socket, id, maxSeqNum, file); // Send the first packet
@@ -56,7 +60,7 @@ void main() async {
     // Send the data packets
     final start = (seqNum - 1) * MAX_PACKET_SIZE;
     final end = min(seqNum * MAX_PACKET_SIZE, fileBytes.length);
-    final data = fileBytes.sublist(start, seqNum == maxSeqNum ? end : end + 1);
+    final data = fileBytes.sublist(start, end);
     await sendPacket(socket, id, seqNum, data);
     if (seqNum == 1) {
       print('erstes Datenpaket $seqNum erfolgreich gesendet');
