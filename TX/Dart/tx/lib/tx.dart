@@ -13,7 +13,8 @@ const String file =
     'D:/Program Files/Netze-PS/nvs23_ps/TX/Dart/tx/test.txt'; // Change this to the path of the file you want to send
 const int MAXTRYCOUNT =
     10; // the number of tries to send one packet, if it fails more than maxTryCount times, the packet will not be sent
-const Duration INTERVAL = Duration(seconds: 1); // the interval between tries
+const Duration INTERVAL =
+    Duration(milliseconds: 1); // the interval between tries
 
 Future<void> sendFirstPacket(
     RawDatagramSocket socket, int id, int maxSeqNum, String fileName) async {
@@ -31,7 +32,7 @@ Future<void> sendFirstPacket(
     print(
         'Fehler beim Senden vom Initial Paket 0: Versuch $tryCount von $MAXTRYCOUNT');
     while (tryCount <= MAXTRYCOUNT && result == 0) {
-      await Future.delayed(INTERVAL);
+      //await Future.delayed(INTERVAL);
       result != 0
           ? print('Paket 0 (init) erfolgreich gesendet')
           : print(
