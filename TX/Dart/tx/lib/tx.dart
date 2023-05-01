@@ -73,7 +73,6 @@ Future<void> sendPacket(
   md5
       ? print('MD5-Paket $seqNum erfolgreich gesendet')
       : print('Paket $seqNum erfolgreich gesendet');
-  return;
 }
 
 void main() async {
