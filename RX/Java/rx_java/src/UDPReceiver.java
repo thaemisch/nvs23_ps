@@ -1,3 +1,4 @@
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -7,91 +8,43 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.PriorityQueue;
 
-/**
- * A UDP-Receiver class for receiving packets in the following structure.
- * Packet {
- *  Transmission ID (16),
- *  Sequence Number (32),
- *  Data (..)
- * }
- * 
- * SeqNr=0 Packet {
- *  Transmission ID (16),
- *  Sequence Number (32),
- *  Max Sequence Number (32),
- *  File Name (8..2048)
- * }
- * 
- * Seq=MaxSeq Packet {
- *  Transmission ID (16),
- *  Sequence Number (32),
- *  MD5 (128)
- * }
- *
- * @author Waleed Ahmad
- * @version 1.0
- */
-public class UDPReceiver extends Thread{
+public class UDPReceiver{
 
-    private static final char[] HEX_ARRAY = "0123456789abcdef".toCharArray(); // char array for hexadecimal MD5
+    private static int BUFFER_SIZE = 1478;
+    private static int PORT = 12345;
+    private static String IP_ADSRESS = "127.0.0.1";
 
     public static void main(String[] args) throws SocketException, UnknownHostException{
-        UDPReceiver udpReceiver = new UDPReceiver(12345);
-        udpReceiver.run();
+        UDPReceiver.run();
     }
 
-    // private inner class for a queue entry (Comparable)
-    private class QueueEntry implements Comparable<QueueEntry>{
-        private int seqNr;
-        private byte[] data;
+    // packet: 
+    private static short transmissionID;
+    private static int maxSeqNr;
+    private static String fileName = null;
+    private static String MD5Hash;
 
-        public QueueEntry(int seqNr, byte[] data){
-            this.seqNr = seqNr;
-            this.data = data;
-        }
+    private static DatagramSocket socket;
+    private static InetAddress IP;
+    private static int receivedPackets = 0;
+    private static Timestamp startTime;
+    private static Timestamp endTime;
+    private static ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    private static ByteBuffer receiverBuffer;
 
-        @Override
-        public int compareTo(QueueEntry entry) {
-            return Integer.compare(this.seqNr, entry.seqNr);
-        }
-    }
-
-    private DatagramSocket socket;
-    private int port;
-    private InetAddress IP;
-    private int maxSeqNr;
-    private String MD5Hash;
-    private int transmissionID;
-    private String fileName = null;
-    private PriorityQueue<QueueEntry> dataQueue = new PriorityQueue<QueueEntry>();
-    private int receivedPackets = 0;
-    private Timestamp startTime;
-    private Timestamp endTime;
-
-    public UDPReceiver(int port, String IP) throws SocketException, UnknownHostException {
-        this.port = port;
-        this.IP = InetAddress.getByName(IP);
-        socket = new DatagramSocket(this.port, this.IP);
-    }
-
-    public UDPReceiver(int port) throws SocketException, UnknownHostException {
-        this.port = port;
-        this.IP = InetAddress.getByName("127.0.0.1");
-        socket = new DatagramSocket(this.port, this.IP);
-    }
-
-    public void run() {
+    public static void run() throws UnknownHostException, SocketException {
+        IP = InetAddress.getByName(IP_ADSRESS);
+        socket = new DatagramSocket(PORT, IP);
         boolean done = false;
         
-        System.out.println("Receiver listening (IP: " + this.IP.getHostAddress() + ", port: " + this.port + ")...");
+        System.out.println("Receiver listening (IP: " + IP.getHostAddress() + ", port: " + PORT + ")...");
         while (!done) {
             try {
                 done = interpretePacket();
@@ -106,10 +59,11 @@ public class UDPReceiver extends Thread{
         socket.close();
     }
 
-    private boolean interpretePacket() throws IOException, NoSuchAlgorithmException{
-        byte[] buf = new byte[1500];
+    private static boolean interpretePacket() throws IOException, NoSuchAlgorithmException{
+        byte[] buf = new byte[BUFFER_SIZE];
         int seqNr = -1;
-        DatagramPacket packet = new DatagramPacket(buf, buf.length, IP, port);
+        DatagramPacket packet = new DatagramPacket(buf, buf.length, IP, PORT);
+        receiverBuffer = ByteBuffer.wrap(packet.getData());
         receivedPackets++;
 
         try {
@@ -118,106 +72,66 @@ public class UDPReceiver extends Thread{
             e.printStackTrace();
         }
 
-        transmissionID = extractTransmissionID(buf);
-        seqNr = extractSeqNr(buf);
+        transmissionID = receiverBuffer.getShort();
+        seqNr = receiverBuffer.getInt();
 
         if (seqNr == 0) {
             // first packet (containing maximum sequence number and file name)
             startTime = new Timestamp(System.currentTimeMillis());
-            System.out.println(startTime.toString() + ": begin of transmission");
 
-            maxSeqNr = extractMaxSeqNr(buf) + 1;
+            maxSeqNr = receiverBuffer.getInt() + 1;
             try{
-                fileName = extractFileName(buf);
+                fileName = new String(receiverBuffer.array(), 10, 11, "UTF8");
             } catch (Exception e){
                 e.printStackTrace();
             }
         } else if (seqNr == maxSeqNr) {
             // last packet (contraining MD5 Checksum)
-            MD5Hash = extractMD5Sum(buf);
+            byte[] MD5Array = new byte[16];
+            receiverBuffer = receiverBuffer.get(MD5Array);
+            MD5Hash = bytesToHex(MD5Array);
+            outputStream.close();
             writeToFile();
             endTime = new Timestamp(System.currentTimeMillis());
             System.out.println(endTime.toString() + ": end of transmission");
-
             if (checkMD5Sum()) {
                 System.out.println("MD5 Checksums are equal.");
             } else {
                 System.err.println("MD5 Checksums are different! Files might not be the same.");
             }
+            
             System.out.println();
             System.out.println("Statistics:");
             System.out.println("\t" + receivedPackets + " packets received");
-            System.out.println("\t" + (endTime.getTime() - startTime.getTime()) + "ms");
-            
+            System.out.println("\t" + (endTime.getTime() - startTime.getTime()) + "ms time");
             //end of transmission
-            //clearBuffer(buf);
             return true;
         } else {
-            // normale data pocket (containing only data)
-            dataQueue.add(new QueueEntry(extractSeqNr(buf), extractData(buf)));
+            // normal data packet (containing only data)
+            byte[] dataArray = new byte[packet.getLength() - receiverBuffer.position()];
+            receiverBuffer.get(dataArray);
+            outputStream.write(dataArray);
         }
-
-        //clearBuffer(buf);
         return false;
     }
 
-    private int extractTransmissionID(byte[] buf){
-        return (buf[0] << 8) + buf[1];
-    }
-
-    private int extractSeqNr(byte[] buf){
-        return (((buf[2] << 24) + (buf[3] << 16)) + (buf[4] << 8)) + buf[5];
-    }
-
-    private int extractMaxSeqNr(byte[] buf){
-        return (((buf[6] << 24) + (buf[7] << 16)) + (buf[8] << 8)) + buf[9];
-    }
-
-    private String extractFileName(byte[] buf) throws UnsupportedEncodingException{
-        return new String(buf, 10, 266, "UTF8");
-    }
-
-    private byte[] extractData(byte[] buf){
-        return Arrays.copyOfRange(buf, 6, buf.length);
-    }
-
-    private String extractMD5Sum(byte[] buf){
-        byte md5Buf[] = new byte[16];
-        md5Buf = Arrays.copyOfRange(buf, 6, 22);
-        return bytesToHex(md5Buf);
-    }
-
     private static String bytesToHex(byte[] bytes) {
-        char[] hexChars = new char[bytes.length * 2];
-        for (int j = 0; j < bytes.length; j++) {
-            int v = bytes[j] & 0xFF;
-            hexChars[j * 2] = HEX_ARRAY[v >>> 4];
-            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
-        }
-        return new String(hexChars);
+        return new BigInteger(1, bytes).toString(16);
     }
 
-    private void writeToFile() throws IOException{
+    private static void writeToFile() throws IOException{
         FileOutputStream out = new FileOutputStream(fileName.trim(), false);
-        while(!dataQueue.isEmpty()){
-            out.write(trimByteArray(dataQueue.poll().data));
-        }
+        out.write(outputStream.toByteArray());
         out.close();
     }
 
-    private static byte[] trimByteArray(byte[] bytes) {
-        int i = bytes.length - 1;
-        while (i >= 0 && bytes[i] == 0) {
-            --i;
-        }
-        return Arrays.copyOf(bytes, i + 1);
-    }
-
-    private boolean checkMD5Sum() throws IOException, NoSuchAlgorithmException{
+    private static boolean checkMD5Sum() throws IOException, NoSuchAlgorithmException{
         byte[] data = Files.readAllBytes(Paths.get(fileName.trim()));
         byte[] hash = MessageDigest.getInstance("MD5").digest(data);
 
         String checksum = new BigInteger(1, hash).toString(16);
+        System.out.println(MD5Hash);
+        System.out.println(checksum);
 
         if(checksum.compareTo(MD5Hash) == 0)
             return true;
