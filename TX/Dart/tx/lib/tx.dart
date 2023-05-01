@@ -53,31 +53,27 @@ Future<void> sendPacket(
   buffer.setRange(6, 6 + data.length, data);
   var result = socket.send(buffer, InternetAddress(HOST), PORT);
   int tryCount = 1;
-  if (result == 0) {
-    print(
-        'Fehler beim Senden von Paket $seqNum: Versuch $tryCount von $MAXTRYCOUNT');
-    while (tryCount <= MAXTRYCOUNT && result == 0) {
-      result = socket.send(buffer, InternetAddress(HOST), PORT);
-      tryCount++;
-      await Future.delayed(INTERVAL);
-      result != 0
-          ? {
-              md5
-                  ? print('MD5-Paket $seqNum erfolgreich gesendet')
-                  : print('Paket $seqNum erfolgreich gesendet')
-            }
-          : {
-              md5
-                  ? print('Fehler beim Senden von MD5-Paket $seqNum')
-                  : print(
-                      'Fehler beim Senden von Paket $seqNum: Versuch $tryCount von $MAXTRYCOUNT')
-            };
+  while (result == 0 && tryCount <= MAXTRYCOUNT) {
+    if (result == 0) {
+      md5
+          ? print('Fehler beim Senden von MD5-Paket $seqNum')
+          : print(
+              'Fehler beim Senden von Paket $seqNum: Versuch $tryCount von $MAXTRYCOUNT');
     }
-  } else {
-    md5
-        ? print('MD5-Paket $seqNum erfolgreich gesendet')
-        : print('Paket $seqNum erfolgreich gesendet');
+    result = socket.send(buffer, InternetAddress(HOST), PORT);
+    tryCount++;
+    await Future.delayed(INTERVAL);
   }
+  if (result == 0 && tryCount > MAXTRYCOUNT) {
+    md5
+        ? print('MD5-Paket $seqNum nicht gesendet')
+        : print('Paket $seqNum nicht gesendet');
+    return;
+  }
+  md5
+      ? print('MD5-Paket $seqNum erfolgreich gesendet')
+      : print('Paket $seqNum erfolgreich gesendet');
+  return;
 }
 
 void main() async {
