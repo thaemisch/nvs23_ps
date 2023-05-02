@@ -11,7 +11,6 @@ for packet in packets:
     seq = packet.udp.stream
     if seq not in transmissions:
         transmissions[seq] = {'packets': [], 'seq_num': 0}
-    #packet.udp.seq = transmissions[seq]['seq_num']
     transmissions[seq]['seq_num'] += 1
     transmissions[seq]['packets'].append(packet)
 
@@ -22,7 +21,6 @@ max_packet_num = max([len(data['packets']) for seq, data in transmissions.items(
 for i, (seq, data) in enumerate(transmissions.items()):
     packets = data['packets']
     # Extract the sequence numbers and timestamps from the packets
-    print(len(packets))
     seq_nums = [i for i in range(len(packets))]
     timestamps = [float(p.sniff_timestamp) for p in packets]
 
