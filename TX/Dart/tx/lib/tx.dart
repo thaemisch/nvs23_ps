@@ -4,12 +4,13 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
+import 'package:args/args.dart';
 import 'dart:math';
 
-const int PORT = 12345;
-const String HOST = '127.0.0.1';
-const int MAX_PACKET_SIZE = 1472;
-const String file =
+int PORT = 12345;
+String HOST = '127.0.0.1';
+int MAX_PACKET_SIZE = 1472;
+String file =
     'D:/Program Files/Netze-PS/nvs23_ps/TX/Dart/tx/test.txt'; // Change this to the path of the file you want to send
 const int MAXTRYCOUNT =
     10; // the number of tries to send one packet, if it fails more than maxTryCount times, the packet will not be sent
@@ -76,7 +77,19 @@ Future<void> sendPacket(
       : print('Paket $seqNum erfolgreich gesendet');
 }
 
-void main() async {
+void main(List<String> args) async {
+  // Parse the command line arguments
+  var parser = ArgParser();
+  parser.addOption('host', abbr: 'h', defaultsTo: HOST);
+  parser.addOption('port', abbr: 'p', defaultsTo: PORT.toString());
+  parser.addOption('max', abbr: 'm', defaultsTo: MAX_PACKET_SIZE.toString());
+  parser.addOption('file', abbr: 'f', defaultsTo: file);
+  var results = parser.parse(args);
+  final host = results['host'] as String;
+  final port = int.parse(results['port'] as String);
+  final maxPacketSize = int.parse(results['maxPacketSize'] as String);
+  file = results['file'] as String;
+
   final socket = await RawDatagramSocket.bind(InternetAddress(HOST), 0);
   final id = DateTime.now().millisecondsSinceEpoch % 65536;
   final fileBytes = await File(file).readAsBytes(); // File as bytes
