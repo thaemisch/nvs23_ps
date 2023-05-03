@@ -15,18 +15,24 @@ const args = process.argv.slice(2);
 for (let i = 0; i < args.length; i++) {
   switch (args[i]) {
     case '--host':
+    case '-h':
       HOST = args[++i];
       break;
     case '--port':
+    case '-p':
       PORT = args[++i];
       break;
     case '--max':
+    case '-m':
       MAX_PACKET_SIZE = args[++i] - 20 - 8;
       break;
     case '--file':
+    case '-f':
       FILE = args[++i];
       break;
     case '--help':
+    case '-?':
+    case '-h':
       console.log('Usage: node myApp.js [options]');
       console.log('Options:');
       console.log('  --host <host>       Host to send to (default: 127.0.0.1)');
