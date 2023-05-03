@@ -80,15 +80,15 @@ void main() async {
   final socket = await RawDatagramSocket.bind(InternetAddress(HOST), 0);
   final id = DateTime.now().millisecondsSinceEpoch % 65536;
   final fileBytes = await File(file).readAsBytes(); // File as bytes
-  final maxSeqNum = (fileBytes.length / MAX_PACKET_SIZE).ceil();
+  final maxSeqNum = (fileBytes.length / (MAX_PACKET_SIZE - 6)).ceil();
   final md5Hash = md5.convert(fileBytes).bytes; // MD5 hash of the file
 
   await sendFirstPacket(socket, id, maxSeqNum, file); // Send the first packet
 
   for (int seqNum = 1; seqNum <= maxSeqNum; seqNum++) {
     // Send the data packets
-    final start = (seqNum - 1) * MAX_PACKET_SIZE;
-    final end = min(seqNum * MAX_PACKET_SIZE, fileBytes.length);
+    final start = (seqNum - 1) * (MAX_PACKET_SIZE - 6);
+    final end = min(seqNum * (MAX_PACKET_SIZE - 6), fileBytes.length);
     final data = fileBytes.sublist(start, end);
     await sendPacket(socket, id, seqNum, data);
   }
