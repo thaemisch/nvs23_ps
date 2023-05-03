@@ -32,7 +32,6 @@ for (let i = 0; i < args.length; i++) {
       break;
     case '--help':
     case '-?':
-    case '-h':
       console.log('Usage: node myApp.js [options]');
       console.log('Options:');
       console.log('  --host <host>       Host to send to (default: 127.0.0.1)');
