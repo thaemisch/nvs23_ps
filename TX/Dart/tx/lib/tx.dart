@@ -87,7 +87,7 @@ void main(List<String> args) async {
   var results = parser.parse(args);
   final host = results['host'] as String;
   final port = int.parse(results['port'] as String);
-  final maxPacketSize = int.parse(results['maxPacketSize'] as String);
+  final maxPacketSize = int.parse(results['max'] as String);
   file = results['file'] as String;
 
   final socket = await RawDatagramSocket.bind(InternetAddress(HOST), 0);

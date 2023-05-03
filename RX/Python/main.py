@@ -1,10 +1,32 @@
 import re
 import socket
 import hashlib
+import sys
+import argparse
 
-# Define the host and port to receive packets on
-HOST = '127.0.0.1'
-PORT = 12345
+if sys.argv[1] == '--help' or sys.argv[1] == '-h':
+    print('Options:');
+    print('  --host <host>       Host to send to (default: 127.0.0.1)');
+    print('  --port <port>       Port to send to (default: 12345)');
+    print('  --max <size>        Maximum packet size (default: 1500)');
+    print('  --help              Show this help');
+    sys.exit(0);
+
+# Create an argument parser
+parser = argparse.ArgumentParser(description='Process some command line arguments.')
+
+# Add arguments
+parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to send to (default: 127.0.0.1)')
+parser.add_argument('--port', type=int, default=12345, help='Port to send to (default: 12345)')
+parser.add_argument('--max', type=int, default=1500, help='Maximum packet size (default: 1500)')
+
+# Parse the arguments
+args = parser.parse_args()
+
+# Set the variables
+HOST = args.host
+PORT = args.port
+max_pack = args.max
 
 # Define the variables
 seq_num = 0
@@ -17,7 +39,7 @@ print(f'Listening on {HOST}:{PORT}')
 print('---------------------------------')
 
 # Receive the first packet
-data, addr = sock.recvfrom(1472)
+data, addr = sock.recvfrom(max_pack)
 id = int.from_bytes(data[0:2], byteorder='big')
 max_seq_num = int.from_bytes(data[6:10], byteorder='big')
 file_name_length = len(data) - 10
@@ -27,7 +49,7 @@ print(f'Packet 0 (init): id={id}, maxSeqNum={max_seq_num}, fileName={file_name}'
 
 # Receive the data packet(s)
 while seq_num < max_seq_num:
-    data, addr = sock.recvfrom(1500)
+    data, addr = sock.recvfrom(max_pack)
     id = int.from_bytes(data[0:2], byteorder='big')
     seq_num = int.from_bytes(data[2:6], byteorder='big')
     packet_data = (data[6:])
@@ -35,7 +57,7 @@ while seq_num < max_seq_num:
     print(f'Packet {seq_num}: id={id}, data={packet_data}')
 
 # Receive the md5 packet
-data, addr = sock.recvfrom(1472)
+data, addr = sock.recvfrom(max_pack)
 id = int.from_bytes(data[0:2], byteorder='big')
 seq_num = int.from_bytes(data[2:6], byteorder='big')
 md5 = data[6:22].hex()
