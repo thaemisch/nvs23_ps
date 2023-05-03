@@ -1,14 +1,14 @@
 const dgram = require('dgram');
 const fs = require('fs');
 const crypto = require('crypto');
-
 let PORT = 12345; // Port, auf dem die Daten übertragen werden sollen
 let HOST = '127.0.0.1'; // IP-Adresse des Empfängers
 let MAX_PACKET_SIZE = 1500 - 20 - 8; // Maximale Größe eines UDP-Pakets is 65507 Byte, davon werden 20 Byte für den IP-Header und 8 Byte für den UDP-Header benötigt
 // 1500 - 20 - 8 = 1472, damit es (hoffentlich) nicht fragmentiert wird/werden muss
 let FILE = 'test.txt'; // Datei, die übertragen werden soll
+let sb = ""; // "Stringbuilder" für die Logausgabe
 
-
+// Entfernen der ersten beiden Argumente (node und main.js)
 const args = process.argv.slice(2);
 
 // Verarbeitung command line arguments
@@ -55,7 +55,7 @@ function sendFirstPacket(id, maxSeqNum, fileName, length) {
     if (err) {
       console.error(`Fehler beim Senden vom Initial Paket 0: ${err}`);
     } else {
-      console.log(`Paket 0 (init) erfolgreich gesendet`);
+      endLog(`Paket 0 (init) erfolgreich gesendet`);
     }
   });
 }
@@ -69,9 +69,9 @@ function sendPacket(id , seqNum, data, length) {
   
     socket.send(buffer, 0, buffer.length, PORT, HOST, (err) => {
       if (err) {
-        console.error(`Fehler beim Senden von Paket ${seqNum}: ${err}`);
+        endLog(`Fehler beim Senden von Paket ${seqNum}: ${err}`);
       } else {
-        console.log(`Paket ${seqNum} erfolgreich gesendet`);
+        endLog(`Paket ${seqNum} erfolgreich gesendet`);
       }
     });
   }
@@ -84,9 +84,9 @@ function sendPacket(id , seqNum, data, length) {
     buffer.write(md5 , 6, 16, 'hex');
     await socket.send(buffer, 0, buffer.length, PORT, HOST, (err) => {
       if (err) {
-        console.error(`Fehler beim Senden vom End Paket ${seqNum}: ${err}`);
+        endLog(`Fehler beim Senden vom End Paket ${seqNum}: ${err}`);
       } else {
-        console.log(`Paket ${seqNum} (MD5) erfolgreich gesendet`);
+        endLog(`Paket ${seqNum} (MD5) erfolgreich gesendet`);
       }
     });
   }
@@ -118,10 +118,16 @@ function sendFile(filename) {
     const fileData = fs.readFileSync(filename);
     const md5sum = crypto.createHash('md5').update(fileData).digest('hex');
     await sendLastPacket(id , seqNum, md5sum);
-    console.log('Datei erfolgreich gesendet');
+    endLog('Datei erfolgreich gesendet');
     socket.close();
-    console.log('UDP-Socket geschlossen');
+    endLog('UDP-Socket geschlossen');
+    console.log(sb);
   });
+}
+
+// Funktion zum Loggen von Nachrichten
+function endLog(message) {
+  sb += (`${message}\n`);
 }
 
 // Erstellen des UDP-Sockets
