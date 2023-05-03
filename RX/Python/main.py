@@ -10,7 +10,6 @@ if sys.argv[1] == '--help' or sys.argv[1] == '-h':
     print('  --host <host>       Host to send to (default: 127.0.0.1)');
     print('  --port <port>       Port to send to (default: 12345)');
     print('  --max <size>        Maximum packet size (default: 1500)');
-    print('  --file <filename>   File to send (default: test.txt)');
     print('  --help              Show this help');
     sys.exit(0);
 
