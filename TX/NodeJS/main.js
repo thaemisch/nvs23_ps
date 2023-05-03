@@ -73,7 +73,7 @@ function sendFile(filename) {
   seqNum++;
 
   // Lesen und Übertragen der Dateidaten
-  const fileStream = fs.createReadStream(filename, { highWaterMark: MAX_PACKET_SIZE });
+  const fileStream = fs.createReadStream(filename, { highWaterMark: MAX_PACKET_SIZE - 6});
   fileStream.on('data', (data) => {
     sendPacket(id , seqNum, data.toString('base64'), data.length);
     seqNum++;
