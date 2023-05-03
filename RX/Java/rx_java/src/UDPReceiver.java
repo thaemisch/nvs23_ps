@@ -15,14 +15,44 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 
+import javax.sound.sampled.SourceDataLine;
+
 public class UDPReceiver{
 
     // adjust according to TX
-    private static final int BUFFER_SIZE = 100;
-    private static final int PORT = 12345;
-    private static final String IP_ADDRESS = "127.0.0.1";
+    private static int BUFFER_SIZE = 1472;
+    private static int PORT = 12345;
+    private static String IP_ADDRESS = "127.0.0.1";
 
     public static void main(String[] args) throws SocketException, UnknownHostException{
+        if (args.length > 0) {
+            // Parse the arguments and set the variables accordingly
+            for (int i = 0; i < args.length; i += 2) {
+                String arg = args[i];
+                String value = args[i+1];
+                switch (arg) {
+                    case "--host":
+                        IP_ADDRESS = value;
+                        break;
+                    case "--port":
+                        PORT = Integer.parseInt(value);
+                        break;
+                    case "--max":
+                        BUFFER_SIZE = Integer.parseInt(value);
+                        break;
+                    case "--help":
+                        System.out.println("Options:");
+                        System.out.println("--host <host>       Host to send to (default: 127.0.0.1)");
+                        System.out.println("--port <port>       Port to send to (default: 12345)");
+                        System.out.println("--max <size>        Maximum packet size (default: 1472)");
+                        System.out.println("--help              Show this help");
+                        System.exit(1);
+                    default:
+                        System.err.println("Unknown argument: " + arg);
+                        System.exit(1);
+                }
+            }
+        }
         UDPReceiver.run();
     }
 
