@@ -14,9 +14,11 @@ def main():
             if not os.path.exists(folder + '/raw' + str(number) + '.pcap'):
                 print('File ' + folder + '/raw' + str(number) + '.pcap' + ' does not exist')
                 continue
+            print('Plotting ' + folder + '/raw' + str(number) + '.pcap')
             # Open the capture file and extract the packets
             capture = pyshark.FileCapture(folder + '/raw' + str(number) + '.pcap')
             packets = [p for p in capture]
+            capture.close()
 
             # Group the packets by transmission and assign sequence numbers
             transmissions = {}
