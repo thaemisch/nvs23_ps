@@ -1,6 +1,7 @@
 import pyshark
 import matplotlib.pyplot as plt
 import asyncio
+import math
 
 
 def main():
@@ -49,7 +50,7 @@ def main():
             if max_packet_num < 20:
                 plt.yticks(range(max_packet_num), range(max_packet_num))
             else:
-                plt.yticks(range(0, max_packet_num, 2), range(0, max_packet_num, 2))
+                plt.yticks(range(0, max_packet_num, math.floor(max_packet_num/20)), range(0, max_packet_num, math.floor(max_packet_num/20)))
 
             # Save the plot as an image
             plt.savefig(folder + '/plot' + str(number) + '.png')
