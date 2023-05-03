@@ -31,18 +31,18 @@ java_path = "RX/Java/rx_java/src/UDPReceiver"
 for i in range(amount):
     # Execute the RX script
     if rx == "python":
-        os.system("python " + python_path + "--max "+ max_pack + " &")
+        os.system("python " + python_path + " --max " + max_pack + " &")
     elif rx == "java":
         os.system("javac " + java_path + ".java")
-        os.system("java " + java_path + ".class" + "--max "+ max_pack + " &")
+        os.system("java " + java_path + ".class --max " + max_pack + " &")
     else:
         print("Invalid RX name entered")
         break
     # Execute the TX script
     if tx == "dart":
-        os.system("dart run" + dart_path + "--max " + max_pack)
+        os.system("dart run" + dart_path + " --max " + max_pack)
     elif tx == "node":
-        os.system("node " + node_path + "--max " + max_pack)
+        os.system("node " + node_path + " --max " + max_pack)
     else:
         print("Invalid TX name entered")
         break
