@@ -2,11 +2,45 @@ const dgram = require('dgram');
 const fs = require('fs');
 const crypto = require('crypto');
 
-const PORT = 12345; // Port, auf dem die Daten übertragen werden sollen
-const HOST = '127.0.0.1'; // IP-Adresse des Empfängers
-const MAX_PACKET_SIZE = 1472; // Maximale Größe eines UDP-Pakets is 65507 Byte, davon werden 20 Byte für den IP-Header und 8 Byte für den UDP-Header benötigt
-// 1472 = 1500 - 20 - 8, damit es (hoffentlich) nicht fragmentiert wird/werden muss
-const file = 'test.txt'; // Datei, die übertragen werden soll
+let PORT = 12345; // Port, auf dem die Daten übertragen werden sollen
+let HOST = '127.0.0.1'; // IP-Adresse des Empfängers
+let MAX_PACKET_SIZE = 1500 - 20 - 8; // Maximale Größe eines UDP-Pakets is 65507 Byte, davon werden 20 Byte für den IP-Header und 8 Byte für den UDP-Header benötigt
+// 1500 - 20 - 8 = 1472, damit es (hoffentlich) nicht fragmentiert wird/werden muss
+let FILE = 'test.txt'; // Datei, die übertragen werden soll
+
+
+const args = process.argv.slice(2);
+
+// Verarbeitung command line arguments
+for (let i = 0; i < args.length; i++) {
+  switch (args[i]) {
+    case '--host':
+      HOST = args[++i];
+      break;
+    case '--port':
+      PORT = args[++i];
+      break;
+    case '--max':
+      MAX_PACKET_SIZE = args[++i] - 20 - 8;
+      break;
+    case '--file':
+      FILE = args[++i];
+      break;
+    case '--help':
+      console.log('Usage: node myApp.js [options]');
+      console.log('Options:');
+      console.log('  --host <host>       Host to send to (default: 127.0.0.1)');
+      console.log('  --port <port>       Port to send to (default: 12345)');
+      console.log('  --max <size>        Maximum packet size (default: 1500)');
+      console.log('  --file <filename>   File to send (default: test.txt)');
+      console.log('  --help              Show this help'); 
+      process.exit(0);
+    default:
+      console.log(`Invalid option: ${args[i]}`);
+      break;
+  }
+}
+console.log(`Sending file "${FILE}" to ${HOST}:${PORT} with max packet size ${MAX_PACKET_SIZE}`);
 
 // Funktion zum Senden eines Pakets
 function sendFirstPacket(id, maxSeqNum, fileName, length) {
@@ -94,7 +128,7 @@ function sendFile(filename) {
 const socket = dgram.createSocket('udp4');
 
 // Senden der Datei
-sendFile(file);
+sendFile(FILE);
 
 
 //Man könnte auf das sendPacket in eine Funktion in die richtung:
