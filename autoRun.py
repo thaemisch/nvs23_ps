@@ -40,7 +40,7 @@ for i in range(amount):
         break
     # Execute the TX script
     if tx == "dart":
-        os.system("dart run" + dart_path + " --max " + max_pack)
+        os.system("dart run " + dart_path + " --max " + max_pack)
     elif tx == "node":
         os.system("node " + node_path + " --max " + max_pack)
     else:
