@@ -2,6 +2,7 @@ import pyshark
 import matplotlib.pyplot as plt
 import asyncio
 import math
+import os
 
 
 def main():
@@ -9,6 +10,10 @@ def main():
     numbers = [100, 1400, 60000]
     for folder in folders:
         for number in numbers:
+            # Check if the capture file exists
+            if not os.path.exists(folder + '/raw' + str(number) + '.pcap'):
+                print('File ' + folder + '/raw' + str(number) + '.pcap' + ' does not exist')
+                continue
             # Open the capture file and extract the packets
             capture = pyshark.FileCapture(folder + '/raw' + str(number) + '.pcap')
             packets = [p for p in capture]
