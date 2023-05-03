@@ -7,7 +7,7 @@ parser = argparse.ArgumentParser(description='Process some command line argument
 # Add arguments
 parser.add_argument('--tx', type=str)
 parser.add_argument('--rx', type=str)
-parser.add_argument('--max', type=str, default=1500)
+parser.add_argument('--max', type=str, default="1500")
 parser.add_argument('--amount', type=int, default=10)
 
 # Parse the arguments
