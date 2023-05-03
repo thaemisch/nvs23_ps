@@ -5,7 +5,6 @@ import sys
 import argparse
 
 if sys.argv[1] == '--help' or sys.argv[1] == '-h':
-    print('Usage: node myApp.js [options]');
     print('Options:');
     print('  --host <host>       Host to send to (default: 127.0.0.1)');
     print('  --port <port>       Port to send to (default: 12345)');
