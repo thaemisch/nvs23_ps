@@ -40,12 +40,12 @@ for (let i = 0; i < args.length; i++) {
     case '-?':
       console.log('Usage: node myApp.js [options]');
       console.log('Options:');
-      console.log('  --host <host>       Host to send to (default: 127.0.0.1)');
-      console.log('  --port <port>       Port to send to (default: 12345)');
-      console.log('  --max <size>        Maximum packet size (default: 1500)');
-      console.log('  --file <filename>   File to send (default: test.txt)');
-      console.log('  --quiet             Suppress log output (except start and final summary)');
-      console.log('  --help              Show this help'); 
+      console.log('  -h, --host, <host>      Host to send to (default: 127.0.0.1)');
+      console.log('  -p, --port <port>       Port to send to (default: 12345)');
+      console.log('  -m, --max <size>        Maximum packet size (default: 1500)');
+      console.log('  -f, --file <filename>   File to send (default: test.txt)');
+      console.log('  -q, --quiet             Suppress log output (except start and final summary)');
+      console.log('  -?, --help              Show this help'); 
       process.exit(0);
     default:
       console.log(`Invalid option: ${args[i]}`);
