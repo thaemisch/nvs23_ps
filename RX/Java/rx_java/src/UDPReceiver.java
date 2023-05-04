@@ -15,8 +15,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 
-import javax.sound.sampled.SourceDataLine;
-
 public class UDPReceiver{
 
     // adjust according to TX
