@@ -5,7 +5,9 @@ let PORT = 12345; // Port, auf dem die Daten übertragen werden sollen
 let HOST = '127.0.0.1'; // IP-Adresse des Empfängers
 let MAX_PACKET_SIZE = 1500 - 20 - 8; // Maximale Größe eines UDP-Pakets is 65507 Byte, davon werden 20 Byte für den IP-Header und 8 Byte für den UDP-Header benötigt
 // 1500 - 20 - 8 = 1472, damit es (hoffentlich) nicht fragmentiert wird/werden muss
-let FILE = 'test.txt'; // Datei, die übertragen werden soll
+let FILE = 'test.txt'; // Datei, die übertragen werden 
+let quiet = false; // Flag, ob die Logausgabe unterdrückt werden soll
+let sendStats = [0, 0]; // Statistiken über die gesendeten Pakete
 let sb = ""; // "Stringbuilder" für die Logausgabe
 
 // Entfernen der ersten beiden Argumente (node und main.js)
@@ -30,6 +32,10 @@ for (let i = 0; i < args.length; i++) {
     case '-f':
       FILE = args[++i];
       break;
+    case '--quiet':
+    case '-q':
+      quiet = true;
+      break;
     case '--help':
     case '-?':
       console.log('Usage: node myApp.js [options]');
@@ -38,6 +44,7 @@ for (let i = 0; i < args.length; i++) {
       console.log('  --port <port>       Port to send to (default: 12345)');
       console.log('  --max <size>        Maximum packet size (default: 1500)');
       console.log('  --file <filename>   File to send (default: test.txt)');
+      console.log('  --quiet             Suppress log output (except start and final summary)');
       console.log('  --help              Show this help'); 
       process.exit(0);
     default:
@@ -58,9 +65,11 @@ function sendFirstPacket(id, maxSeqNum, fileName, length) {
 
   socket.send(buffer, 0, buffer.length, PORT, HOST, (err) => {
     if (err) {
-      console.error(`Fehler beim Senden vom Initial Paket 0: ${err}`);
+      endLog(`Fehler beim Senden vom Initial Paket 0: ${err}`, true);
+      sendStats[1]++;
     } else {
       endLog(`Paket 0 (init) erfolgreich gesendet`);
+      sendStats[0]++;
     }
   });
 }
@@ -74,9 +83,11 @@ function sendPacket(id , seqNum, data, length) {
   
     socket.send(buffer, 0, buffer.length, PORT, HOST, (err) => {
       if (err) {
-        endLog(`Fehler beim Senden von Paket ${seqNum}: ${err}`);
+        endLog(`Fehler beim Senden von Paket ${seqNum}: ${err}`, true);
+        sendStats[1]++;
       } else {
         endLog(`Paket ${seqNum} erfolgreich gesendet`);
+        sendStats[0]++;
       }
     });
   }
@@ -89,9 +100,11 @@ function sendPacket(id , seqNum, data, length) {
     buffer.write(md5 , 6, 16, 'hex');
     await socket.send(buffer, 0, buffer.length, PORT, HOST, (err) => {
       if (err) {
-        endLog(`Fehler beim Senden vom End Paket ${seqNum}: ${err}`);
+        endLog(`Fehler beim Senden vom End Paket ${seqNum}: ${err}`, true);
+        sendStats[1]++;
       } else {
         endLog(`Paket ${seqNum} (MD5) erfolgreich gesendet`);
+        sendStats[0]++;
       }
     });
   }
@@ -123,16 +136,18 @@ function sendFile(filename) {
     const fileData = fs.readFileSync(filename);
     const md5sum = crypto.createHash('md5').update(fileData).digest('hex');
     await sendLastPacket(id , seqNum, md5sum);
-    endLog('Datei erfolgreich gesendet');
     socket.close();
     endLog('UDP-Socket geschlossen');
-    console.log(sb);
+    if(!quiet)
+      console.log(sb);
+    console.log(`Datei gesendet in ${seqNum + 1} Paketen mit ${sendStats[0]} erfolgreichen und ${sendStats[1]} fehlgeschlagenen Paketen`);
   });
 }
 
 // Funktion zum Loggen von Nachrichten
-function endLog(message) {
-  sb += (`${message}\n`);
+function endLog(message, error = false) {
+  if(!quiet)
+    sb += (`${message}\n`);
 }
 
 // Erstellen des UDP-Sockets
