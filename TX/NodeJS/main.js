@@ -110,7 +110,7 @@ function sendPacket(id , seqNum, data, length) {
   }
 
 // Funktion zum Senden der Datei
-function sendFile(filename) {
+async function sendFile(filename) {
   // Erste Sequenznummer für die Datenpakete
   let seqNum = 0;
 
@@ -122,12 +122,14 @@ function sendFile(filename) {
   const maxSeqNum = Math.ceil(fileSize / MAX_PACKET_SIZE);
   const fileName = filename.split('/').pop();
   sendFirstPacket(id, maxSeqNum, fileName, fileName.length);
+  await waitForAckPacket(id, 0);
   seqNum++;
 
   // Lesen und Übertragen der Dateidaten
   const fileStream = fs.createReadStream(filename, { highWaterMark: MAX_PACKET_SIZE - 6});
-  fileStream.on('data', (data) => {
+  fileStream.on('data', async (data) => {
     sendPacket(id , seqNum, data.toString('base64'), data.length);
+    await waitForAckPacket(id, seqNum);
     seqNum++;
   });
 
@@ -135,7 +137,8 @@ function sendFile(filename) {
   fileStream.on('close', async () => {
     const fileData = fs.readFileSync(filename);
     const md5sum = crypto.createHash('md5').update(fileData).digest('hex');
-    await sendLastPacket(id , seqNum, md5sum);
+    sendLastPacket(id , seqNum, md5sum);
+    await waitForAckPacket(id, seqNum);
     socket.close();
     endLog('UDP-Socket geschlossen');
     if(!quiet)
@@ -143,6 +146,22 @@ function sendFile(filename) {
     console.log(`Datei gesendet in ${seqNum + 1} Paketen mit ${sendStats[0]} erfolgreichen und ${sendStats[1]} fehlgeschlagenen Paketen`);
   });
 }
+
+async function waitForAckPacket(transmissionId, sequenceNumber) {
+  return new Promise((resolve) => {
+    function messageHandler(msg) {
+      const receivedTransmissionId = msg.readUInt16BE(0);
+      const receivedSequenceNumber = msg.readUInt32BE(2);
+      if (receivedTransmissionId === transmissionId && receivedSequenceNumber === sequenceNumber) {
+        socket.off('message', messageHandler);
+        resolve();
+      }
+    }
+
+    socket.on('message', messageHandler);
+  });
+}
+
 
 // Funktion zum Loggen von Nachrichten
 function endLog(message, error = false) {
