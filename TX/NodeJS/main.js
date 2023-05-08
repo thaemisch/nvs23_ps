@@ -19,7 +19,16 @@ for (let i = 0; i < args.length; i++) {
   switch (args[i]) {
     case '--host':
     case '-h':
-      HOST = args[++i];
+      let tmp = args[++i];
+      if (tmp === undefined) {
+        printHelp();
+      }
+      if(tmp.includes(':')) {
+        HOST = tmp.split(':')[0];
+        PORT = tmp.split(':')[1];
+      } else {
+        HOST = tmp;
+      }
       break;
     case '--port':
     case '-p':
@@ -43,16 +52,7 @@ for (let i = 0; i < args.length; i++) {
       break;
     case '--help':
     case '-?':
-      console.log('Usage: node myApp.js [options]');
-      console.log('Options:');
-      console.log('  -h, --host, <host>      Host to send to (default: 127.0.0.1)');
-      console.log('  -p, --port <port>       Port to send to (default: 12345)');
-      console.log('  -m, --max <size>        Maximum packet size (default: 1500)');
-      console.log('  -f, --file <filename>   File to send (default: test.txt)');
-      console.log('  -q, --quiet             Suppress log output');
-      console.log('  -v, --verbose           Verbose log output');
-      console.log('  -?, --help              Show this help'); 
-      process.exit(0);
+      printHelp();
     default:
       console.log(`Invalid option: ${args[i]}`);
       break;
@@ -113,13 +113,13 @@ async function sendfirstPacket(id, maxSeqNum, fileName) {
 }
 
 // Funktion zum senden eines Pakets
-async function sendPacket(id , seqNum, data) {
+function sendPacket(id , seqNum, data) {
   const buffer = Buffer.allocUnsafe(6); // Paketgröße = 16/8 + 32/8 + "packetinhalt" size
   //Buffer ist "Byteadresiert" 
   buffer.writeUInt16BE(id, 0);
   buffer.writeUInt32BE(seqNum, 2);
 
-  return socket.send([buffer, data], PORT, HOST, (err) => {
+  socket.send([buffer, data], PORT, HOST, (err) => {
     if (err) {
       console.error(`Fehler beim Senden von Paket ${seqNum}: ${err}`);
       sendStats[1]++;
@@ -139,10 +139,10 @@ function sendLastPacket(id, seqNum, md5) {
   buffer.write(md5 , 6, 16, 'hex');
   socket.send(buffer, PORT, HOST, (err) => {
     if (err) {
-      endLog(`Fehler beim Senden vom End Paket ${seqNum}: ${err}`, true);
+      console.error(`Fehler beim Senden vom End Paket ${seqNum}: ${err}`);
       sendStats[1]++;
     } else {
-      endLog(`Paket ${seqNum} (MD5) gesendet`);
+      verboseLog(`Paket ${seqNum} (MD5) gesendet`);
       sendStats[0]++;
       socket.close();
       verboseLog('UDP-Socket geschlossen');
@@ -182,15 +182,16 @@ async function sendFile(filename) {
   const fileName = filename.split('/').pop().split('\\').pop();
   await sendfirstPacket(id, maxSeqNum, fileName);
   let promise = waitForAckPacket(id, 0);
-  seqNum++;
 
   // Lesen und Übertragen der Dateidaten
   const fileStream = fs.createReadStream(filename, { highWaterMark: MAX_PACKET_SIZE - 6});
   fileStream.on('data', async (data) => {
-    await promise;
-    sendPacket(id , seqNum, data);
-    promise = waitForAckPacket(id, seqNum);
     seqNum++;
+    let localSeqNum = seqNum;
+    await promise;
+    sendPacket(id , localSeqNum, data);
+    promise = waitForAckPacket(id, localSeqNum);
+
   });
 
   // Senden des letzten Pakets mit der MD5-Prüfsumme
@@ -206,4 +207,17 @@ async function sendFile(filename) {
 function verboseLog(message) {
   if(verbose)
     console.log(message);
+}
+
+function printHelp() {
+  console.log('Usage: node myApp.js [options]');
+  console.log('Options:');
+  console.log('  -h, --host, <host>      Host to send to (default: 127.0.0.1)');
+  console.log('  -p, --port <port>       Port to send to (default: 12345)');
+  console.log('  -m, --max <size>        Maximum packet size (default: 1500)');
+  console.log('  -f, --file <filename>   File to send (default: test.txt)');
+  console.log('  -q, --quiet             Suppress log output (overrides -v)');
+  console.log('  -v, --verbose           Verbose log output');
+  console.log('  -?, --help              Show this help'); 
+  process.exit(0);
 }
