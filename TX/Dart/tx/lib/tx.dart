@@ -43,6 +43,7 @@ Future<void> sendFirstPacket(
   } else {
     print('Paket 0 (init) erfolgreich gesendet');
   }
+  await waitForAcks(PORT, 0, id);
 }
 
 Future<void> sendPacket(
@@ -75,6 +76,41 @@ Future<void> sendPacket(
   md5
       ? print('MD5-Paket $seqNum erfolgreich gesendet')
       : print('Paket $seqNum erfolgreich gesendet');
+  await waitForAcks(PORT, seqNum, id);
+}
+
+Future<void> waitForAcks(int port, int seqNr, int id) async {
+  final socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, port);
+  await socket.listen((RawSocketEvent event) {
+    if (event == RawSocketEvent.read) {
+      final Datagram? dg = socket.receive();
+      if (dg != null) {
+        _processAckPacket(dg.data, seqNr, id);
+        return;
+      }
+    }
+  }).asFuture<void>();
+}
+
+void _processAckPacket(Uint8List data, int seqNr, int id) {
+  if (data.length != 6) {
+    print('Invalid ACK packet length');
+    return;
+  }
+
+  final transmissionId = data.buffer.asByteData().getUint16(0);
+  final sequenceNumber = data.buffer.asByteData().getUint32(2);
+  if(transmissionId != id) {
+    print('Invalid ACK packet transmission ID');
+    return;
+  }
+  if (sequenceNumber != seqNr) {
+    print('Invalid ACK packet sequence number');
+    return;
+  } else {
+    print(
+        'ACK Paket mit Transmission ID: $transmissionId und Sequence Number: $sequenceNumber erhalten');
+  }
 }
 
 void main(List<String> args) async {
