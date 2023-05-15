@@ -47,7 +47,7 @@ Future<void> sendFirstPacket(
   } else {
     !quiet ? print('Paket 0 (init) erfolgreich gesendet') : {};
   }
-  //await waitForAcks(PORT, 0, id, quiet);
+  await waitForAcks(PORT, 0, id, quiet);
 }
 
 Future<void> sendPacket(
@@ -75,7 +75,7 @@ Future<void> sendPacket(
     printpaketstatus(seqNum, md5, quiet, sent: false);
   } else {
     printpaketstatus(seqNum, md5, quiet, sent: true);
-    //await waitForAcks(PORT, seqNum, id, quiet);
+    await waitForAcks(PORT, seqNum, id, quiet);
   }
 }
 
