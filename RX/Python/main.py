@@ -21,7 +21,7 @@ parser = argparse.ArgumentParser(description='Process some command line argument
 parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to send to (default: 127.0.0.1)')
 parser.add_argument('--port', type=int, default=12345, help='Port to send to (default: 12345)')
 parser.add_argument('--max', type=int, default=1500, help='Maximum packet size (default: 1500)')
-parser.add_argument('--quiet', type=bool, default=False, help='Do not print anything to the terminal')
+parser.add_argument('--quiet', action='store_true', help='Do not print anything to the terminal')
 
 # Parse the arguments
 args = parser.parse_args()
