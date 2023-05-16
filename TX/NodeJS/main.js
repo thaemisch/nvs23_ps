@@ -186,11 +186,12 @@ async function sendFile(filename) {
   // Lesen und Übertragen der Dateidaten
   const fileStream = fs.createReadStream(filename, { highWaterMark: MAX_PACKET_SIZE - 6});
   fileStream.on('data', async (data) => {
+    let thisPromise = promise;
     seqNum++;
     let localSeqNum = seqNum;
-    await promise;
+    pPromise = waitForAckPacket(id, localSeqNum);
+    await thisPromise;
     sendPacket(id , localSeqNum, data);
-    promise = waitForAckPacket(id, localSeqNum);
 
   });
 
