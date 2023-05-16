@@ -22,6 +22,7 @@ for (let i = 0; i < args.length; i++) {
       let tmp = args[++i];
       if (tmp === undefined) {
         printHelp();
+        return;
       }
       if(tmp.includes(':')) {
         HOST = tmp.split(':')[0];
@@ -36,7 +37,7 @@ for (let i = 0; i < args.length; i++) {
       break;
     case '--max':
     case '-m':
-      MAX_PACKET_SIZE = args[++i] - 20 - 8;
+      MAX_PACKET_SIZE = parseInt(args[++i]); //- 20 - 8;
       break;
     case '--file':
     case '-f':
@@ -53,9 +54,10 @@ for (let i = 0; i < args.length; i++) {
     case '--help':
     case '-?':
       printHelp();
+      return;
     default:
       console.log(`Invalid option: ${args[i]}`);
-      break;
+      return;
   }
 }
 
@@ -69,20 +71,6 @@ console.log(`Sending file "${FILE}" to ${HOST}:${PORT} with max packet size ${MA
 // Erstellen des UDP-Sockets
 const socket = dgram.createSocket('udp4');
 
-// einrichten des Sockets
-/*socket.connect(PORT, HOST, (err) => {
-  if (err) {
-    console.log(`Fehler beim Verbinden mit ${HOST}:${PORT}: ${err}`, true);
-    process.exit(1);
-  }
-  else{
-    console.log(`Verbunden mit ${HOST}:${PORT}`);
-    socket.setSendBufferSize(MAX_PACKET_SIZE);
-    socket.setRecvBufferSize(6); // mehr brauchen wir für ACKs nicht
-  }
-});*/
-
-
 // Senden der Datei
 sendFile(FILE);
 
@@ -93,7 +81,8 @@ sendFile(FILE);
 
 // Funktion zum senden des ersten Pakets
 async function sendfirstPacket(id, maxSeqNum, fileName) {
-  const buffer = Buffer.allocUnsafe(10 + fileName.length);
+  const buffer = Buffer.allocUnsafe(10 + fileName.length);  // Paketgröße = 16/8 + 32/8 + 32/8 + "packetinhalt" size
+  //Buffer ist "Byteadresiert" 
   buffer.writeUInt16BE(id, 0);
   buffer.writeUInt32BE(0, 2);
   buffer.writeUInt32BE(maxSeqNum, 6);
@@ -114,8 +103,7 @@ async function sendfirstPacket(id, maxSeqNum, fileName) {
 
 // Funktion zum senden eines Pakets
 function sendPacket(id , seqNum, data) {
-  const buffer = Buffer.allocUnsafe(6); // Paketgröße = 16/8 + 32/8 + "packetinhalt" size
-  //Buffer ist "Byteadresiert" 
+  const buffer = Buffer.allocUnsafe(6); // Paketgröße = 16/8 + 32/8
   buffer.writeUInt16BE(id, 0);
   buffer.writeUInt32BE(seqNum, 2);
 
@@ -170,38 +158,29 @@ async function waitForAckPacket(transmissionId, sequenceNumber) {
 
 // Funktion zum Senden der Datei
 async function sendFile(filename) {
-  // Erste Sequenznummer für die Datenpakete
-  let seqNum = 0;
 
   //random id 0 bis 16^2-1
   const id = Math.floor(Math.random() * 65535);
 
-  // Erstellen des ersten Pakets mit Dateiinformationen
+  // Einlesen der Datei
   const fileSize = fs.statSync(filename).size;
-  const maxSeqNum = Math.ceil(fileSize / MAX_PACKET_SIZE);
+  const maxSeqNum = Math.ceil(fileSize / (MAX_PACKET_SIZE-6) + 1);
   const fileName = filename.split('/').pop().split('\\').pop();
+  const data = fs.readFileSync(filename);
+
+  // Senden des ersten Pakets
   await sendfirstPacket(id, maxSeqNum, fileName);
-  let promise = waitForAckPacket(id, 0);
+  await waitForAckPacket(id, 0);
 
-  // Lesen und Übertragen der Dateidaten
-  const fileStream = fs.createReadStream(filename, { highWaterMark: MAX_PACKET_SIZE - 6});
-  fileStream.on('data', async (data) => {
-    let thisPromise = promise;
-    seqNum++;
-    let localSeqNum = seqNum;
-    pPromise = waitForAckPacket(id, localSeqNum);
-    await thisPromise;
-    sendPacket(id , localSeqNum, data);
+  // Senden der Datei
+  for (let seqNum = 1; seqNum < maxSeqNum; seqNum++) {
+    sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
+    await waitForAckPacket(id, seqNum);
+  }
 
-  });
-
-  // Senden des letzten Pakets mit der MD5-Prüfsumme
-  fileStream.on('close', () => {
-    const fileData = fs.readFileSync(filename);
-    const md5sum = crypto.createHash('md5').update(fileData).digest('hex');
-    sendLastPacket(id , seqNum, md5sum);
-    console.log(`Datei gesendet in ${seqNum + 1} Paketen mit ${sendStats[0]} erfolgreichen und ${sendStats[1]} fehlgeschlagenen Paketen`);
-  });
+  // Senden des letzten Pakets mit MD5-Hash
+  const md5sum = crypto.createHash('md5').update(data).digest('hex');
+  sendLastPacket(id , maxSeqNum, md5sum);
 }
 
 // Funktion zum Loggen von Nachrichten
@@ -215,7 +194,7 @@ function printHelp() {
   console.log('Options:');
   console.log('  -h, --host, <host>      Host to send to (default: 127.0.0.1)');
   console.log('  -p, --port <port>       Port to send to (default: 12345)');
-  console.log('  -m, --max <size>        Maximum packet size (default: 1500)');
+  console.log('  -m, --max <size>        Maximum packet size (default: 1472)');
   console.log('  -f, --file <filename>   File to send (default: test.txt)');
   console.log('  -q, --quiet             Suppress log output (overrides -v)');
   console.log('  -v, --verbose           Verbose log output');
