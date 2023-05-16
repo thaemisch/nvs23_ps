@@ -47,7 +47,7 @@ Future<void> sendFirstPacket(
   } else {
     !quiet ? print('Paket 0 (init) erfolgreich gesendet') : {};
   }
-  await waitForAcks(PORT, 0, id, quiet);
+  await waitForAcks(socket, PORT, 0, id, quiet);
 }
 
 Future<void> sendPacket(
@@ -75,12 +75,12 @@ Future<void> sendPacket(
     printpaketstatus(seqNum, md5, quiet, sent: false);
   } else {
     printpaketstatus(seqNum, md5, quiet, sent: true);
-    await waitForAcks(PORT, seqNum, id, quiet);
+    await waitForAcks(socket, PORT, seqNum, id, quiet);
   }
 }
 
-Future<void> waitForAcks(int port, int seqNr, int id, bool quiet) async {
-  final socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, port);
+Future<void> waitForAcks(
+    RawDatagramSocket socket, int port, int seqNr, int id, bool quiet) async {
   await socket.listen((RawSocketEvent event) {
     if (event == RawSocketEvent.read) {
       final Datagram? dg = socket.receive();
