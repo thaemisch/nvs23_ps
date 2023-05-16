@@ -2,8 +2,21 @@ import pyshark
 import os
 import subprocess
 import threading
+import argparse
+import plot
 
-messungs_folder = "messungen_test"
+
+# Create an argument parser
+parser = argparse.ArgumentParser(description='Process some command line arguments.')
+
+# Add arguments
+parser.add_argument('--folder', type=str, default="messungen_test")
+
+# Parse the arguments
+args = parser.parse_args()
+
+# Set the variables
+messungs_folder = args.folder
 
 tx_list = ["Dart", "Node"] # List of all senders
 rx_list = ["Java", "Python"] # List of all receivers
@@ -24,3 +37,7 @@ for tx in tx_list:
             proc.wait() # Wait for other script to complete
             capture_thread.join() # Wait for Pyshark capture to complete
             capture.close() # Stop Pyshark capture
+
+# Plot the results
+
+plot(messungs_folder)
