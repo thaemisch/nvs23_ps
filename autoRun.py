@@ -45,9 +45,9 @@ for i in range(amount):
 
     # Execute the TX script
     if tx == "dart":
-        tx_proc = subprocess.Popen(['dart', 'run', dart_path, '--max', max_pack])
+        tx_proc = subprocess.Popen(['dart', 'run', dart_path, '--max', max_pack, '--quiet'])
     elif tx == "node":
-        tx_proc = subprocess.Popen(['node', node_path, '--max', max_pack])
+        tx_proc = subprocess.Popen(['node', node_path, '--max', max_pack, '--quiet'])
     else:
         print("Invalid TX name entered")
         break
