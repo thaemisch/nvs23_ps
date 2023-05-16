@@ -48,6 +48,10 @@ file_nameU = data[10:10+file_name_length].decode('utf-8')
 file_name = re.sub(r'.*/', '', file_nameU)
 print(f'Packet 0 (init): id={id}, maxSeqNum={max_seq_num}, fileName={file_name}')
 
+# Send response packet containing transmission ID and sequence number
+response_data = id.to_bytes(2, byteorder='big') + seq_num.to_bytes(4, byteorder='big')
+sock.sendto(response_data, addr)
+
 # Receive the data packet(s)
 while seq_num < max_seq_num:
     data, addr = sock.recvfrom(max_pack)
@@ -57,12 +61,20 @@ while seq_num < max_seq_num:
     final_data += packet_data
     print(f'Packet {seq_num}: id={id}, data={packet_data}')
 
+    # Send response packet containing transmission ID and sequence number
+    response_data = id.to_bytes(2, byteorder='big') + seq_num.to_bytes(4, byteorder='big')
+    sock.sendto(response_data, addr)
+
 # Receive the md5 packet
 data, addr = sock.recvfrom(max_pack)
 id = int.from_bytes(data[0:2], byteorder='big')
 seq_num = int.from_bytes(data[2:6], byteorder='big')
 md5 = data[6:22].hex()
 print(f'Packet {seq_num} (md5): id={id}, md5={md5}')
+
+# Send response packet containing transmission ID and sequence number
+response_data = id.to_bytes(2, byteorder='big') + seq_num.to_bytes(4, byteorder='big')
+sock.sendto(response_data, addr)
 
 print('---------------------------------')
 
