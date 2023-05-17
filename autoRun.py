@@ -3,6 +3,17 @@ import os
 import subprocess
 import time
 
+def progressBar(i, step):
+    bar_length = 50
+    steps = 2*amount
+    step_size = steps / bar_length
+    progress = step / steps
+    filled_length = int(round(bar_length * progress))  
+    remaining_length = bar_length - filled_length 
+    filled_bar = '█' * filled_length
+    empty_bar = '░' * remaining_length 
+    print(f'\r|{filled_bar}{empty_bar}| {i} / {amount} ({progress:.1%})', end='')
+
 # Create an argument parser
 parser = argparse.ArgumentParser(description='Process some command line arguments.')
 
@@ -32,9 +43,12 @@ python_path = "RX/Python/main.py"
 java_path = "RX/Java/rx_java/src/UDPReceiver"
 
 totalTimeouts = 0
+successes = 0
 
 # Execute the TX/RX scripts
 for i in range(amount):
+    progressBar(i, 2*i)
+        
     # Execute the RX script
     if rx == "python":
         rx_proc = subprocess.Popen(['python', python_path, '--max', max_pack, '--quiet'])
@@ -44,6 +58,9 @@ for i in range(amount):
     else:
         print("Invalid RX name entered")
         exit()
+    # waiting for the RX script to start
+    time.sleep(1)
+    progressBar(i, 2*i+1)
 
     # Execute the TX script
     if tx == "dart":
@@ -55,11 +72,12 @@ for i in range(amount):
         break
     # print("Packet " + str(i) + " sent!")
     
-    for i in range(timeout):
+    for j in range(timeout):
         rx_exit_code = rx_proc.poll()
         tx_exit_code = tx_proc.poll()
         if rx_exit_code is not None and tx_exit_code is not None:
             # Both processes have terminated
+            successes += 1
             break
         time.sleep(1)
     else:
@@ -76,7 +94,9 @@ for i in range(amount):
             rx_proc.wait()
             print("RX process terminated")
         totalTimeouts += 1
-        
+        amount += 1
     
-
-print("Total timeouts: " + str(totalTimeouts) + " von " + str(amount) + " Versuchen")
+# Clear the progress bar
+print("\r" + " " * 100 + "\r", end="")
+# Print the results
+print(f"\r{tx} -> {rx} mit {max_pack} Packetsize ({amount} Versuche): {successes} Erfolge, {totalTimeouts} Timeouts", end="")
