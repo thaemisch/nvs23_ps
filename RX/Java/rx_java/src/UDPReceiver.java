@@ -121,7 +121,7 @@ public class UDPReceiver{
         if (seqNr == 0) { // first packet (containing maximum sequence number and file name)
             startTime = new Timestamp(System.currentTimeMillis());  // set start time stamp
 
-            maxSeqNr = receiverBuffer.getInt() + 1; // get max. sequence number and increase by 1 to know when to stop
+            maxSeqNr = receiverBuffer.getInt(); // get max. sequence number to know when to stop
             try{
                 fileName = new String(receiverBuffer.array(), 10, 11, "UTF8");  // extract file name
             } catch (Exception e){  // could result in Exception if charsetName is unknown to Java-String

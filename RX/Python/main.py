@@ -58,7 +58,7 @@ response_data = id.to_bytes(2, byteorder='big') + seq_num.to_bytes(4, byteorder=
 sock.sendto(response_data, addr)
 
 # Receive the data packet(s)
-while seq_num < max_seq_num:
+while seq_num < max_seq_num-1:
     data, addr = sock.recvfrom(max_pack)
     id = int.from_bytes(data[0:2], byteorder='big')
     seq_num = int.from_bytes(data[2:6], byteorder='big')
