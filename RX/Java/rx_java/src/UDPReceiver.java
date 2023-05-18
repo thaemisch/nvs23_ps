@@ -77,13 +77,20 @@ public class UDPReceiver{
         IP = InetAddress.getByName(IP_ADDRESS);
         socket = new DatagramSocket(PORT, IP);
         boolean done = false;
+        byte[] buf = new byte[BUFFER_SIZE]; // BUFFER_SIZE = data-size + 6Byte (Header)
+        DatagramPacket packet = new DatagramPacket(buf, buf.length, IP, PORT);
         
         System.out.println("Receiver listening (IP: " + IP.getHostAddress() + ", port: " + PORT + ")...");
         
         // loop runs until done == false which means the last packet was received (see interpretPacket())
         while (!done) {
             try {
-                done = interpretPacket();
+                try {
+                    socket.receive(packet);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                done = interpretPacket(packet);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -102,18 +109,10 @@ public class UDPReceiver{
     * @return true if last packet is received
     * @return false if last transmission is still ongoing (last packet not received yet)
     */
-    private static boolean interpretPacket() throws IOException, NoSuchAlgorithmException{
-        byte[] buf = new byte[BUFFER_SIZE]; // BUFFER_SIZE = data-size + 6Byte (Header)
-        int seqNr = -1;
-        DatagramPacket packet = new DatagramPacket(buf, buf.length, IP, PORT);
+    private static boolean interpretPacket(DatagramPacket packet) throws IOException, NoSuchAlgorithmException{
         receiverBuffer = ByteBuffer.wrap(packet.getData());
         receivedPackets++;
-
-        try {
-            socket.receive(packet);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        int seqNr = -1;
 
         transmissionID = receiverBuffer.getShort(); // get 2 Byte (short) transmission ID
         seqNr = receiverBuffer.getInt();    // get 4 Byte (Integer) sequence number 
@@ -135,7 +134,6 @@ public class UDPReceiver{
             outputStream.close();   // now the output-stream can be closed 
 
             writeToFile();  // write data to file (data is written to file after the transmission is complete)
-
             endTime = new Timestamp(System.currentTimeMillis());
 
             if (checkMD5Sum()) {    // check the MD5 hash
@@ -156,7 +154,29 @@ public class UDPReceiver{
             receiverBuffer.get(dataArray);  // get data
             outputStream.write(dataArray);  // write data to output-stream
         }
+        sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
         return false;
+    }
+
+    /**
+    * Sends an ACK-packet to Transmitter after receiving a packet
+    * @param seqNr 
+    * @param port
+    * @param transmitterAddress
+    */
+    private static void sendACKPacket(int seqNr, int port, InetAddress transmitterAddress){
+        try {
+            ByteBuffer messageBuffer = ByteBuffer.allocate(6);
+            messageBuffer.putShort(transmissionID);
+            messageBuffer.putInt(seqNr);
+
+            DatagramPacket packet = new DatagramPacket(messageBuffer.array(), messageBuffer.array().length, transmitterAddress, port);
+            
+            socket.send(packet);
+
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 
     /**
