@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
 import 'dart:async';
 import 'dart:io';
@@ -105,22 +105,27 @@ Future<void> waitForAck(RawDatagramSocket socket, int port, int seqNr, int id,
 
 void _processAckPacket(Uint8List data, int seqNr, int id, bool quiet) {
   if (data.length != 6) {
-    printiffalse('Invalid ACK packet length', quiet);
+    printiffalse(
+        'ACK Paket hat falsche Größe => SOLL: 6 IST: ${data.length}', quiet);
     return;
   }
 
   final transmissionId = data.buffer.asByteData().getUint16(0);
   final sequenceNumber = data.buffer.asByteData().getUint32(2);
   if (transmissionId != id) {
-    printiffalse('Invalid ACK packet transmission ID', quiet);
+    printiffalse(
+        'ACK Paket mit falscher Transmission ID erhalten => SOLL: $id IST: $transmissionId',
+        quiet);
     return;
   }
   if (sequenceNumber != seqNr) {
-    printiffalse('Invalid ACK packet sequence number', quiet);
+    printiffalse(
+        'ACK Paket mit falscher Sequenznummer erhalten => SOLL: $seqNr IST: $sequenceNumber',
+        quiet);
     return;
   } else {
     printiffalse(
-        'ACK Paket mit Transmission ID: $transmissionId und Sequence Number: $sequenceNumber erhalten\n',
+        'ACK Paket mit Transmission ID: $transmissionId und Sequenznummer: $sequenceNumber erhalten\n',
         quiet);
   }
 }
