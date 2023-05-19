@@ -5,8 +5,8 @@ import math
 import os
 
 
-def plot(filePath):
-    fileSize = 0.88 # in MB
+def plot(filePath, fileSize = 0.88):
+    # fileSize in MB
     folders = ['Dart_Java', 'Dart_Python', 'Node_Java', 'Node_Python'] 
     numbers = [100, 1400, 60000]
     mdParts = []
