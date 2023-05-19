@@ -82,7 +82,7 @@ if id == transmID:
     if not quiet:
         print(f'Packet {seq_num} (md5): id={id}, md5={md5}')
 
-sendAck()
+    sendAck()
 
 if not quiet:
     print('---------------------------------')
