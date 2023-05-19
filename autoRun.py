@@ -38,7 +38,6 @@ max_pack = args.max
 amount = args.amount
 timeout = args.timeout
 file_path = os.path.abspath(args.file)
-print(file_path)
 
 # TX-Variables
 dart_path = "TX/Dart/tx/lib/tx.dart"
@@ -52,7 +51,8 @@ totalTimeouts = 0
 successes = 0
 
 # Execute the TX/RX scripts
-for i in range(amount):
+i = 0
+while i < amount and totalTimeouts < 10:
     progressBar(i, 2*i)
         
     # Execute the RX script
@@ -60,7 +60,7 @@ for i in range(amount):
         rx_proc = subprocess.Popen(['python', python_path, '--max', max_pack, '--quiet'])
     elif rx == "java":
         os.system("javac " + java_path + ".java")
-        rx_proc = subprocess.Popen(['java', '-classpath', 'RX/Java/rx_java/src', 'UDPReceiver', '--max', max_pack, '--quiet'])
+        rx_proc = subprocess.Popen(['java', '-classpath', 'RX/Java/rx_java/src', 'UDPReceiver', '--max', max_pack, '--quiet', 'true'])
     else:
         print("Invalid RX name entered")
         exit()
@@ -78,6 +78,8 @@ for i in range(amount):
         print("Invalid TX name entered")
         break
     # print("Packet " + str(i) + " sent!")
+
+    i += 1
     
     # waiting for the TX script to finish
     tmp = 0.01
