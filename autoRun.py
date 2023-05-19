@@ -3,6 +3,9 @@ import os
 import subprocess
 import time
 
+# start time
+start = time.time()
+
 def progressBar(i, step):
     bar_length = 50
     steps = 2*amount
@@ -58,8 +61,9 @@ for i in range(amount):
     else:
         print("Invalid RX name entered")
         exit()
-    # waiting for the RX script to start
-    time.sleep(1)
+    # waiting for the RX script to start, 
+    time.sleep(0.1) # increase this if the RX script do weard stuff
+    
     progressBar(i, 2*i+1)
 
     # Execute the TX script
@@ -72,14 +76,17 @@ for i in range(amount):
         break
     # print("Packet " + str(i) + " sent!")
     
-    for j in range(timeout):
+    # waiting for the TX script to finish
+    tmp = 0.01
+    while tmp < timeout:
         rx_exit_code = rx_proc.poll()
         tx_exit_code = tx_proc.poll()
         if rx_exit_code is not None and tx_exit_code is not None:
             # Both processes have terminated
             successes += 1
             break
-        time.sleep(1)
+        time.sleep(tmp)
+        tmp *= 2
     else:
         # if RX process is still running, terminate it
         tx_exit_code = tx_proc.poll()
@@ -98,5 +105,7 @@ for i in range(amount):
     
 # Clear the progress bar
 print("\r" + " " * 100 + "\r", end="")
+# End Timer
+end = time.time()
 # Print the results
-print(f"\r{tx} -> {rx} mit {max_pack} Packetsize ({amount} Versuche): {successes} Erfolge, {totalTimeouts} Timeouts", end="")
+print(f"\r{tx} -> {rx}: Mit {max_pack} Packetsize ({amount} Versuche): {successes} Erfolge, {totalTimeouts} Timeouts. In {end - start:.2f} Sekunden\n", end="")
