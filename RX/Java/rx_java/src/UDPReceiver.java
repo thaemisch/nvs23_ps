@@ -87,7 +87,7 @@ public class UDPReceiver{
         byte[] buf = new byte[bufferSize]; // BUFFER_SIZE = data-size + 6Byte (Header)
         DatagramPacket packet = new DatagramPacket(buf, buf.length, IP, port);
         
-        System.out.println("Receiver listening (IP: " + IP.getHostAddress() + ", port: " + port + "buffer size" + bufferSize + ")...");
+        System.out.println("Receiver listening (IP: " + IP.getHostAddress() + ", port: " + port + ", buffer size: " + bufferSize + ")...");
         
         // loop runs until done == false which means the last packet was received (see interpretPacket())
         while (!done) {
