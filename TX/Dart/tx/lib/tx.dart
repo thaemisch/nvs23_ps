@@ -159,7 +159,7 @@ void main(List<String> args) async {
   final stream = socket.asBroadcastStream();
   final id = DateTime.now().millisecondsSinceEpoch % 65536;
   final fileBytes = await File(file).readAsBytes(); // File as bytes
-  final maxSeqNum = (fileBytes.length / (MAX_PACKET_SIZE - 6)).ceil();
+  final maxSeqNum = (fileBytes.length / (MAX_PACKET_SIZE - 6)).ceil() + 1;
   final md5Hash = md5.convert(fileBytes).bytes; // MD5 hash of the file
   final RegExpMatch? fileameForPrint =
       RegExp(r"(?<=/)[^/]*$").firstMatch(file); // Filename after last slash
@@ -179,7 +179,7 @@ void main(List<String> args) async {
           : file,
       stream,
       quiet); // Send the first packet
-  for (int seqNum = 1; seqNum <= maxSeqNum; seqNum++) {
+  for (int seqNum = 1; seqNum < maxSeqNum; seqNum++) {
     // Send the data packets
     final start = (seqNum - 1) * (MAX_PACKET_SIZE - 6);
     final end = min(seqNum * (MAX_PACKET_SIZE - 6), fileBytes.length);
@@ -188,7 +188,7 @@ void main(List<String> args) async {
   }
   // Send the MD5 hash as the last packet
   final md5Packet = Uint8List.fromList(md5Hash);
-  await sendPacket(socket, id, maxSeqNum + 1, md5Packet, stream, quiet, true);
+  await sendPacket(socket, id, maxSeqNum, md5Packet, stream, quiet, true);
 
   !quiet
       ? print(
