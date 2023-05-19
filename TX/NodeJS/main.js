@@ -132,8 +132,6 @@ function sendLastPacket(id, seqNum, md5) {
     } else {
       verboseLog(`Paket ${seqNum} (MD5) gesendet`);
       sendStats[0]++;
-      socket.close();
-      verboseLog('UDP-Socket geschlossen');
     }
   });
 }
@@ -181,6 +179,9 @@ async function sendFile(filename) {
   // Senden des letzten Pakets mit MD5-Hash
   const md5sum = crypto.createHash('md5').update(data).digest('hex');
   sendLastPacket(id , maxSeqNum, md5sum);
+  await waitForAckPacket(id, maxSeqNum);
+  socket.close();
+  verboseLog('UDP-Socket geschlossen');
 }
 
 // Funktion zum Loggen von Nachrichten
