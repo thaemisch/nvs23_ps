@@ -46,7 +46,7 @@ Future<void> sendFirstPacket(RawDatagramSocket socket, int id, int maxSeqNum,
       tryCount++;
     }
   } else {
-    !quiet ? print('Paket 0 (init) erfolgreich gesendet') : {};
+    printiffalse('Paket 0 (init) erfolgreich gesendet', quiet);
   }
   await waitForAck(socket, PORT, 0, id, stream, quiet);
 }
@@ -63,10 +63,10 @@ Future<void> sendPacket(RawDatagramSocket socket, int id, int seqNum,
   int tryCount = 1;
   while (result == 0 && tryCount <= MAXTRYCOUNT) {
     if (result == 0 && !quiet) {
-      md5
-          ? print('Fehler beim Senden von MD5-Paket $seqNum')
-          : print(
-              'Fehler beim Senden von Paket $seqNum: Versuch $tryCount von $MAXTRYCOUNT');
+      printiffalse('Fehler beim Senden von MD5-Paket $seqNum', !md5);
+      printiffalse(
+          'Fehler beim Senden von Paket $seqNum: Versuch $tryCount von $MAXTRYCOUNT',
+          md5);
     }
     result = socket.send(buffer, InternetAddress(HOST), PORT);
     tryCount++;
@@ -105,24 +105,29 @@ Future<void> waitForAck(RawDatagramSocket socket, int port, int seqNr, int id,
 
 void _processAckPacket(Uint8List data, int seqNr, int id, bool quiet) {
   if (data.length != 6) {
-    !quiet ? print('Invalid ACK packet length') : {};
+    printiffalse('Invalid ACK packet length', quiet);
     return;
   }
 
   final transmissionId = data.buffer.asByteData().getUint16(0);
   final sequenceNumber = data.buffer.asByteData().getUint32(2);
   if (transmissionId != id) {
-    !quiet ? print('Invalid ACK packet transmission ID') : {};
+    printiffalse('Invalid ACK packet transmission ID', quiet);
     return;
   }
   if (sequenceNumber != seqNr) {
-    !quiet ? print('Invalid ACK packet sequence number') : {};
+    printiffalse('Invalid ACK packet sequence number', quiet);
     return;
   } else {
-    !quiet
-        ? print(
-            'ACK Paket mit Transmission ID: $transmissionId und Sequence Number: $sequenceNumber erhalten\n')
-        : {};
+    printiffalse(
+        'ACK Paket mit Transmission ID: $transmissionId und Sequence Number: $sequenceNumber erhalten\n',
+        quiet);
+  }
+}
+
+void printiffalse(String text, bool value) {
+  if (!value) {
+    print(text);
   }
 }
 
@@ -165,10 +170,9 @@ void main(List<String> args) async {
       RegExp(r"(?<=/)[^/]*$").firstMatch(file); // Filename after last slash
 
   // ------------------ Send the file ------------------
-  !quiet
-      ? print(
-          '\n-------------------------- Sending file: $file with Transmission ID: $id --------------------------\n')
-      : {};
+  printiffalse(
+      '\n-------------------------- Sending file: $file with Transmission ID: $id --------------------------\n',
+      quiet);
 
   await sendFirstPacket(
       socket,
@@ -190,10 +194,9 @@ void main(List<String> args) async {
   final md5Packet = Uint8List.fromList(md5Hash);
   await sendPacket(socket, id, maxSeqNum, md5Packet, stream, quiet, true);
 
-  !quiet
-      ? print(
-          '-------------------------- File sent --------------------------\n')
-      : {};
+  printiffalse(
+      '-------------------------- File sent --------------------------\n',
+      quiet);
 
   socket.close();
 }
