@@ -57,10 +57,10 @@ for i in range(amount):
         
     # Execute the RX script
     if rx == "python":
-        rx_proc = subprocess.Popen(['python', python_path, '--max', max_pack, '--quiet', '--file', file_path])
+        rx_proc = subprocess.Popen(['python', python_path, '--max', max_pack, '--quiet'])
     elif rx == "java":
         os.system("javac " + java_path + ".java")
-        rx_proc = subprocess.Popen(['java', '-classpath', 'RX/Java/rx_java/src', 'UDPReceiver', '--max', max_pack , '--quiet', '--file', file_path])
+        rx_proc = subprocess.Popen(['java', '-classpath', 'RX/Java/rx_java/src', 'UDPReceiver', '--max', max_pack, '--quiet'])
     else:
         print("Invalid RX name entered")
         exit()
