@@ -5,10 +5,10 @@ import math
 import os
 
 
-def plot(filePath, fileSize = 0.88):
-    # fileSize in MB
+def plot(filePath, fileSize = 90_000):
+    # fileSize in Bytes
     folders = ['Dart_Java', 'Dart_Python', 'Node_Java', 'Node_Python'] 
-    numbers = [100, 1400, 60000]
+    numbers = [100, 1_400, 60_000]
     mdParts = []
     for directFolder in folders:
         if(filePath != ''):
@@ -93,7 +93,7 @@ def plot(filePath, fileSize = 0.88):
             plt.close()
 
             # Generate the .md part
-            mdParts.append(f" ![{number}_{directFolder}]({directFolder}/plot{number}.png) {fileSize/relative_times[1]*1000:.1f} - {fileSize/relative_times[0]*1000:.1f} MB/s")
+            mdParts.append(f" ![{number}_{directFolder}]({directFolder}/plot{number}.png) {fileSize/relative_times[1]*1000 *1000*1000:.1f} - {fileSize/relative_times[0]*1000 *1000*1000:.1f} MB/s")
 
     # Finish the .md file
     md = "# Messungen\n\n| TX/RX | &nbsp;&nbsp;&nbsp;Java&nbsp;&nbsp;&nbsp; | Python |\n:-------------------------:|:-------------------------:|:-------------------------:\n"
