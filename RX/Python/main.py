@@ -46,6 +46,7 @@ if not quiet:
 # Receive the first packet
 data, addr = sock.recvfrom(max_pack)
 id = int.from_bytes(data[0:2], byteorder='big')
+transmID = id
 max_seq_num = int.from_bytes(data[6:10], byteorder='big')
 file_name_length = len(data) - 10
 file_nameU = data[10:10+file_name_length].decode('utf-8')
@@ -62,10 +63,11 @@ while seq_num < max_seq_num-1:
     data, addr = sock.recvfrom(max_pack)
     id = int.from_bytes(data[0:2], byteorder='big')
     seq_num = int.from_bytes(data[2:6], byteorder='big')
-    packet_data = (data[6:])
-    final_data += packet_data
-    if not quiet:
-        print(f'Packet {seq_num}: id={id}, data={packet_data}')
+    if id == transmID:
+        packet_data = (data[6:])
+        final_data += packet_data
+        if not quiet:
+            print(f'Packet {seq_num}: id={id}, data={packet_data}')
 
     # Send response packet containing transmission ID and sequence number
     response_data = id.to_bytes(2, byteorder='big') + seq_num.to_bytes(4, byteorder='big')
@@ -75,9 +77,10 @@ while seq_num < max_seq_num-1:
 data, addr = sock.recvfrom(max_pack)
 id = int.from_bytes(data[0:2], byteorder='big')
 seq_num = int.from_bytes(data[2:6], byteorder='big')
-md5 = data[6:22].hex()
-if not quiet:
-    print(f'Packet {seq_num} (md5): id={id}, md5={md5}')
+if id == transmID:
+    md5 = data[6:22].hex()
+    if not quiet:
+        print(f'Packet {seq_num} (md5): id={id}, md5={md5}')
 
 # Send response packet containing transmission ID and sequence number
 response_data = id.to_bytes(2, byteorder='big') + seq_num.to_bytes(4, byteorder='big')
