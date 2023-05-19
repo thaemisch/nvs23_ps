@@ -71,7 +71,7 @@ while seq_num < max_seq_num-1:
         if not quiet:
             print(f'Packet {seq_num}: id={id}, data={packet_data}')
 
-    sendAck()
+        sendAck()
 
 # Receive the md5 packet
 data, addr = sock.recvfrom(max_pack)
