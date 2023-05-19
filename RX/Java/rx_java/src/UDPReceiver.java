@@ -18,27 +18,33 @@ import java.sql.Timestamp;
 public class UDPReceiver{
 
     // adjust according to TX
-    private static int BUFFER_SIZE = 1472;
-    private static int PORT = 12345;
-    private static String IP_ADDRESS = "127.0.0.1";
+    private static final int BUFFER_SIZE = 1472;
+    private static final int PORT = 12345;
+    private static final String HOST = "127.0.0.1";
 
     public static void main(String[] args) throws SocketException, UnknownHostException{
+        String host = HOST;
+        int bufferSize = BUFFER_SIZE;
+        int port = PORT;
         if (args.length > 0) {
             // Parse the arguments and set the variables accordingly
             for (int i = 0; i < args.length; i += 2) {
                 String arg = args[i];
                 String value = args[i+1];
                 switch (arg) {
-                    case "--host":
-                        IP_ADDRESS = value;
+                    case "--host", "-h":
+                        host = value;
                         break;
-                    case "--port":
-                        PORT = Integer.parseInt(value);
+                    case "--port", "-p":
+                        port = Integer.parseInt(value);
                         break;
-                    case "--max":
-                        BUFFER_SIZE = Integer.parseInt(value);
+                    case "--max", "-m":
+                        bufferSize = Integer.parseInt(value);
                         break;
-                    case "--help":
+                    case "--quiet", "-q":
+                        quiet = true;
+                        break;
+                    case "--help", "-?":
                         System.out.println("Options:");
                         System.out.println("--host <host>       Host to send to (default: 127.0.0.1)");
                         System.out.println("--port <port>       Port to send to (default: 12345)");
@@ -51,7 +57,7 @@ public class UDPReceiver{
                 }
             }
         }
-        UDPReceiver.run();
+        UDPReceiver.run(host, port, bufferSize);
     }
 
     // packet variables
@@ -67,20 +73,21 @@ public class UDPReceiver{
     private static Timestamp endTime;   // to save end time (last packet received)
     private static ByteArrayOutputStream outputStream = new ByteArrayOutputStream();    // to write packet data to stream
     private static ByteBuffer receiverBuffer;   // simplifies extraction of header and data part in packet (byte array with lots of bitwise shifts could be used as well)
+    private static boolean quiet = false;
 
     /**
     * This method contains a loop that terminates once the last packet is received.
     * @throws UnknownHostException if IP-address is unknown
     * @throws SocketException if there is an error creating socket object
     */
-    public static void run() throws UnknownHostException, SocketException {
-        IP = InetAddress.getByName(IP_ADDRESS);
-        socket = new DatagramSocket(PORT, IP);
+    public static void run(String host, int port, int bufferSize) throws UnknownHostException, SocketException {
+        IP = InetAddress.getByName(host);
+        socket = new DatagramSocket(port, IP);
         boolean done = false;
-        byte[] buf = new byte[BUFFER_SIZE]; // BUFFER_SIZE = data-size + 6Byte (Header)
-        DatagramPacket packet = new DatagramPacket(buf, buf.length, IP, PORT);
+        byte[] buf = new byte[bufferSize]; // BUFFER_SIZE = data-size + 6Byte (Header)
+        DatagramPacket packet = new DatagramPacket(buf, buf.length, IP, port);
         
-        System.out.println("Receiver listening (IP: " + IP.getHostAddress() + ", port: " + PORT + ")...");
+        System.out.println("Receiver listening (IP: " + IP.getHostAddress() + ", port: " + port + "buffer size" + bufferSize + ")...");
         
         // loop runs until done == false which means the last packet was received (see interpretPacket())
         while (!done) {
@@ -111,10 +118,12 @@ public class UDPReceiver{
     */
     private static boolean interpretPacket(DatagramPacket packet) throws IOException, NoSuchAlgorithmException{
         receiverBuffer = ByteBuffer.wrap(packet.getData());
-        receivedPackets++;
         int seqNr = -1;
-
-        transmissionID = receiverBuffer.getShort(); // get 2 Byte (short) transmission ID
+        short receivedTransmissionID = receiverBuffer.getShort(); // get 2 Byte (short) transmission ID
+        if(receivedPackets > 0 && receivedTransmissionID != transmissionID){
+            return false;
+        }
+        transmissionID = receivedTransmissionID;
         seqNr = receiverBuffer.getInt();    // get 4 Byte (Integer) sequence number 
 
         if (seqNr == 0) { // first packet (containing maximum sequence number and file name)
@@ -126,22 +135,24 @@ public class UDPReceiver{
             } catch (Exception e){  // could result in Exception if charsetName is unknown to Java-String
                 e.printStackTrace();
             }
+            log("Packet " + seqNr + " received");
         } else if (seqNr == maxSeqNr) { // last packet (containing MD5 Checksum)
             byte[] MD5Array = new byte[16];
             receiverBuffer = receiverBuffer.get(MD5Array);  // get MD5 hash and save in byte array
             MD5Hash = bytesToHex(MD5Array); // convert to hex-number as String
 
             outputStream.close();   // now the output-stream can be closed 
+            log("Packet " + seqNr + " received");
 
             writeToFile();  // write data to file (data is written to file after the transmission is complete)
             endTime = new Timestamp(System.currentTimeMillis());
+            log("");
 
             if (checkMD5Sum()) {    // check the MD5 hash
                 System.out.println("MD5 Checksums are equal.");
             } else {
                 System.err.println("MD5 Checksums are different! Files might not be the same.");
             }
-            
             System.out.println();
             System.out.println("Statistics:");
             System.out.println("\t" + receivedPackets + " packets received");
@@ -152,10 +163,18 @@ public class UDPReceiver{
             // normal data packet (containing only data)
             byte[] dataArray = new byte[packet.getLength() - receiverBuffer.position()];    // data byte array of packet size minus current position of ByteBuffer (will 6 Bytes)
             receiverBuffer.get(dataArray);  // get data
+            log("Packet " + seqNr + " received");
             outputStream.write(dataArray);  // write data to output-stream
         }
+        receivedPackets++;
         sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
         return false;
+    }
+
+    private static void log(String text){
+        if (!quiet){
+            System.out.println(text);
+        }
     }
 
     /**
@@ -173,6 +192,7 @@ public class UDPReceiver{
             DatagramPacket packet = new DatagramPacket(messageBuffer.array(), messageBuffer.array().length, transmitterAddress, port);
             
             socket.send(packet);
+            log("ACK for packet " + seqNr + " sent");
 
         } catch (Exception e) {
             System.err.println(e);
