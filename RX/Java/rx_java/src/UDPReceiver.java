@@ -140,10 +140,10 @@ public class UDPReceiver{
             byte[] MD5Array = new byte[16];
             receiverBuffer = receiverBuffer.get(MD5Array);  // get MD5 hash and save in byte array
             MD5Hash = bytesToHex(MD5Array); // convert to hex-number as String
-
+            
             outputStream.close();   // now the output-stream can be closed 
             log("Packet " + seqNr + " received");
-
+            sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
             writeToFile();  // write data to file (data is written to file after the transmission is complete)
             endTime = new Timestamp(System.currentTimeMillis());
             log("");
