@@ -4,6 +4,10 @@ import hashlib
 import sys
 import argparse
 
+def sendAck():
+    response_data = id.to_bytes(2, byteorder='big') + seq_num.to_bytes(4, byteorder='big')
+    sock.sendto(response_data, addr)
+
 if len(sys.argv) > 1:
     if sys.argv[1] == '--help' or sys.argv[1] == '-h':
         print('Options:')
@@ -54,9 +58,7 @@ file_name = re.sub(r'.*/', '', file_nameU)
 if not quiet:
     print(f'Packet 0 (init): id={id}, maxSeqNum={max_seq_num}, fileName={file_name}')
 
-# Send response packet containing transmission ID and sequence number
-response_data = id.to_bytes(2, byteorder='big') + seq_num.to_bytes(4, byteorder='big')
-sock.sendto(response_data, addr)
+sendAck()
 
 # Receive the data packet(s)
 while seq_num < max_seq_num-1:
@@ -69,9 +71,7 @@ while seq_num < max_seq_num-1:
         if not quiet:
             print(f'Packet {seq_num}: id={id}, data={packet_data}')
 
-    # Send response packet containing transmission ID and sequence number
-    response_data = id.to_bytes(2, byteorder='big') + seq_num.to_bytes(4, byteorder='big')
-    sock.sendto(response_data, addr)
+    sendAck()
 
 # Receive the md5 packet
 data, addr = sock.recvfrom(max_pack)
@@ -82,9 +82,7 @@ if id == transmID:
     if not quiet:
         print(f'Packet {seq_num} (md5): id={id}, md5={md5}')
 
-# Send response packet containing transmission ID and sequence number
-response_data = id.to_bytes(2, byteorder='big') + seq_num.to_bytes(4, byteorder='big')
-sock.sendto(response_data, addr)
+sendAck()
 
 if not quiet:
     print('---------------------------------')
