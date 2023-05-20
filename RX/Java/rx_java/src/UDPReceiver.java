@@ -22,50 +22,6 @@ public class UDPReceiver{
     private static final int PORT = 12345;
     private static final String HOST = "127.0.0.1";
 
-    public static void main(String[] args) throws SocketException, UnknownHostException{
-        String host = HOST;
-        int bufferSize = BUFFER_SIZE;
-        int port = PORT;
-        if (args.length > 0) {
-            // Parse the arguments and set the variables accordingly
-            for (int i = 0; i < args.length; i += 2) {
-                String arg = args[i];
-                String value = args[i+1];
-                switch (arg) {
-                    case "--host", "-h":
-                        host = value;
-                        break;
-                    case "--port", "-p":
-                        port = Integer.parseInt(value);
-                        break;
-                    case "--max", "-m":
-                        bufferSize = Integer.parseInt(value);
-                        break;
-                    case "--quiet", "-q":
-                        quiet = true;
-                        break;
-                    case "--help", "-?":
-                        System.out.println("Options:");
-                        System.out.println("--host <host>       Host to send to (default: 127.0.0.1)");
-                        System.out.println("--port <port>       Port to send to (default: 12345)");
-                        System.out.println("--max <size>        Maximum packet size (default: 1472)");
-                        System.out.println("--help              Show this help");
-                        System.exit(1);
-                    default:
-                        System.err.println("Unknown argument: " + arg);
-                        System.exit(1);
-                }
-            }
-        }
-        UDPReceiver.run(host, port, bufferSize);
-    }
-
-    // packet variables
-    private static short transmissionID;
-    private static int maxSeqNr;
-    private static String fileName = null;
-    private static String MD5Hash;
-
     private static DatagramSocket socket;
     private static InetAddress IP;
     private static int receivedPackets = 0; // counter for received packets
@@ -74,6 +30,70 @@ public class UDPReceiver{
     private static ByteArrayOutputStream outputStream = new ByteArrayOutputStream();    // to write packet data to stream
     private static ByteBuffer receiverBuffer;   // simplifies extraction of header and data part in packet (byte array with lots of bitwise shifts could be used as well)
     private static boolean quiet = false;
+    private static boolean verbose = false;
+
+    // packet variables
+    private static short transmissionID;
+    private static int maxSeqNr;
+    private static String fileName = null;
+    private static String MD5Hash;
+
+    public static void main(String[] args) throws SocketException, UnknownHostException{
+        String host = HOST;
+        int bufferSize = BUFFER_SIZE;
+        int port = PORT;
+
+        if (args.length > 0) {
+            // Parse the arguments and set the variables accordingly
+            for (int i = 0; i < args.length; i++) {
+                String arg = args[i];
+                switch (arg) {
+                    case "--host":
+                    case "-h":
+                        host = args[i+1];
+                        i++;
+                        break;
+                    case "--port":
+                    case "-p":
+                        port = Integer.parseInt(args[i+1]);
+                        i++;
+                        break;
+                    case "--max":
+                    case  "-m":
+                        bufferSize = Integer.parseInt(args[i+1]);
+                        i++;
+                        break;
+                    case "--quiet":
+                    case "-q":
+                        quiet = true;
+                        if(verbose){
+                            verbose = false;
+                        }
+                        break;
+                    case "--verbose":
+                    case "-v":
+                        if (!quiet){
+                            verbose = true;
+                        }
+                        break;
+                    case "--help":
+                    case "-?":
+                        System.out.println("Options:");
+                        System.out.println("-h, --host, <host>      Host to send to (default: 127.0.0.1)");
+                        System.out.println("-p, --port <port>       Port to send to (default: 12345)");
+                        System.out.println("-m, --max <size>        Maximum packet size (default: 1472)");
+                        System.out.println("-q, --quiet             Suppress log output (overrides -v)");
+                        System.out.println("-v, --verbose           Verbose log output");
+                        System.out.println("-?, --help              Show this help");
+                        System.exit(0);
+                    default:
+                        System.err.println("Unknown argument: " + arg);
+                        System.exit(1);
+                }
+            }
+        }
+        UDPReceiver.run(host, port, bufferSize);
+    }
 
     /**
     * This method contains a loop that terminates once the last packet is received.
@@ -87,7 +107,7 @@ public class UDPReceiver{
         byte[] buf = new byte[bufferSize]; // BUFFER_SIZE = data-size + 6Byte (Header)
         DatagramPacket packet = new DatagramPacket(buf, buf.length, IP, port);
         
-        System.out.println("Receiver listening (IP: " + IP.getHostAddress() + ", port: " + port + ", buffer size: " + bufferSize + ")...");
+        log("Receiver listening (IP: " + IP.getHostAddress() + ", port: " + port + ", buffer size: " + bufferSize + ")...", false);
         
         // loop runs until done == false which means the last packet was received (see interpretPacket())
         while (!done) {
@@ -135,46 +155,40 @@ public class UDPReceiver{
             } catch (Exception e){  // could result in Exception if charsetName is unknown to Java-String
                 e.printStackTrace();
             }
-            log("Packet " + seqNr + " received");
+            verboseLog("Packet " + seqNr + " received");
         } else if (seqNr == maxSeqNr) { // last packet (containing MD5 Checksum)
             byte[] MD5Array = new byte[16];
             receiverBuffer = receiverBuffer.get(MD5Array);  // get MD5 hash and save in byte array
             MD5Hash = bytesToHex(MD5Array); // convert to hex-number as String
             
             outputStream.close();   // now the output-stream can be closed 
-            log("Packet " + seqNr + " received");
+            verboseLog("Packet " + seqNr + " received");
             sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
             writeToFile();  // write data to file (data is written to file after the transmission is complete)
             endTime = new Timestamp(System.currentTimeMillis());
-            log("");
+            verboseLog("");
 
             if (checkMD5Sum()) {    // check the MD5 hash
-                System.out.println("MD5 Checksums are equal.");
+                log("MD5 Checksums are equal.", false);
             } else {
-                System.err.println("MD5 Checksums are different! Files might not be the same.");
+                log("MD5 Checksums are different! Files might not be the same.", true);
             }
-            System.out.println();
-            System.out.println("Statistics:");
-            System.out.println("\t" + receivedPackets + " packets received");
-            System.out.println("\t" + (endTime.getTime() - startTime.getTime()) + "ms time");
+            log(" ",false);
+            log("Statistics:", false);
+            log("\t" + receivedPackets + " packets received", false);
+            log("\t" + (endTime.getTime() - startTime.getTime()) + "ms time", false);
             //end of transmission
             return true;
         } else {
             // normal data packet (containing only data)
             byte[] dataArray = new byte[packet.getLength() - receiverBuffer.position()];    // data byte array of packet size minus current position of ByteBuffer (will 6 Bytes)
             receiverBuffer.get(dataArray);  // get data
-            log("Packet " + seqNr + " received");
+            verboseLog("Packet " + seqNr + " received");
             outputStream.write(dataArray);  // write data to output-stream
         }
         receivedPackets++;
         sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
         return false;
-    }
-
-    private static void log(String text){
-        if (!quiet){
-            System.out.println(text);
-        }
     }
 
     /**
@@ -192,7 +206,7 @@ public class UDPReceiver{
             DatagramPacket packet = new DatagramPacket(messageBuffer.array(), messageBuffer.array().length, transmitterAddress, port);
             
             socket.send(packet);
-            log("ACK for packet " + seqNr + " sent");
+            verboseLog("ACK for packet " + seqNr + " sent");
 
         } catch (Exception e) {
             System.err.println(e);
@@ -232,5 +246,20 @@ public class UDPReceiver{
         String checksum = new BigInteger(1, hash).toString(16);
 
         return checksum.equals(MD5Hash);
+    }
+
+    private static void verboseLog(String text){
+        if (verbose){
+            System.out.println(text);
+        }
+    }
+
+    private static void log(String text, boolean error){
+        if (!quiet) {
+            if (error)
+                System.err.println(text);
+            else 
+                System.out.println(text);
+        }
     }
 }
