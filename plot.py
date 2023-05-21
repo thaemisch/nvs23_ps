@@ -112,7 +112,6 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
             plt.legend()
             
             step = math.ceil(max_seq_num/20)
-            print(step, max_seq_num)
             # Set the y-axis ticks to natural numbers
             plt.yticks(range(0, max_seq_num, step), range(0, max_seq_num, step))
 
