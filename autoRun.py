@@ -15,8 +15,7 @@ def progressBar(i, step):
     remaining_length = bar_length - filled_length 
     filled_bar = '█' * filled_length
     empty_bar = '░' * remaining_length 
-    print(f'\r|{filled_bar}{empty_bar}| {i} / {amount} ({progress:.1%})', end='')
-
+    print(f'\r{tx} -> {rx}: |{filled_bar}{empty_bar}| {i} / {amount} ({progress:.1%})', end='')
 # Create an argument parser
 parser = argparse.ArgumentParser(description='Process some command line arguments.')
 
@@ -25,7 +24,7 @@ parser.add_argument('--tx', type=str)
 parser.add_argument('--rx', type=str)
 parser.add_argument('--max', type=str, default="1500")
 parser.add_argument('--amount', type=int, default=10)
-parser.add_argument('--timeout', type=int, default=5)
+parser.add_argument('--timeout', type=int, default=10)
 parser.add_argument('--file', type=str, default="test.txt")
 
 # Parse the arguments
@@ -34,6 +33,8 @@ args = parser.parse_args()
 # Set the variables
 tx = args.tx.lower()
 rx = args.rx.lower()
+if rx == "java":
+    rx = " java "
 max_pack = args.max
 amount = args.amount
 timeout = args.timeout
@@ -58,9 +59,9 @@ while i < amount and totalTimeouts < 10:
     # Execute the RX script
     if rx == "python":
         rx_proc = subprocess.Popen(['python', python_path, '--max', max_pack, '--quiet'])
-    elif rx == "java":
+    elif rx == " java ":
         os.system("javac " + java_path + ".java")
-        rx_proc = subprocess.Popen(['java', '-classpath', 'RX/Java/rx_java/src', 'UDPReceiver', '--max', max_pack, '--quiet', 'true'])
+        rx_proc = subprocess.Popen(['java', '-classpath', 'RX/Java/rx_java/src', 'UDPReceiver', '--max', max_pack, '--quiet'])
     else:
         print("Invalid RX name entered")
         exit()
@@ -71,7 +72,7 @@ while i < amount and totalTimeouts < 10:
 
     # Execute the TX script
     if tx == "dart":
-        tx_proc = subprocess.Popen(['dart', 'run', dart_path, '--max', max_pack, '--quiet' , '--file', file_path])
+        tx_proc = subprocess.Popen(['dart', 'run', dart_path, '--max', max_pack, '--quiet', '--file', file_path])
     elif tx == "node":
         tx_proc = subprocess.Popen(['node', node_path, '--max', max_pack, '--quiet' , '--file', file_path])
     else:
