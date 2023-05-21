@@ -1,8 +1,8 @@
-import pyshark
 import os
 import subprocess
 import threading
 import argparse
+import time
 import plot
 import createFile
 import math
@@ -39,30 +39,41 @@ tx_list = ["Dart", "Node"] # List of all senders
 rx_list = ["Java", "Python"] # List of all receivers
 pktlen_list = [100, 1400, 60_000] # List of all packet lengths
 amount = 10 # Amount of packets to send
-capture_timeout = 5 # Timeout for the capture
+capture_timeout = 10 # Timeout for the capture
+interface = "Adapter for loopback traffic capture" # Interface to capture on
+capture_filter = "udp port 12345" # Filter for the capture
 
 for tx in tx_list:
     for rx in rx_list:
         for pktlen in pktlen_list:
             timeout = (1+ math.ceil(size_in_bytes / pktlen)* 0.001) *amount + 5
-            print(f"Timeout: {timeout}")
+            # print(f"Timeout: {timeout}")
             foldername = f"{messungs_folder}/{tx}_{rx}"
             filename = f"raw{pktlen}.pcap"
             os.makedirs(foldername, exist_ok=True) # Create directory if it doesn't exist
-            capture = pyshark.LiveCapture(interface='Adapter for loopback traffic capture', output_file=f"{foldername}/{filename}")
+            # capture = pyshark.LiveCapture(interface='Adapter for loopback traffic capture', output_file=f"{foldername}/{filename}")
             # capture.sniff(timeout=10) # Capture network traffic for 10 seconds
-            # os.system(f"python other_script.py {foldername}/{filename}") # Run another script
-            capture_thread = threading.Thread(target=capture.sniff, kwargs={'timeout': timeout}) # Create Pyshark capture thread
-            capture_thread.start() # Start Pyshark capture
+            command = ['tshark', '-i', interface, '-f', capture_filter, '-w', f'{foldername}/{filename}']
+            capture = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+            time.sleep(1)
+
+            # capture_thread = threading.Thread(target=capture.sniff, kwargs={'timeout': timeout}) # Create Pyshark capture thread
+            # capture_thread.start() # Start Pyshark capture
+
             proc = subprocess.Popen(['python', 'autoRun.py', "--tx", tx, "--rx", rx, "--max", str(pktlen), "--amount", str(amount), "--timeout", str(capture_timeout), "--file", file])
             proc.wait() # Wait for other script to complete
+            
+            time.sleep(1)
+            # Stop the capture
+            capture.terminate()
             # See if thread is still running
-            if not capture_thread.is_alive():
-                print("Capture thread ended to early")
-            print("Waiting for capture to end...")
-            capture_thread.join() # Wait for Pyshark capture to complete
-            capture.close() # Stop Pyshark capture
-            print("\f") # Clear the console
+            #if not capture_thread.is_alive():
+            #    print("Capture thread ended to early")
+            #print("Waiting for capture to end...")
+            #capture_thread.join() # Wait for Pyshark capture to complete
+            #capture.close() # Stop Pyshark capture
+            #print("\f") # Clear the console
 
 # Plot the results
 plot.plot(messungs_folder, size_in_bytes)
