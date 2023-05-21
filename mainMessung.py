@@ -76,7 +76,7 @@ for tx in tx_list:
             #print("\f") # Clear the console
 
 # Plot the results
-plot.plot(messungs_folder, size_in_bytes)
+plot.plot(messungs_folder, size_in_bytes, True)
 
 # Delete the file
 try:
