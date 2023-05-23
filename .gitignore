@@ -10,3 +10,6 @@ RX/Python/1400.file
 RX/Python/60000.file
 *test*
 *copy*
+*tmp*
+*.class
+__pycache__
