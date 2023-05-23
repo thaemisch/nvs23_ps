@@ -1,8 +1,6 @@
-import io
 import time
 import pyshark
 import matplotlib.pyplot as plt
-import asyncio
 import math
 import os
 
@@ -43,8 +41,7 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
                 end = time.time() - start
                 print(f" in {end:.2f} seconds")
                 continue
-
-            print('Plotting ' + folder + '/raw' + str(number) + '.pcap', end='')
+            print(('Plotting ' + folder + '/raw' + str(number) + '.pcap' ).ljust(len("Plotting /raw.pcap") + len(filePath) + len(max(folders)) + 6), end='')
             # Open the capture file and extract the packets
             capture = pyshark.FileCapture(folder + '/raw' + str(number) + '.pcap')
 
