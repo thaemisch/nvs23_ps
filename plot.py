@@ -1,4 +1,5 @@
 import io
+import time
 import pyshark
 import matplotlib.pyplot as plt
 import asyncio
@@ -7,6 +8,12 @@ import os
 
 
 def plot(filePath, fileSize = 90_000, with_ack = False):
+    # test if the filePath exists
+    if(filePath != ''):
+        if not os.path.exists(filePath):
+            print('File ' + filePath + ' does not exist')
+            return
+
     # fileSize in Bytes
     folders = ['Dart_Java', 'Dart_Python', 'Node_Java', 'Node_Python'] 
     numbers = [100, 1_400, 60_000]
@@ -15,9 +22,10 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
         if(filePath != ''):
             folder = filePath + '/' + directFolder
         for number in numbers:
+            start = time.time()
             # Check if the capture file exists
             if not os.path.exists(folder + '/raw' + str(number) + '.pcap'):
-                print('File ' + folder + '/raw' + str(number) + '.pcap' + ' does not exist, generating empty plot anyway')
+                print('File ' + folder + '/raw' + str(number) + '.pcap' + ' does not exist, generating empty plot anyway', end='')
                 # Set the axis labels and legend
                 plt.xlabel('Time (ms)')
                 plt.ylabel('Sequence number')
@@ -32,9 +40,11 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
 
                 # Generate the .md part
                 mdParts.append(f" ![{number}_{directFolder}]({directFolder}/plot{number}.png) 0 MB/s")
+                end = time.time() - start
+                print(f" in {end:.2f} seconds")
                 continue
 
-            print('Plotting ' + folder + '/raw' + str(number) + '.pcap')
+            print('Plotting ' + folder + '/raw' + str(number) + '.pcap', end='')
             # Open the capture file and extract the packets
             capture = pyshark.FileCapture(folder + '/raw' + str(number) + '.pcap')
 
@@ -51,8 +61,8 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
                 # if not ack is false and 36 is true
                 if not (with_ack == False and int(packet.length) == 38):
                     transmissions[seq]['packets'].append(packet)
-                    byte_array = bytes.fromhex(packet.udp.payload.replace(':', '')) # Convert the hex string to a byte array
-                    seq_num = int.from_bytes(byte_array[2:6], byteorder='big') # Convert the byte array to an integer
+                    byte_array = bytes.fromhex(packet.udp.payload[6:17].replace(':', '')) # Convert the hex string to a byte array
+                    seq_num = int.from_bytes(byte_array, byteorder='big') # Convert the byte array to an integer
                     transmissions[seq]['seq_num'].append(seq_num)
 
                 #if(int(packet.length) != 38): # Ignore ACKs for sequence numbers
@@ -121,6 +131,8 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
 
             # Generate the .md part
             mdParts.append(f" ![{number}_{directFolder}]({directFolder}/plot{number}.png) {fileSize/relative_times[1]*1000 /1000/1000:.1f} - {fileSize/relative_times[0]*1000 /1000/1000:.1f} MB/s")
+            end = time.time() - start
+            print(f" in {end:.2f} seconds")
 
     # Finish the .md file
     print("Generating messungen.md")
@@ -138,4 +150,4 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
 # plt.show()
 
 if __name__ == '__main__':
-    plot('messungen_test', 1_000_000, True)
+    plot('messung_V2_1KB', 1_000, True)
