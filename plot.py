@@ -60,12 +60,6 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
                     transmissions[seq]['packets'].append(packet)
                     byte_array = bytes.fromhex(packet.udp.payload[6:17].replace(':', '')) # Convert the hex string to a byte array
                     seq_num = int.from_bytes(byte_array, byteorder='big') # Convert the byte array to an integer
-                    transmissions[seq]['seq_num'].append(seq_num)
-
-                #if(int(packet.length) != 38): # Ignore ACKs for sequence numbers
-                #    transmissions[seq]['seq_num'] += 1
-                #if(int(packet.length) == 38 and with_ack): # Ignore ACKs
-                #    transmissions[seq]['packets'].append(packet)
 
             capture.close()
             # Get the maximum packet number across all transmissions
