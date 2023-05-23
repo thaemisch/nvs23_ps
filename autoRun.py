@@ -114,4 +114,4 @@ print("\r" + " " * 100 + "\r", end="")
 # End Timer
 end = time.time()
 # Print the results
-print(f"\r{tx} -> {rx}: Mit {max_pack} Packetsize ({amount} Versuche): {successes} Erfolge, {totalTimeouts} Timeouts. In {end - start:.2f} Sekunden\n", end="")
+print(f"\r{tx} -> {rx}: Mit {str(max_pack).ljust(5)} Packetsize ({amount} Versuche): {successes} Erfolge, {totalTimeouts} Timeouts. In {end - start:5.2f} Sekunden\n", end="")
