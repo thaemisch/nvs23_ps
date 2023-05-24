@@ -3,6 +3,7 @@ import socket
 import hashlib
 import sys
 import argparse
+import io
 
 def sendAck():
     response_data = id.to_bytes(2, byteorder='big') + seq_num.to_bytes(4, byteorder='big')
@@ -38,7 +39,7 @@ quiet = args.quiet
 
 # Define the variables
 seq_num = 0
-final_data = b''
+data_output = io.BytesIO()
 
 # Create a UDP socket and bind it to the host and port
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -67,7 +68,7 @@ while seq_num < max_seq_num-1:
     seq_num = int.from_bytes(data[2:6], byteorder='big')
     if id == transmID:
         packet_data = (data[6:])
-        final_data += packet_data
+        data_output.write(packet_data)
         if not quiet:
             print(f'Packet {seq_num}: id={id}, data={packet_data}')
 
@@ -87,16 +88,18 @@ if id == transmID:
 if not quiet:
     print('---------------------------------')
 
+final_data = data_output.getvalue()
+
 # Verify the MD5
 final_data_md5 = hashlib.md5(final_data).hexdigest()
 
 if md5 == final_data_md5:
     if not quiet:
         print(u'\u2714''  MD5 matches')
-    with open(file_name, 'wb') as f:
-        f.write(final_data)
-    if not quiet:
-        print(u'\u2714'f'  File {file_name} written')
+    # with open(file_name, 'wb') as f:
+    #     f.write(final_data)
+    # if not quiet:
+    #     print(u'\u2714'f'  File {file_name} written')
 else:
     if not quiet:
         print(u'\u274C'' MD5 does not match: \n 'f' {md5} != {final_data_md5}')
