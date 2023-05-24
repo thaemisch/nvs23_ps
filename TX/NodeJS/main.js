@@ -165,6 +165,7 @@ async function sendFile(filename) {
   const maxSeqNum = Math.ceil(fileSize / (MAX_PACKET_SIZE-6) + 1);
   const fileName = filename.split('/').pop().split('\\').pop();
   const data = fs.readFileSync(filename);
+  const md5sum = crypto.createHash('md5').update(data).digest('hex');
 
   // Senden des ersten Pakets
   await sendfirstPacket(id, maxSeqNum, fileName);
@@ -177,7 +178,6 @@ async function sendFile(filename) {
   }
 
   // Senden des letzten Pakets mit MD5-Hash
-  const md5sum = crypto.createHash('md5').update(data).digest('hex');
   sendLastPacket(id , maxSeqNum, md5sum);
   await waitForAckPacket(id, maxSeqNum);
   socket.close();
