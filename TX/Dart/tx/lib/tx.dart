@@ -104,12 +104,6 @@ Future<void> waitForAck(RawDatagramSocket socket, int port, int seqNr, int id,
 }
 
 void _processAckPacket(Uint8List data, int seqNr, int id, bool quiet) {
-  if (data.length != 6) {
-    printiffalse(
-        'ACK Paket hat falsche Größe => SOLL: 6 IST: ${data.length}', quiet);
-    return;
-  }
-
   final transmissionId = data.buffer.asByteData().getUint16(0);
   final sequenceNumber = data.buffer.asByteData().getUint32(2);
   if (transmissionId != id) {
