@@ -11,7 +11,7 @@ start = time.time()
 parser = argparse.ArgumentParser(description='Process some command line arguments.')
 
 # Add arguments
-parser.add_argument('--folder', type=str, default="messungen_test")
+parser.add_argument('--folder', type=str, default="messungen/test/1MB")
 parser.add_argument('--size', type=str, default="1MB")
 parser.add_argument('--file', type=str, default="test.txt")
 parser.add_argument('--timeout', type=int, default=10)
