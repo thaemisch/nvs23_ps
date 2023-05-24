@@ -50,6 +50,7 @@ java_path = "RX/Java/rx_java/src/UDPReceiver"
 
 totalTimeouts = 0
 successes = 0
+rx_sleep = 0.1
 
 # Execute the TX/RX scripts
 i = 0
@@ -66,7 +67,7 @@ while i < amount and totalTimeouts < 10:
         print("Invalid RX name entered")
         exit()
     # waiting for the RX script to start, 
-    time.sleep(0.1) # increase this if the RX script do weard stuff
+    time.sleep(rx_sleep) # increase this if the RX script do weard stuff
     
     progressBar(i, 2*i+1)
 
@@ -114,4 +115,4 @@ print("\r" + " " * 100 + "\r", end="")
 # End Timer
 end = time.time()
 # Print the results
-print(f"\r{tx} -> {rx}: Mit {str(max_pack).ljust(5)} Packetsize ({amount} Versuche): {successes} Erfolge, {totalTimeouts} Timeouts. In {end - start:5.2f} Sekunden\n", end="")
+print(f"\r{tx} -> {rx}: Mit {str(max_pack).ljust(5)} Packetsize ({amount} Versuche): {successes} Erfolge, {totalTimeouts} Timeouts. In {end - start:5.2f} Sekunden ({(end - start) / amount - rx_sleep:.2f} s/V)")

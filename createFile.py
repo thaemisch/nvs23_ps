@@ -32,4 +32,4 @@ def convert_size_to_bytes(size):
 
 
 if __name__ == '__main__':
-    create_random_file('test.txt', 0.88)
+    create_random_file('test.txt', "10MB")
