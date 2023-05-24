@@ -1,11 +1,9 @@
 import os
 import subprocess
-import threading
 import argparse
 import time
 import plot
 import createFile
-import math
 
 # Create an argument parser
 parser = argparse.ArgumentParser(description='Process some command line arguments.')

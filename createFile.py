@@ -1,6 +1,5 @@
 import random
 import string
-import math
 
 def generate_random_string(length):
     letters = string.ascii_letters + string.digits + string.punctuation
