@@ -131,7 +131,7 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
         mdParts.append(" ![]() 0 MB/s")
 
     # Finish the .md file
-    print("Generating messungen.md")
+    print("Generating README.md")
     md = "# Messungen\n\n| TX/RX | &nbsp;&nbsp;&nbsp;Java&nbsp;&nbsp;&nbsp; | Python |\n:-------------------------:|:-------------------------:|:-------------------------:\n"
     md += "| Dart |" + mdParts[0]+ mdParts[1] + mdParts[2] + " |"
     md += mdParts[3] + mdParts[4] + mdParts[5] + " |\n"
@@ -139,7 +139,7 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
     md += mdParts[9] + mdParts[10] + mdParts[11] + " |\n"
 
     # Write the .md file
-    with open(filePath + '/messungen.md', 'w') as f:
+    with open(filePath + '/README.md', 'w') as f:
         f.write(md)
     f.close()
 
