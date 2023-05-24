@@ -5,6 +5,8 @@ import time
 import plot
 import createFile
 
+start = time.time()
+
 # Create an argument parser
 parser = argparse.ArgumentParser(description='Process some command line arguments.')
 
@@ -71,3 +73,7 @@ try:
     os.remove(file)
 except:
     pass
+
+# end time
+end = time.time()
+print(f"\nTotal time elapsed: {end - start:.2f}s")

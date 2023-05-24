@@ -122,9 +122,13 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
             plt.close()
 
             # Generate the .md part
-            mdParts.append(f" ![{number}_{directFolder}]({directFolder}/plot{number}.png) {fileSize/relative_times[1]*1000 /1000/1000:.1f} - {fileSize/relative_times[0]*1000 /1000/1000:.1f} MB/s")
+            mdParts.append(f" ![{number}_{directFolder}]({directFolder}/plot{number}.png) {fileSize/relative_times[1]*1000 /1000/1000 *8:.1f} - {fileSize/relative_times[0]*1000 /1000/1000 *8:.1f} Mb/s")
             end = time.time() - start
             print(f" in {end:.2f} seconds")
+
+    # extend the mdParts with empty plots
+    while(len(mdParts) < 12):
+        mdParts.append(" ![]() 0 MB/s")
 
     # Finish the .md file
     print("Generating messungen.md")
@@ -142,4 +146,4 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
 # plt.show()
 
 if __name__ == '__main__':
-    plot('messung_V2_1KB', 1_000, True)
+    plot('messung_test_10MB', 10_000_000, False)
