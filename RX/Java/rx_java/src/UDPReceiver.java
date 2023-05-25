@@ -112,11 +112,7 @@ public class UDPReceiver{
         // loop runs until done == false which means the last packet was received (see interpretPacket())
         while (!done) {
             try {
-                try {
-                    socket.receive(packet);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                socket.receive(packet);
                 done = interpretPacket(packet);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
