@@ -84,6 +84,7 @@ Future<void> waitForAck(RawDatagramSocket socket, int port, int seqNr, int id,
     Stream<RawSocketEvent> stream, bool quiet) async {
   final completer = Completer<void>(); // Completer to signal method completion
   late StreamSubscription<RawSocketEvent> sub;
+  bool valid = false;
   // Listen for data events on the socket
   sub = stream.listen((event) async {
     if (event == RawSocketEvent.read) {
@@ -93,9 +94,11 @@ Future<void> waitForAck(RawDatagramSocket socket, int port, int seqNr, int id,
       } else {
         final data = datagram.data;
         if (data.length == 6) {
-          _processAckPacket(data, seqNr, id, quiet);
-          await sub.cancel();
-          completer.complete();
+          valid = _processAckPacket(data, seqNr, id, quiet);
+          if (valid) {
+            await sub.cancel();
+            completer.complete();
+          }
         }
       }
     }
@@ -103,30 +106,25 @@ Future<void> waitForAck(RawDatagramSocket socket, int port, int seqNr, int id,
   await completer.future;
 }
 
-void _processAckPacket(Uint8List data, int seqNr, int id, bool quiet) {
-  if (data.length != 6) {
-    printiffalse(
-        'ACK Paket hat falsche Größe => SOLL: 6 IST: ${data.length}', quiet);
-    return;
-  }
-
+bool _processAckPacket(Uint8List data, int seqNr, int id, bool quiet) {
   final transmissionId = data.buffer.asByteData().getUint16(0);
   final sequenceNumber = data.buffer.asByteData().getUint32(2);
   if (transmissionId != id) {
     printiffalse(
         'ACK Paket mit falscher Transmission ID erhalten => SOLL: $id IST: $transmissionId',
         quiet);
-    return;
+    return false;
   }
   if (sequenceNumber != seqNr) {
     printiffalse(
         'ACK Paket mit falscher Sequenznummer erhalten => SOLL: $seqNr IST: $sequenceNumber',
         quiet);
-    return;
+    return false;
   } else {
     printiffalse(
         'ACK Paket mit Transmission ID: $transmissionId und Sequenznummer: $sequenceNumber erhalten\n',
         quiet);
+    return true;
   }
 }
 
@@ -165,14 +163,19 @@ void main(List<String> args) async {
   bool quiet = results['quiet'] as bool;
 
   // ------------------- initialize Variables -------------------
-  final socket = await RawDatagramSocket.bind(InternetAddress(HOST), 0);
+  final socket =
+      await RawDatagramSocket.bind(InternetAddress(HOST), 0 /*PORT*/);
   final stream = socket.asBroadcastStream();
-  final id = DateTime.now().millisecondsSinceEpoch % 65536;
+  final id = Random().nextInt(65535); // Random transmission ID (0-65535)
   final fileBytes = await File(file).readAsBytes(); // File as bytes
   final maxSeqNum = (fileBytes.length / (MAX_PACKET_SIZE - 6)).ceil() + 1;
   final md5Hash = md5.convert(fileBytes).bytes; // MD5 hash of the file
-  final RegExpMatch? fileameForPrint =
-      RegExp(r"(?<=/)[^/]*$").firstMatch(file); // Filename after last slash
+  final RegExpMatch? fileameForPrint = RegExp(r"(?<=/)[^/]*$").firstMatch(file
+      .replaceAll("\\\\", "/")
+      .replaceAll("\\", "/")); // Filename after last slash
+  file = fileameForPrint != null
+      ? file.substring(fileameForPrint.start, fileameForPrint.end)
+      : file;
 
   // ------------------ Send the file ------------------
   printiffalse(
@@ -180,14 +183,7 @@ void main(List<String> args) async {
       quiet);
 
   await sendFirstPacket(
-      socket,
-      id,
-      maxSeqNum,
-      fileameForPrint != null
-          ? file.substring(fileameForPrint.start, fileameForPrint.end)
-          : file,
-      stream,
-      quiet); // Send the first packet
+      socket, id, maxSeqNum, file, stream, quiet); // Send the first packet
   for (int seqNum = 1; seqNum < maxSeqNum; seqNum++) {
     // Send the data packets
     final start = (seqNum - 1) * (MAX_PACKET_SIZE - 6);
