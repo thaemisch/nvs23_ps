@@ -37,9 +37,14 @@ PORT = args.port
 max_pack = args.max
 quiet = args.quiet
 
+####
+#
+####
+
 # Define the variables
 seq_num = 0
 data_output = io.BytesIO()
+md5received = False
 
 # Create a UDP socket and bind it to the host and port
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -75,15 +80,19 @@ while seq_num < max_seq_num-1:
         sendAck()
 
 # Receive the md5 packet
-data, addr = sock.recvfrom(max_pack)
-id = int.from_bytes(data[0:2], byteorder='big')
-seq_num = int.from_bytes(data[2:6], byteorder='big')
-if id == transmID:
-    md5 = data[6:22].hex()
-    if not quiet:
-        print(f'Packet {seq_num} (md5): id={id}, md5={md5}')
+while md5received == False:
+    data, addr = sock.recvfrom(max_pack)
+    id = int.from_bytes(data[0:2], byteorder='big')
+    seq_num = int.from_bytes(data[2:6], byteorder='big')
+    if id == transmID:
+        md5 = data[6:22].hex()
+        md5received = True
+        if not quiet:
+            print(f'Packet {seq_num} (md5): id={id}, md5={md5}')
 
-    sendAck()
+        sendAck()
+    else:
+        md5received = False
 
 if not quiet:
     print('---------------------------------')
