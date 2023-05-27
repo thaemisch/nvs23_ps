@@ -45,6 +45,7 @@ quiet = args.quiet
 seq_num = 0
 data_output = io.BytesIO()
 md5received = False
+md5 = ""
 
 # Create a UDP socket and bind it to the host and port
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
