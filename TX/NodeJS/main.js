@@ -9,6 +9,9 @@ let MAX_PACKET_SIZE = 1500 - 20 - 8; // Maximale Größe eines UDP-Pakets is 655
 let FILE = 'test.txt'; // Datei, die übertragen werden 
 let quiet = false; // Flag, ob die Logausgabe unterdrückt werden soll
 let verbose = false; // Flag, ob die Logausgabe erweitert werden soll
+let version =  2; // Versionsnummer
+let sliding_window_n = 10; //
+
 let sendStats = [0, 0]; // Statistiken über die gesendeten Pakete
 
 // Entfernen der ersten beiden Argumente (node und main.js)
@@ -51,6 +54,13 @@ for (let i = 0; i < args.length; i++) {
     case '-v':
       verbose = true;
       break;
+    case '--version':
+    case '-v':
+      version = args[++i];
+      break;
+    case '--sliding-window':
+    case '-n':
+      sliding_window_n = args[++i];
     case '--help':
     case '-?':
       printHelp();
@@ -138,6 +148,10 @@ function sendLastPacket(id, seqNum, md5) {
 
 
 async function waitForAckPacket(transmissionId, sequenceNumber) {
+  if(version == 1) {
+    // no acks
+    return;
+  }
   verboseLog(`Warte auf Bestätigung für Paket ${sequenceNumber}`);
   return new Promise((resolve) => {
     function messageHandler(msg) {
@@ -196,6 +210,8 @@ function printHelp() {
   console.log('  -h, --host, <host>      Host to send to (default: 127.0.0.1)');
   console.log('  -p, --port <port>       Port to send to (default: 12345)');
   console.log('  -m, --max <size>        Maximum packet size (default: 1472)');
+  console.log('  -v, --version           TX Version to use (default: 2)');
+  console.log('  -n, --sliding-window    Sliding Windows size (Only applicable if version = 3, default 10)')
   console.log('  -f, --file <filename>   File to send (default: test.txt)');
   console.log('  -q, --quiet             Suppress log output (overrides -v)');
   console.log('  -v, --verbose           Verbose log output');
