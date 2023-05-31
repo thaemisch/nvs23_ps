@@ -19,8 +19,8 @@ const Duration INTERVAL =
     Duration(milliseconds: 1); // the interval between tries
 
 Future<void> sendFirstPacket(RawDatagramSocket socket, int id, int maxSeqNum,
-    String fileName, Stream<RawSocketEvent> stream,
-    [quiet = false]) async {
+    String fileName, Stream<RawSocketEvent> stream, quiet,
+    {version = 2}) async {
   final fileNameBytes = utf8.encode(fileName);
   final buffer = Uint8List(10 + fileNameBytes.length);
   ByteData.view(buffer.buffer)
@@ -48,12 +48,12 @@ Future<void> sendFirstPacket(RawDatagramSocket socket, int id, int maxSeqNum,
   } else {
     printiffalse('Paket 0 (init) erfolgreich gesendet', quiet);
   }
-  await waitForAck(socket, PORT, 0, id, stream, quiet);
+  if (version == 2) await waitForAck(socket, PORT, 0, id, stream, quiet);
 }
 
 Future<void> sendPacket(RawDatagramSocket socket, int id, int seqNum,
     Uint8List data, Stream<RawSocketEvent> stream, bool quiet,
-    [bool md5 = false]) async {
+    {bool md5 = false, version = 2}) async {
   final buffer = Uint8List(6 + data.length);
   ByteData.view(buffer.buffer)
     ..setUint16(0, id)
@@ -76,7 +76,7 @@ Future<void> sendPacket(RawDatagramSocket socket, int id, int seqNum,
     printpaketstatus(seqNum, md5, quiet, sent: false);
   } else {
     printpaketstatus(seqNum, md5, quiet, sent: true);
-    await waitForAck(socket, PORT, seqNum, id, stream, quiet);
+    if (version == 2) await waitForAck(socket, PORT, seqNum, id, stream, quiet);
   }
 }
 
@@ -154,12 +154,14 @@ void main(List<String> args) async {
   parser.addOption('port', abbr: 'p', defaultsTo: PORT.toString());
   parser.addOption('max', abbr: 'm', defaultsTo: MAX_PACKET_SIZE.toString());
   parser.addOption('file', abbr: 'f', defaultsTo: file);
+  parser.addOption('version', abbr: 'v', defaultsTo: '2');
   parser.addFlag('quiet', abbr: 'q', defaultsTo: false);
   var results = parser.parse(args);
   HOST = results['host'] as String;
   PORT = int.parse(results['port'] as String);
   MAX_PACKET_SIZE = int.parse(results['max'] as String);
   file = (results['file'] as String).replaceAll('\\', '/');
+  int VERSION = int.parse(results['version'] as String);
   bool quiet = results['quiet'] as bool;
 
   // ------------------- initialize Variables -------------------
@@ -182,18 +184,19 @@ void main(List<String> args) async {
       '\n-------------------------- Sending file: $file with Transmission ID: $id --------------------------\n',
       quiet);
 
-  await sendFirstPacket(
-      socket, id, maxSeqNum, file, stream, quiet); // Send the first packet
+  await sendFirstPacket(socket, id, maxSeqNum, file, stream, quiet,
+      version: VERSION); // Send the first packet
   for (int seqNum = 1; seqNum < maxSeqNum; seqNum++) {
     // Send the data packets
     final start = (seqNum - 1) * (MAX_PACKET_SIZE - 6);
     final end = min(seqNum * (MAX_PACKET_SIZE - 6), fileBytes.length);
     final data = fileBytes.sublist(start, end);
-    await sendPacket(socket, id, seqNum, data, stream, quiet);
+    await sendPacket(socket, id, seqNum, data, stream, quiet, version: VERSION);
   }
   // Send the MD5 hash as the last packet
   final md5Packet = Uint8List.fromList(md5Hash);
-  await sendPacket(socket, id, maxSeqNum, md5Packet, stream, quiet, true);
+  await sendPacket(socket, id, maxSeqNum, md5Packet, stream, quiet,
+      md5: true, version: VERSION);
 
   printiffalse(
       '-------------------------- File sent --------------------------\n',
