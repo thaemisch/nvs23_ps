@@ -146,4 +146,4 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
 # plt.show()
 
 if __name__ == '__main__':
-    plot('messung_test_10MB', 10_000_000, False)
+    plot('messungen/test/1MB', 1_000_000, False)
