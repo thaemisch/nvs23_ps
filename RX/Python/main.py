@@ -68,16 +68,41 @@ if not quiet:
 sendAck()
 
 # Receive the data packet(s)
-while seq_num < max_seq_num-1:
+window_size = 5
+window_start = 1
+window_end = window_start + window_size - 1
+received_packets = [False] * max_seq_num
+while True:
     data, addr = sock.recvfrom(max_pack)
     id = int.from_bytes(data[0:2], byteorder='big')
     seq_num = int.from_bytes(data[2:6], byteorder='big')
-    if id == transmID:
+    if id == transmID and seq_num >= window_start and seq_num <= window_end:
         packet_data = (data[6:])
         data_output.write(packet_data)
-        if not quiet:
-            print(f'Packet {seq_num}: id={id}, data={packet_data}')
-
+        received_packets[seq_num] = True
+        if seq_num == window_end:
+            # Check if all packets in the window have been received
+            all_received = True
+            for i in range(window_start, window_end+1):
+                if not received_packets[i]:
+                    all_received = False
+                    break
+            if all_received:
+                # Send cumulative ACK
+                sendAck()
+                # Move the window
+                window_start += window_size
+                window_end += window_size
+                if window_end >= max_seq_num:
+                    window_end = max_seq_num - 1
+                # Check for any missing packets
+                for i in range(window_start, window_end+1):
+                    if not received_packets[i]:
+                        # Send duplicate ACK
+                        sendAck()
+                        break
+    elif id == transmID:
+        # Send duplicate ACK
         sendAck()
 
 # Receive the md5 packet
