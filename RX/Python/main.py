@@ -15,6 +15,7 @@ if len(sys.argv) > 1:
         print('  --host <host>       Host to send to (default: 127.0.0.1)')
         print('  --port <port>       Port to send to (default: 12345)')
         print('  --max <size>        Maximum packet size (default: 1500)')
+        print('  --window <size>     Window size (default: 5)')
         print('  --quiet             Do not print anything to the terminal')
         print('  --help              Show this help')
         sys.exit(0)
@@ -26,6 +27,7 @@ parser = argparse.ArgumentParser(description='Process some command line argument
 parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to send to (default: 127.0.0.1)')
 parser.add_argument('--port', type=int, default=12345, help='Port to send to (default: 12345)')
 parser.add_argument('--max', type=int, default=1500, help='Maximum packet size (default: 1500)')
+parser.add_argument('--window', type=int, default=10, help='Window size (default: 5)')
 parser.add_argument('--quiet', action='store_true', help='Do not print anything to the terminal')
 
 # Parse the arguments
@@ -36,6 +38,7 @@ HOST = args.host
 PORT = args.port
 max_pack = args.max
 quiet = args.quiet
+window_size = args.window
 
 ####
 #
@@ -68,7 +71,6 @@ if not quiet:
 sendAck()
 
 # Receive the data packet(s)
-window_size = 5
 window_start = 1
 window_end = window_start + window_size - 1
 received_packets = [False] * max_seq_num
