@@ -193,6 +193,22 @@ async function waitForAckPacket(transmissionId, sequenceNumber) {
   }
 }
 
+function waitForAckPacket(transmissionId) {
+  return new Promise((resolve) => {
+    function messageHandler(msg) {
+      const receivedTransmissionId = msg.readUInt16BE(0);
+      const receivedSequenceNumber = msg.readUInt32BE(2);
+      if (receivedTransmissionId === transmissionId) {
+        socket.off('message', messageHandler);
+        verboseLog(`ACK für ${receivedSequenceNumber} erhalten`);
+        resolve(receivedSequenceNumber);
+      }
+    }
+
+    socket.on('message', messageHandler);
+  });
+}
+
 function sendNPackages(n, id, seqNum, maxSeqNum, data, md5sum) {
   for (; n > 0; n--) {
     sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
@@ -220,10 +236,12 @@ async function sendFile(filename) {
 
   // Senden des ersten Pakets
   await sendfirstPacket(id, maxSeqNum, fileName);
-  await waitForAckPacket(id, 0);
+  if(version == 2)
+    await waitForAckPacket(id, 0);
 
   // Senden der Datei
   if(version != 3) {
+    let ack =  waitForAckPacket(id);
     for (let seqNum = 1; seqNum < maxSeqNum; seqNum++) {
       sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
       await waitForAckPacket(id, seqNum);
@@ -232,14 +250,38 @@ async function sendFile(filename) {
     // Senden des letzten Pakets mit MD5-Hash
     sendLastPacket(id , maxSeqNum, md5sum);
     await waitForAckPacket(id, maxSeqNum);
+
   } else {
+    let ack;
+    let listen = true;
+    let possibleDupAck = new Set();
+    function getPacket(){
+      ack = waitForAckPacket(id).then((seqNum) => {
+        receivedAck.push(seqNum);
+        if (possibleDupAck.has(seqNum)) {
+          possibleDupAck.delete(seqNum);
+          // resend packet
+          if(seqNum < maxSeqNum)
+            sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
+          else
+            sendLastPacket(id , seqNum, md5sum);
+        }
+        else 
+          possibleDupAck.add(seqNum);
+        if(listen)
+          getPacket();
+      });
+    }
+    // start listening for acks
+    getPacket();
+
     seqNum = sendNPackages(sliding_window_n-1, id, 1, maxSeqNum, data, md5sum);
     while(seqNum < maxSeqNum) {
       seqNum = sendNPackages(sliding_window_n, id, seqNum, maxSeqNum, data, md5sum);
-      waitForAckPacket(id, seqNum-1).catch((locseqNum) => {
-        seqNum = locseqNum;
-      });
-
+      //waitForAckPacket(id, seqNum-1).catch((locseqNum) => {
+      //  seqNum = locseqNum;
+      //});
+      await waitForAckPacket(id, seqNum-1);
     }
   }
 
