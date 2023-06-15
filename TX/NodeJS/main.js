@@ -9,7 +9,7 @@ let MAX_PACKET_SIZE = 1500 - 20 - 8; // Maximale Größe eines UDP-Pakets is 655
 let FILE = 'test.txt'; // Datei, die übertragen werden 
 let quiet = false; // Flag, ob die Logausgabe unterdrückt werden soll
 let verbose = false; // Flag, ob die Logausgabe erweitert werden soll
-let version =  2; // Versionsnummer
+let version = 2; // Versionsnummer
 let sliding_window_n = 10; //
 
 let sendStats = [0, 0]; // Statistiken über die gesendeten Pakete
@@ -55,12 +55,13 @@ for (let i = 0; i < args.length; i++) {
       verbose = true;
       break;
     case '--version':
-    case '-v':
+    case '-V':
       version = args[++i];
       break;
     case '--sliding-window':
     case '-n':
       sliding_window_n = args[++i];
+      break;
     case '--help':
     case '-?':
       printHelp();
@@ -134,7 +135,7 @@ function sendLastPacket(id, seqNum, md5) {
   //Buffer ist "Byteadresiert" 
   buffer.writeUInt16BE(id, 0);
   buffer.writeUInt32BE(seqNum, 2);
-  buffer.write(md5 , 6, 16, 'hex');
+  buffer.write(md5, 6, 16, 'hex');
   socket.send(buffer, PORT, HOST, (err) => {
     if (err) {
       console.error(`Fehler beim Senden vom End Paket ${seqNum}: ${err}`);
@@ -152,20 +153,56 @@ async function waitForAckPacket(transmissionId, sequenceNumber) {
     // no acks
     return;
   }
-  verboseLog(`Warte auf Bestätigung für Paket ${sequenceNumber}`);
-  return new Promise((resolve) => {
-    function messageHandler(msg) {
-      const receivedTransmissionId = msg.readUInt16BE(0);
-      const receivedSequenceNumber = msg.readUInt32BE(2);
-      if (receivedTransmissionId === transmissionId && receivedSequenceNumber === sequenceNumber) {
-        socket.off('message', messageHandler);
-        verboseLog(`Bestätigung für Paket ${sequenceNumber} erhalten`);
-        resolve();
+  if (version == 2) {
+    verboseLog(`Warte auf Bestätigung für Paket ${sequenceNumber}`);
+    return new Promise((resolve) => {
+      function messageHandler(msg) {
+        const receivedTransmissionId = msg.readUInt16BE(0);
+        const receivedSequenceNumber = msg.readUInt32BE(2);
+        if (receivedTransmissionId === transmissionId && receivedSequenceNumber === sequenceNumber) {
+          socket.off('message', messageHandler);
+          verboseLog(`Bestätigung für Paket ${sequenceNumber} erhalten`);
+          resolve();
+        }
       }
-    }
 
-    socket.on('message', messageHandler);
-  });
+      socket.on('message', messageHandler);
+    });
+  }
+  if (version == 3) {
+    // cumulative acks and sliding window with duplicate acks for packets in wrong order
+    verboseLog(`Warte auf Bestätigung für Paket ${sequenceNumber}`);
+    return new Promise((resolve, reject) => {
+      function messageHandler(msg) {
+        const receivedTransmissionId = msg.readUInt16BE(0);
+        const receivedSequenceNumber = msg.readUInt32BE(2);
+        if (receivedTransmissionId === transmissionId && receivedSequenceNumber === sequenceNumber) {
+          socket.off('message', messageHandler);
+          verboseLog(`Bestätigung für Paket ${sequenceNumber} erhalten`);
+          resolve();
+        }
+        else if(receivedTransmissionId === transmissionId /* && receivedSequenceNumber < sequenceNumber*/) {
+          socket.off('message', messageHandler);
+          verboseLog(`Bestätigung für Paket ${receivedSequenceNumber} erhalten aber ${sequenceNumber} erwartet`);
+          reject(receivedSequenceNumber);
+        }
+      }
+
+      socket.on('message', messageHandler);
+    });
+  }
+}
+
+function sendNPackages(n, id, seqNum, maxSeqNum, data, md5sum) {
+  for (; n > 0; n--) {
+    sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
+    seqNum++;
+    if(seqNum == maxSeqNum){
+      sendLastPacket(id, seqNum, md5sum);
+      break;
+    }
+  }
+  return seqNum;
 }
 
 // Funktion zum Senden der Datei
@@ -186,14 +223,26 @@ async function sendFile(filename) {
   await waitForAckPacket(id, 0);
 
   // Senden der Datei
-  for (let seqNum = 1; seqNum < maxSeqNum; seqNum++) {
-    sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
-    await waitForAckPacket(id, seqNum);
+  if(version != 3) {
+    for (let seqNum = 1; seqNum < maxSeqNum; seqNum++) {
+      sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
+      await waitForAckPacket(id, seqNum);
+    }
+
+    // Senden des letzten Pakets mit MD5-Hash
+    sendLastPacket(id , maxSeqNum, md5sum);
+    await waitForAckPacket(id, maxSeqNum);
+  } else {
+    seqNum = sendNPackages(sliding_window_n-1, id, 1, maxSeqNum, data, md5sum);
+    while(seqNum < maxSeqNum) {
+      seqNum = sendNPackages(sliding_window_n, id, seqNum, maxSeqNum, data, md5sum);
+      waitForAckPacket(id, seqNum-1).catch((locseqNum) => {
+        seqNum = locseqNum;
+      });
+
+    }
   }
 
-  // Senden des letzten Pakets mit MD5-Hash
-  sendLastPacket(id , maxSeqNum, md5sum);
-  await waitForAckPacket(id, maxSeqNum);
   socket.close();
   verboseLog('UDP-Socket geschlossen');
 }
@@ -210,7 +259,7 @@ function printHelp() {
   console.log('  -h, --host, <host>      Host to send to (default: 127.0.0.1)');
   console.log('  -p, --port <port>       Port to send to (default: 12345)');
   console.log('  -m, --max <size>        Maximum packet size (default: 1472)');
-  console.log('  -v, --version           TX Version to use (default: 2)');
+  console.log('  -V, --version           TX Version to use (default: 2)');
   console.log('  -n, --sliding-window    Sliding Windows size (Only applicable if version = 3, default 10)')
   console.log('  -f, --file <filename>   File to send (default: test.txt)');
   console.log('  -q, --quiet             Suppress log output (overrides -v)');
