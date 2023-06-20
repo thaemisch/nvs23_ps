@@ -9,8 +9,9 @@ let MAX_PACKET_SIZE = 1500 - 20 - 8; // Maximale Größe eines UDP-Pakets is 655
 let FILE = 'test.txt'; // Datei, die übertragen werden 
 let quiet = false; // Flag, ob die Logausgabe unterdrückt werden soll
 let verbose = false; // Flag, ob die Logausgabe erweitert werden soll
-let version = 2; // Versionsnummer
+let version = 3; // Versionsnummer
 let sliding_window_n = 10; //
+let fileSize, md5sum; // Variablen für die Dateigröße und den MD5-Hash
 
 let sendStats = [0, 0]; // Statistiken über die gesendeten Pakete
 
@@ -153,7 +154,7 @@ async function waitForAckPacket(transmissionId, sequenceNumber) {
     // no acks
     return;
   }
-  if (version == 2) {
+  if (version != 2) {
     verboseLog(`Warte auf Bestätigung für Paket ${sequenceNumber}`);
     return new Promise((resolve) => {
       function messageHandler(msg) {
@@ -169,7 +170,7 @@ async function waitForAckPacket(transmissionId, sequenceNumber) {
       socket.on('message', messageHandler);
     });
   }
-  if (version == 3) {
+  /*if (version == 3) {
     // cumulative acks and sliding window with duplicate acks for packets in wrong order
     verboseLog(`Warte auf Bestätigung für Paket ${sequenceNumber}`);
     return new Promise((resolve, reject) => {
@@ -181,7 +182,7 @@ async function waitForAckPacket(transmissionId, sequenceNumber) {
           verboseLog(`Bestätigung für Paket ${sequenceNumber} erhalten`);
           resolve();
         }
-        else if(receivedTransmissionId === transmissionId /* && receivedSequenceNumber < sequenceNumber*/) {
+        else if(receivedTransmissionId === transmissionId /* && receivedSequenceNumber < sequenceNumber*//*) {
           socket.off('message', messageHandler);
           verboseLog(`Bestätigung für Paket ${receivedSequenceNumber} erhalten aber ${sequenceNumber} erwartet`);
           reject(receivedSequenceNumber);
@@ -190,10 +191,10 @@ async function waitForAckPacket(transmissionId, sequenceNumber) {
 
       socket.on('message', messageHandler);
     });
-  }
+  }*/
 }
 
-function waitForAckPacket(transmissionId) {
+function waitForGeneralAckPacket(transmissionId) {
   return new Promise((resolve) => {
     function messageHandler(msg) {
       const receivedTransmissionId = msg.readUInt16BE(0);
@@ -209,7 +210,7 @@ function waitForAckPacket(transmissionId) {
   });
 }
 
-function sendNPackages(n, id, seqNum, maxSeqNum, data, md5sum) {
+function sendNPackages(n, id, seqNum, maxSeqNum, data) {
   for (; n > 0; n--) {
     sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
     seqNum++;
@@ -228,11 +229,11 @@ async function sendFile(filename) {
   const id = Math.floor(Math.random() * 65535);
 
   // Einlesen der Datei
-  const fileSize = fs.statSync(filename).size;
+  fileSize = fs.statSync(filename).size;
   const maxSeqNum = Math.ceil(fileSize / (MAX_PACKET_SIZE-6) + 1);
   const fileName = filename.split('/').pop().split('\\').pop();
   const data = fs.readFileSync(filename);
-  const md5sum = crypto.createHash('md5').update(data).digest('hex');
+  md5sum = crypto.createHash('md5').update(data).digest('hex');
 
   // Senden des ersten Pakets
   await sendfirstPacket(id, maxSeqNum, fileName);
@@ -241,7 +242,7 @@ async function sendFile(filename) {
 
   // Senden der Datei
   if(version != 3) {
-    let ack =  waitForAckPacket(id);
+    //let ack =  waitForAckPacket(id);
     for (let seqNum = 1; seqNum < maxSeqNum; seqNum++) {
       sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
       await waitForAckPacket(id, seqNum);
@@ -252,12 +253,15 @@ async function sendFile(filename) {
     await waitForAckPacket(id, maxSeqNum);
 
   } else {
+    // cumulative acks and sliding window with duplicate acks for packets in wrong order
     let ack;
     let listen = true;
     let possibleDupAck = new Set();
     function getPacket(){
-      ack = waitForAckPacket(id).then((seqNum) => {
-        receivedAck.push(seqNum);
+      ack = waitForGeneralAckPacket(id).then((seqNum) => {
+        if(listen)
+          // keep listening for acks 
+          getPacket();
         if (possibleDupAck.has(seqNum)) {
           possibleDupAck.delete(seqNum);
           // resend packet
@@ -265,22 +269,22 @@ async function sendFile(filename) {
             sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
           else
             sendLastPacket(id , seqNum, md5sum);
-        }
-        else 
+        } else 
           possibleDupAck.add(seqNum);
-        if(listen)
-          getPacket();
       });
     }
     // start listening for acks
     getPacket();
 
-    seqNum = sendNPackages(sliding_window_n-1, id, 1, maxSeqNum, data, md5sum);
+    seqNum = sendNPackages(sliding_window_n-1, id, 1, maxSeqNum, data);
+    verboseLog(`Sliding window wait: ${seqNum - 1}`);
+    await waitForAckPacket(id, seqNum-1);
     while(seqNum < maxSeqNum) {
-      seqNum = sendNPackages(sliding_window_n, id, seqNum, maxSeqNum, data, md5sum);
+      seqNum = sendNPackages(sliding_window_n, id, seqNum, maxSeqNum, data);
       //waitForAckPacket(id, seqNum-1).catch((locseqNum) => {
       //  seqNum = locseqNum;
       //});
+      verboseLog(`Sliding window wait: ${seqNum - 1}`);
       await waitForAckPacket(id, seqNum-1);
     }
   }
@@ -301,7 +305,7 @@ function printHelp() {
   console.log('  -h, --host, <host>      Host to send to (default: 127.0.0.1)');
   console.log('  -p, --port <port>       Port to send to (default: 12345)');
   console.log('  -m, --max <size>        Maximum packet size (default: 1472)');
-  console.log('  -V, --version           TX Version to use (default: 2)');
+  console.log('  -V, --version           TX Version to use (default: 3)');
   console.log('  -n, --sliding-window    Sliding Windows size (Only applicable if version = 3, default 10)')
   console.log('  -f, --file <filename>   File to send (default: test.txt)');
   console.log('  -q, --quiet             Suppress log output (overrides -v)');
