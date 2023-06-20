@@ -12,6 +12,7 @@ def sendAck():
 if len(sys.argv) > 1:
     if sys.argv[1] == '--help' or sys.argv[1] == '-h':
         print('Options:')
+        print('  --version <version> Version of the protocol (default: 1)')
         print('  --host <host>       Host to send to (default: 127.0.0.1)')
         print('  --port <port>       Port to send to (default: 12345)')
         print('  --max <size>        Maximum packet size (default: 1500)')
@@ -24,6 +25,7 @@ if len(sys.argv) > 1:
 parser = argparse.ArgumentParser(description='Process some command line arguments.')
 
 # Add arguments
+parser.add_argument('--version', type=int, default=1, help='Version of the protocol (default: 1)')
 parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to send to (default: 127.0.0.1)')
 parser.add_argument('--port', type=int, default=12345, help='Port to send to (default: 12345)')
 parser.add_argument('--max', type=int, default=1500, help='Maximum packet size (default: 1500)')
@@ -34,6 +36,7 @@ parser.add_argument('--quiet', action='store_true', help='Do not print anything 
 args = parser.parse_args()
 
 # Set the variables
+version = args.version
 HOST = args.host
 PORT = args.port
 max_pack = args.max
