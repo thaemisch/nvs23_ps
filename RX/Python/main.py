@@ -68,6 +68,10 @@ def sendAck():
     response_data = id.to_bytes(2, byteorder='big') + seq_num.to_bytes(4, byteorder='big')
     sock.sendto(response_data, addr)
 
+def sendAckBySQN(sqn):
+    response_data = id.to_bytes(2, byteorder='big') + sqn.to_bytes(4, byteorder='big')
+    sock.sendto(response_data, addr)
+
 # Receive the first packet
 data, addr = sock.recvfrom(max_pack)
 id = int.from_bytes(data[0:2], byteorder='big')
@@ -102,22 +106,23 @@ elif version == 3:
     window_start = 1
     window_end = window_start + window_size - 1
     received_packets = [False] * max_seq_num
+    last_seq_num = 1
     while True:
         data, addr = sock.recvfrom(max_pack)
         id = int.from_bytes(data[0:2], byteorder='big')
         seq_num = int.from_bytes(data[2:6], byteorder='big')
-        if id == transmID and seq_num >= window_start and seq_num <= window_end:
+        if id == transmID and seq_num >= window_start and seq_num <= window_end and last_seq_num+1 == seq_num:
             packet_data = (data[6:])
             data_output.write(packet_data)
             received_packets[seq_num] = True
             if seq_num == window_end:
                 # Check if all packets in the window have been received
-                all_received = True
+                window_closed = True
                 for i in range(window_start, window_end+1):
                     if not received_packets[i]:
-                        all_received = False
+                        window_closed = False
                         break
-                if all_received:
+                if window_closed:
                     # Send cumulative ACK
                     sendAck()
                     # Move the window
@@ -129,8 +134,11 @@ elif version == 3:
                     for i in range(window_start, window_end+1):
                         if not received_packets[i]:
                             # Send duplicate ACK
-                            sendAck()
+                            sendAckBySQN(i)
                             break
+        elif not last_seq_num+1 == seq_num:
+            # Send duplicate ACK
+            sendAckBySQN(last_seq_num)
         elif id == transmID:
             # Send duplicate ACK
             sendAck()
