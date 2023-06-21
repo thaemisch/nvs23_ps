@@ -31,6 +31,13 @@ public class UDPReceiver{
     private static ByteBuffer receiverBuffer;   // simplifies extraction of header and data part in packet (byte array with lots of bitwise shifts could be used as well)
     private static boolean quiet = false;
     private static boolean verbose = false;
+    private static enum version{
+        VERSION_ONE,
+        VERSION_TWO,
+        VERSION_THREE
+    };
+    private static version userVersionChoice = version.VERSION_THREE; //default
+    private static int slidingWindow = 10; 
 
     // packet variables
     private static short transmissionID;
@@ -75,6 +82,19 @@ public class UDPReceiver{
                         if (!quiet){
                             verbose = true;
                         }
+                        break;
+                    case "-V":
+                    case "--version":
+                        if (args[i+1] == "2"){
+                            userVersionChoice = version.VERSION_TWO;
+                        } else if (args[i+1] == "1") {
+                            userVersionChoice = version.VERSION_ONE;
+                        }
+                        break;
+                    case "n":
+                    case "--sliding-window":
+                        userVersionChoice = version.VERSION_THREE;
+                        slidingWindow = Integer.parseInt(args[i+1]);
                         break;
                     case "--help":
                     case "-?":
@@ -159,7 +179,9 @@ public class UDPReceiver{
             
             outputStream.close();   // now the output-stream can be closed 
             verboseLog("Packet " + seqNr + " received");
-            sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
+            if(userVersionChoice != version.VERSION_ONE){
+                sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
+            }
             writeToFile();  // write data to file (data is written to file after the transmission is complete)
             endTime = new Timestamp(System.currentTimeMillis());
             verboseLog("");
@@ -183,7 +205,13 @@ public class UDPReceiver{
             outputStream.write(dataArray);  // write data to output-stream
         }
         receivedPackets++;
-        sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
+        if(userVersionChoice == version.VERSION_TWO){
+            sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
+        } else if (userVersionChoice == version.VERSION_THREE){
+            if (seqNr > 0 && (seqNr + 1) % 10 == 0){
+                sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
+            }
+        }
         return false;
     }
 
