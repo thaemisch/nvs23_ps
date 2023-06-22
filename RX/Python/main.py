@@ -153,23 +153,23 @@ else:
 ####
 
 # Receive the md5 packet
-signal.signal(signal.SIGALRM, timeout_handler)
-signal.alarm(20)
+#signal.signal(signal.SIGALRM, timeout_handler)
+#signal.alarm(20)
 
-try:
-    data, addr = sock.recvfrom(max_pack)
-    id = int.from_bytes(data[0:2], byteorder='big')
-    seq_num = int.from_bytes(data[2:6], byteorder='big')
-    if id == transmID:
-        md5 = data[6:22].hex()
-        if not quiet:
-            print(f'Packet {seq_num} (md5): id={id}, md5={md5}')
+#try:
+data, addr = sock.recvfrom(max_pack)
+id = int.from_bytes(data[0:2], byteorder='big')
+seq_num = int.from_bytes(data[2:6], byteorder='big')
+if id == transmID:
+    md5 = data[6:22].hex()
+    if not quiet:
+        print(f'Packet {seq_num} (md5): id={id}, md5={md5}')
 
-        sendAck()
-except TimeoutException as ex:
-    print("No MD5 packet received after 20 seconds")
-    print("Exiting...")
-    sys.exit(1)
+    sendAck()
+#except TimeoutException as ex:
+#    print("No MD5 packet received after 20 seconds")
+#    print("Exiting...")
+#    sys.exit(1)
 
 ####
 #Finishing Up
