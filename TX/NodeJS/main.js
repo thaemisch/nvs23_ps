@@ -265,6 +265,7 @@ async function sendFile(filename) {
         if (possibleDupAck.has(seqNum)) {
           possibleDupAck.delete(seqNum);
           // resend packet
+          seqNum++;
           if(seqNum < maxSeqNum)
             sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
           else
@@ -276,7 +277,7 @@ async function sendFile(filename) {
     // start listening for acks
     getPacket();
 
-    seqNum = sendNPackages(sliding_window_n-1, id, 1, maxSeqNum, data);
+    let seqNum = sendNPackages(sliding_window_n-1, id, 1, maxSeqNum, data);
     verboseLog(`Sliding window wait: ${seqNum - 1}`);
     await waitForAckPacket(id, seqNum-1);
     while(seqNum < maxSeqNum) {
