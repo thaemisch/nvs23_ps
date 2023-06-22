@@ -210,11 +210,12 @@ function waitForGeneralAckPacket(transmissionId) {
 
 function sendNPackages(n, id, seqNum, maxSeqNum, data) {
   for (; n > 0; n--) {
-    sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
-    seqNum++;
     if(seqNum == maxSeqNum){
       sendLastPacket(id, seqNum, md5sum);
       break;
+    } else {
+      sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
+      seqNum++;
     }
   }
   return seqNum;
