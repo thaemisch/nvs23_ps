@@ -154,22 +154,20 @@ async function waitForAckPacket(transmissionId, sequenceNumber) {
     // no acks
     return;
   }
-  if (version != 2) {
-    verboseLog(`Warte auf Bestätigung für Paket ${sequenceNumber}`);
-    return new Promise((resolve) => {
-      function messageHandler(msg) {
-        const receivedTransmissionId = msg.readUInt16BE(0);
-        const receivedSequenceNumber = msg.readUInt32BE(2);
-        if (receivedTransmissionId === transmissionId && receivedSequenceNumber === sequenceNumber) {
-          socket.off('message', messageHandler);
-          verboseLog(`Bestätigung für Paket ${sequenceNumber} erhalten`);
-          resolve();
-        }
+  verboseLog(`Warte auf Bestätigung für Paket ${sequenceNumber}`);
+  return new Promise((resolve) => {
+    function messageHandler(msg) {
+      const receivedTransmissionId = msg.readUInt16BE(0);
+      const receivedSequenceNumber = msg.readUInt32BE(2);
+      if (receivedTransmissionId === transmissionId && receivedSequenceNumber === sequenceNumber) {
+        socket.off('message', messageHandler);
+        verboseLog(`Bestätigung für Paket ${sequenceNumber} erhalten`);
+        resolve();
       }
+    }
 
-      socket.on('message', messageHandler);
-    });
-  }
+    socket.on('message', messageHandler);
+  });
   /*if (version == 3) {
     // cumulative acks and sliding window with duplicate acks for packets in wrong order
     verboseLog(`Warte auf Bestätigung für Paket ${sequenceNumber}`);
@@ -237,8 +235,7 @@ async function sendFile(filename) {
 
   // Senden des ersten Pakets
   await sendfirstPacket(id, maxSeqNum, fileName);
-  if(version == 2)
-    await waitForAckPacket(id, 0);
+  await waitForAckPacket(id, 0);
 
   // Senden der Datei
   if(version != 3) {
@@ -277,8 +274,7 @@ async function sendFile(filename) {
     // start listening for acks
     getPacket();
 
-    let seqNum = sendNPackages(sliding_window_n-1, id, 1, maxSeqNum, data);
-    verboseLog(`Sliding window wait: ${seqNum - 1}`);
+    let seqNum = 1;
     await waitForAckPacket(id, seqNum-1);
     while(seqNum < maxSeqNum) {
       seqNum = sendNPackages(sliding_window_n, id, seqNum, maxSeqNum, data);
