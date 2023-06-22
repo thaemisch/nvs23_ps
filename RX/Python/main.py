@@ -115,7 +115,6 @@ elif version == 3:
         if id == transmID and seq_num >= window_start and seq_num <= window_end:
             packet_data = (data[6:])
             packets_map[seq_num] = packet_data
-            #data_output.write(packet_data)
             received_packets[seq_num] = True
             if seq_num == window_end:
                 # Check if all packets in the window have been received
@@ -139,12 +138,8 @@ elif version == 3:
                             sendAckBySQN(i)
                         if i == max_seq_num-1:
                             break
-        #elif not last_seq_num+1 == seq_num:
-            # Send duplicate ACK
-            #sendAckBySQN(last_seq_num)
-        #elif id == transmID:
-            # Send duplicate ACK
-        #    sendAck()
+        if window_end == max_seq_num-1:
+            break
 
     for i in range(1, max_seq_num):
         data_output.write(packets_map[i])
