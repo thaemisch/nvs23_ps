@@ -16,8 +16,8 @@ if len(sys.argv) > 1:
     if sys.argv[1] == '--help' or sys.argv[1] == '-h':
         print('Options:')
         print('  --version <version> Version of the protocol (default: 1)')
-        print('  --host <host>       Host to send to (default: 127.0.0.1)')
-        print('  --port <port>       Port to send to (default: 12345)')
+        print('  --host <host>       Host to receive from (default: 127.0.0.1)')
+        print('  --port <port>       Port to receive from (default: 12345)')
         print('  --max <size>        Maximum packet size (default: 1500)')
         print('  --window <size>     Window size (default: 5)')
         print('  --quiet             Do not print anything to the terminal')
