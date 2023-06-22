@@ -139,9 +139,9 @@ elif version == 3:
         elif not last_seq_num+1 == seq_num:
             # Send duplicate ACK
             sendAckBySQN(last_seq_num)
-        elif id == transmID:
+        #elif id == transmID:
             # Send duplicate ACK
-            sendAck()
+        #    sendAck()
 else:
     print("Invalid Version (can be 1-3)")
     print("Version 1: Basic")
