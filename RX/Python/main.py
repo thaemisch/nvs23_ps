@@ -4,13 +4,6 @@ import hashlib
 import sys
 import argparse
 import io
-import signal
-
-class TimeoutException(Exception):
-    pass 
-
-def timeout_handler(signum, frame):
-    raise TimeoutException("Function timed out")
 
 if len(sys.argv) > 1:
     if sys.argv[1] == '--help' or sys.argv[1] == '-h':
@@ -72,6 +65,10 @@ def sendAckBySQN(sqn):
     response_data = id.to_bytes(2, byteorder='big') + sqn.to_bytes(4, byteorder='big')
     sock.sendto(response_data, addr)
 
+def sendDupAckBySQN(sqn):
+    sendAckBySQN(sqn)
+    sendAckBySQN(sqn)
+
 # Receive the first packet
 data, addr = sock.recvfrom(max_pack)
 id = int.from_bytes(data[0:2], byteorder='big')
@@ -99,16 +96,17 @@ if version == 1 or version == 2:
             packet_data = (data[6:])
             data_output.write(packet_data)
             if not quiet:
-                print(f'Packet {seq_num}: id={id}, data={packet_data}')
+                print(f'Packet {seq_num}: id={id}')
+                #print(f'data={packet_data}')
             if version == 2:
                 sendAck()
 elif version == 3:
     window_start = 1
     window_end = window_start + window_size - 1
     received_packets = [False] * max_seq_num
-    last_seq_num = 1
     packets_map = {}
-    while True:
+    allDataReceived = False
+    while allDataReceived:
         data, addr = sock.recvfrom(max_pack)
         id = int.from_bytes(data[0:2], byteorder='big')
         seq_num = int.from_bytes(data[2:6], byteorder='big')
@@ -116,29 +114,32 @@ elif version == 3:
             packet_data = (data[6:])
             packets_map[seq_num] = packet_data
             received_packets[seq_num] = True
+            if not quiet:
+                print(f'Packet {seq_num}: id={id}')
             if seq_num == window_end:
+                if not quiet:
+                    print(f'Window closed: {window_start}-{window_end}')
                 # Check if all packets in the window have been received
                 window_closed = True
                 for i in range(window_start, window_end+1):
                     if not received_packets[i]:
                         window_closed = False
+                        if not quiet:
+                            print(f'Packet {i} is missing, sending duplicate ACK')
+                        sendDupAckBySQN(i)
                         break
                 if window_closed:
                     # Send cumulative ACK
+                    if not quiet:
+                        print(f'Sending cumulative ACK for {window_start}-{window_end}')
                     sendAck()
                     # Move the window
                     window_start += window_size
                     window_end += window_size
                     if window_end >= max_seq_num:
                         window_end = max_seq_num - 1
-                    # Check for any missing packets
-                    for i in range(window_start, window_end+1):
-                        if not received_packets[i]:
-                            # Send duplicate ACK
-                            sendAckBySQN(i)
-                            break
         if seq_num == max_seq_num-1:
-            break
+            allDataReceived = True
 
     for i in range(1, max_seq_num):
         data_output.write(packets_map[i])
@@ -148,7 +149,7 @@ else:
     print("Version 1: Basic")
     print("Version 2: + ACK")
     print("Version 3: + Sliding Window + cumulative ACK")
-    sys.exit(0)
+    sys.exit(1)
 ####
 #
 ####
