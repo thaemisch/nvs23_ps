@@ -275,7 +275,6 @@ async function sendFile(filename) {
     getPacket();
 
     let seqNum = 1;
-    await waitForAckPacket(id, seqNum-1);
     while(seqNum < maxSeqNum) {
       seqNum = sendNPackages(sliding_window_n, id, seqNum, maxSeqNum, data);
       //waitForAckPacket(id, seqNum-1).catch((locseqNum) => {
