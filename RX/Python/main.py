@@ -136,9 +136,8 @@ elif version == 3:
                         if not received_packets[i]:
                             # Send duplicate ACK
                             sendAckBySQN(i)
-                        if i == max_seq_num-1:
                             break
-        if window_end == max_seq_num-1:
+        if seq_num == max_seq_num-1:
             break
 
     for i in range(1, max_seq_num):
