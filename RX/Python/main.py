@@ -33,7 +33,7 @@ parser.add_argument('--version', type=int, default=1, help='Version of the proto
 parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to send to (default: 127.0.0.1)')
 parser.add_argument('--port', type=int, default=12345, help='Port to send to (default: 12345)')
 parser.add_argument('--max', type=int, default=1500, help='Maximum packet size (default: 1500)')
-parser.add_argument('--window', type=int, default=10, help='Window size (default: 5)')
+parser.add_argument('--window', type=int, default=10, help='Window size (default: 10)')
 parser.add_argument('--quiet', action='store_true', help='Do not print anything to the terminal')
 parser.add_argument('--save', action='store_true', help='Save the received file to disk')
 
@@ -107,13 +107,15 @@ elif version == 3:
     window_end = window_start + window_size - 1
     received_packets = [False] * max_seq_num
     last_seq_num = 1
+    packets_map = {}
     while True:
         data, addr = sock.recvfrom(max_pack)
         id = int.from_bytes(data[0:2], byteorder='big')
         seq_num = int.from_bytes(data[2:6], byteorder='big')
-        if id == transmID and seq_num >= window_start and seq_num <= window_end and last_seq_num+1 == seq_num:
+        if id == transmID and seq_num >= window_start and seq_num <= window_end:
             packet_data = (data[6:])
-            data_output.write(packet_data)
+            packets_map[seq_num] = packet_data
+            #data_output.write(packet_data)
             received_packets[seq_num] = True
             if seq_num == window_end:
                 # Check if all packets in the window have been received
@@ -135,13 +137,18 @@ elif version == 3:
                         if not received_packets[i]:
                             # Send duplicate ACK
                             sendAckBySQN(i)
+                        if i == max_seq_num-1:
                             break
-        elif not last_seq_num+1 == seq_num:
+        #elif not last_seq_num+1 == seq_num:
             # Send duplicate ACK
-            sendAckBySQN(last_seq_num)
+            #sendAckBySQN(last_seq_num)
         #elif id == transmID:
             # Send duplicate ACK
         #    sendAck()
+
+    for i in range(1, max_seq_num):
+        data_output.write(packets_map[i])
+
 else:
     print("Invalid Version (can be 1-3)")
     print("Version 1: Basic")
