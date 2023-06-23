@@ -301,7 +301,7 @@ async function sendFile(filename) {
     socket.on('message', messageHandler);
 
     let seqNum = 1;
-    while(seqNum < maxSeqNum) {
+    while(seqNum <= maxSeqNum) {
       seqNum = sendNPackages(sliding_window_n, id, seqNum, maxSeqNum, data);
       //waitForAckPacket(id, seqNum-1).catch((locseqNum) => {
       //  seqNum = locseqNum;
