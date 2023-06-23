@@ -1,0 +1,917 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1024" height="1024" viewBox="0 0 1024 1024" xml:space="preserve">
+<desc>Created @ WordClouds.com</desc>
+<defs>
+</defs>
+<rect x="0" y="0" width="100%" height="100%" fill="#fff"></rect>
+<g transform="matrix(1 0 0 1 515 523)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="200" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-180.03" y="62.83" >fix</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 323 603)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="189.5357660799801" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-341.22" y="59.54" >window</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 761 537)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="200" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-300.05" y="62.83" >added</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 185 557)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="138.99289512531874" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-291.93" y="43.66" >sliding</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 592 307)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="200" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-180.03" y="62.83" >now</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 465 758)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="113.72145964798806" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-204.73" y="35.72" >update</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 300 222)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="113.72145964798806" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-238.85" y="35.72" >support</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 687 849)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="126.3571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-189.57" y="39.69" >fixed</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 868 562)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="101.08574190932272" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-212.31" y="31.76" >cleanup</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 112 526)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="88.45002417065739" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-185.78" y="27.79" >version</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 475 398)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="37.90715321599602" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-159.24" y="11.91" >node_python.md</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 362 152)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="63.1785886933267" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-170.61" y="19.85" >messungen</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 416 829)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="63.1785886933267" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-132.7" y="19.85" >removed</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 493 92)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="75.81430643199204" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-136.49" y="23.82" >python</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 615 708)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="75.81430643199204" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-113.74" y="23.82" >might</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 671 146)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="63.1785886933267" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-113.74" y="19.85" >packet</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 929 563)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="63.1785886933267" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-113.74" y="19.85" >output</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 743 161)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="101.08574190932272" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-90.99" y="31.76" >ack</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 618 919)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="88.45002417065739" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-106.16" y="27.79" >dart</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 543 690)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="63.1785886933267" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-94.78" y="19.85" >quiet</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 907 319)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="50.54287095466136" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-106.16" y="15.88" >working</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 905 274)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="50.54287095466136" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-106.16" y="15.88" >improve</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 515 343)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="50.54287095466136" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-75.83" y="15.88" >wrong</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 428 377)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="63.1785886933267" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-75.83" y="19.85" >last</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 662 366)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="37.90715321599602" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-113.74" y="11.91" >statements</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 877 232)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="63.1785886933267" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-94.78" y="19.85" >first</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 568 970)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="37.90715321599602" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-79.62" y="11.91" >package</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 400 980)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="50.54287095466136" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-90.99" y="15.88" >prints</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 534 44)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="50.54287095466136" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-90.99" y="15.88" >option</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 839 174)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="63.1785886933267" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-75.83" y="19.85" >file</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 52 500)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="63.1785886933267" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-56.87" y="19.85" >add</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 173 866)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="63.1785886933267" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-75.83" y="19.85" >work</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 281 104)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="50.54287095466136" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-75.83" y="15.88" >print</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 394 350)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="37.90715321599602" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-68.24" y="11.91" >chance</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 618 1002)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="50.54287095466136" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-106.16" y="15.88" >timeout</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 115 724)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="50.54287095466136" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-60.66" y="15.88" >java</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 673 691)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="50.54287095466136" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-60.66" y="15.88" >wait</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 373 779)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-75.83" y="7.94" >improvment</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 958 401)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="50.54287095466136" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-60.66" y="15.88" >acks</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 87 312)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="50.54287095466136" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-60.66" y="15.88" >code</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 284 544)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="37.90715321599602" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-56.87" y="11.91" >check</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 242 178)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-113.74" y="7.94" >customizability</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 204 425)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="50.54287095466136" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="15.88" >try</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 237 774)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-68.24" y="7.94" >gitignore</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 369 332)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-68.24" y="7.94" >arguments</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 267 599)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-90.99" y="7.94" >messungen.md</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 560 525)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="37.90715321599602" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="11.91" >size</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 768 599)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="37.90715321599602" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="11.91" >stop</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 183 367)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="50.54287095466136" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="15.88" >md5</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 455 455)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-41.7" y="3.97" >packet_size</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 896 784)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-83.41" y="7.94" >improvments</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 408 572)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-53.08" y="7.94" >updated</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 576 589)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-53.08" y="3.97" >automatisation</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 762 347)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="37.90715321599602" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="11.91" >smol</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 515 682)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-49.29" y="3.97" >optimierungen</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 383 637)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="37.90715321599602" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="11.91" >cmd</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 749 474)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-68.24" y="7.94" >structure</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 949 685)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-68.24" y="7.94" >formating</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 539 525)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="3.97" >transmission</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 682 343)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-49.29" y="3.97" >theoretischer</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 456 259)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="3.97" >transimssion</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 368 555)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="3.97" >eeemootional</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 819 658)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="7.94" >import</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 727 677)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-41.7" y="3.97" >implemented</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 577 795)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-41.7" y="3.97" >progressbar</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 822 512)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="37.90715321599602" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="11.91" >ups</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 405 243)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-41.7" y="3.97" >nextpackage</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 818 390)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-41.7" y="3.97" >versionized</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 330 457)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-49.29" y="3.97" >zurückgesetzt</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 435 253)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-41.7" y="3.97" >unnecessary</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 263 493)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-60.66" y="7.94" >overhead</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 126 763)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-53.08" y="7.94" >plot.py</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 584 130)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-53.08" y="7.94" >packets</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 451 364)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >increased</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 245 319)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-41.7" y="3.97" >combination</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 644 837)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="3.97" >messung.md</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 646 618)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="3.97" >functional</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 142 494)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-41.7" y="3.97" >directories</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 379 901)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="7.94" >nicer</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 588 538)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >parameter</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 427 544)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >readme.md</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 961 488)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="7.94" >clean</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 969 563)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="7.94" >fixes</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 66 401)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="7.94" >files</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 509 782)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="7.94" >byte</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 403 668)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >duplicate</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 637 430)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >definitly</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 499 353)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >seqnummer</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 509 902)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="3.97" >apparently</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 583 252)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-53.08" y="3.97" >transmissionid</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 680 538)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >reduction</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 665 783)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >stop/wait</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 679 786)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >subsystem</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 140 630)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="3.97" >autorun.py</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 592 307)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="37.90715321599602" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="11.91" >new</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 917 730)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="7.94" >plots</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 812 745)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="7.94" >node</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 63 613)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="7.94" >split</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 833 402)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >try-catch</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 471 206)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >honestly</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 319 714)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="7.94" >delete</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 568 178)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="7.94" >string</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 874 342)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="7.94" >better</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 589 630)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >reloaded</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 906 625)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >actually</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 636 91)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >probably</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 625 430)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >overload</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 311 382)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="3.97" >implementirt</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 586 243)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-49.29" y="3.97" >parameterized</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 726 851)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >received</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 575 867)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >overhall</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 149 265)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="3.97" >optimisation</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 417 282)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >sniffing</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 588 360)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-49.29" y="3.97" >modifications</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 327 468)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-45.5" y="3.97" >architecture</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 525 434)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >seq_num</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 356 892)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >packages</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 463 623)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-41.7" y="3.97" >imporvments</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 468 688)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-41.7" y="3.97" >improvement</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 610 731)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-41.7" y="3.97" >commandline</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 767 130)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-41.7" y="3.97" >optimierung</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 344 886)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >comments</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 742 415)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="7.94" >debug</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 742 526)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="7.94" >even</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 312 398)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="7.94" >send</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 310 659)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="7.94" >args</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 937 365)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="7.94" >delay</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 574 199)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="7.94" >typo</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 212 512)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >wordcloud</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 210 670)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="3.97" >background</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 465 759)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >debugging</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 528 423)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >flowchart</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 307 783)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >behaviour</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 484 821)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >exestiert</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 306 770)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >md5packet</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 194 682)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="3.97" >optimising</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 194 344)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="3.97" >generation</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 775 712)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >optimised</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 468 890)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >maxseqnum</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 205 659)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >hopefully</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 740 779)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >threading</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 484 123)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >resilient</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 285 830)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="3.97" >dependency</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 398 181)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >automated</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 756 903)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-37.91" y="3.97" >bytebuffer</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 406 65)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-34.12" y="3.97" >correctly</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 301 420)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >methode</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 872 425)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >function</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 736 767)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >variable</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 687 608)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >wrapper</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 767 721)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >handles</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 868 414)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >ploting</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 734 192)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >caputres</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 114 550)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >controll</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 731 537)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >bessere</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 885 588)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >graphen</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 953 426)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >probleme</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 879 463)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >javadoc</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 127 280)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >plotter</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 97 450)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >captures</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 743 788)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >readable</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 257 562)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >receiver</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 553 65)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="3.97" >bugfixes</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 445 532)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="7.94" >bug</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 724 921)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >sending</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 946 438)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >closing</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 337 949)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >changed</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 524 474)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >verusch</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 585 370)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >errrror</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 343 329)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="7.94" >dup</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 958 625)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="7.94" >can</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 317 73)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="7.94" >test</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 666 945)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="25.27143547733068" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-30.33" y="7.94" >init</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 632 842)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >windows</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 698 103)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >fucking</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 453 838)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >reject</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 979 463)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >missing</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 801 884)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >default</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 367 423)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >listen</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 142 425)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >socket</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 427 481)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >drawio</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 599 862)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >dupack</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 185 557)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >github</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 187 457)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >bugged</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 991 538)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >perfect</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 509 443)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >reason</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 984 600)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >waiting</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 283 531)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >double</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 806 414)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >cancel</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 166 611)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >remove</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 764 656)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >switch</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 163 213)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >updates</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 972 649)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >autorun</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 739 551)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >script</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 196 236)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >timing</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 945 720)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >messung</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 695 192)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >msssung</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 345 481)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >visual</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 244 271)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >create</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 245 256)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >format</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 45 625)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >changes</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 493 92)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >number</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 630 674)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >rework</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 496 524)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >für</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 885 815)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >julian</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 835 647)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >smooth</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 857 224)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >moment</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 42 413)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >pending</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 337 293)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >folder</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 352 61)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >ignored</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 600 322)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >errors</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 131 221)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >reasons</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 610 775)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >runner</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 833 156)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >daamage</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 845 716)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >forgor</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 60 673)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >whopsi</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 547 861)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >change</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 307 123)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >relativ</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 211 899)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >needed</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 314 262)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >ploter</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 242 922)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >instead</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 528 263)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >passes</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 93 488)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >single</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 827 299)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >fucked</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 709 726)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >higher</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 311 643)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-22.75" y="3.97" >buffer</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 873 845)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-26.54" y="3.97" >chanced</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 465 717)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >sucks</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 550 790)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >sleep</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 598 289)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >dummy</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 648 768)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >place</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 428 376)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >time</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 576 669)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >will</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 604 755)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >break</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 669 620)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >help</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 559 860)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >frick</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 574 744)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >diese</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 709 586)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >wird</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 36 576)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >arged</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 416 687)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >just</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 820 550)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >small</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 269 321)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >right</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 351 613)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >name</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 562 706)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >well</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 704 597)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >much</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 633 684)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >wants</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 403 726)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >show</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 587 864)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >timer</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 304 755)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >stufd</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 618 919)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >await</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 769 232)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >sends</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 437 38)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >brain</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 515 222)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >mode</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 509 483)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >error</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 294 672)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >copy</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 705 714)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >main</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 681 451)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >path</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 183 493)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >readd</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 842 861)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >jetzt</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 90 283)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >speed</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 272 369)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >empty</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 537 751)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >leck</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 759 402)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >oash</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 232 525)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >mate</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 241 616)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >cmdl</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 391 261)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >sind</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 191 623)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >immer</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 786 367)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >links</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 496 284)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >need</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 204 768)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >graph</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 531 213)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >array</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 343 252)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >make</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 462 869)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >bugs</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 265 211)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >guess</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 599 820)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >data</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 300 221)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-18.96" y="3.97" >bytes</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 213 432)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >note</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 657 228)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >spec</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 269 720)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >0.5s</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 246 690)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >dass</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 631 500)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >upsi</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 801 691)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-15.17" y="3.97" >clue</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 500 551)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >lol</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 478 347)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >big</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 503 642)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >cum</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 515 602)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >wtf</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 632 584)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >mal</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 545 574)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >und</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 420 656)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >bei</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 407 420)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >auf</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 578 487)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >idk</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 609 538)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >sth</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 668 549)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >1kb</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 472 656)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >ids</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 605 453)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >use</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 304 481)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >mit</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 376 673)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >raw</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 710 360)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >get</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 468 729)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >jes</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 427 332)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(73,10,61); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >c&amp;p</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 775 657)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(127,173,204); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >old</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 371 259)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(189,30,80); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >1st</tspan></text>
+</g>
+<g transform="matrix(0 1 -1 0 248 457)" style=""  >
+		<text xml:space="preserve" font-family="Courier New" font-size="12.63571773866534" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(240,184,20); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-11.37" y="3.97" >npm</tspan></text>
+</g>
+</svg>
