@@ -10,6 +10,8 @@ textParts = output.decode('utf-8').split('\n')
 for textPart in textParts:
     if "merge" in textPart.lower():
         textParts.remove(textPart)
+    if "wordcloud" or "worldcloud" in textPart.lower():
+        textParts.remove(textPart)
 
 text = ' '.join(textParts)
 
