@@ -22,7 +22,7 @@ if len(sys.argv) > 1:
 parser = argparse.ArgumentParser(description='Process some command line arguments.')
 
 # Add arguments
-parser.add_argument('--version', type=int, default=1, help='Version of the protocol (default: 1)')
+parser.add_argument('--version', type=int, default=3, help='Version of the protocol (default: 3)')
 parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to send to (default: 127.0.0.1)')
 parser.add_argument('--port', type=int, default=12345, help='Port to send to (default: 12345)')
 parser.add_argument('--max', type=int, default=1500, help='Maximum packet size (default: 1500)')
