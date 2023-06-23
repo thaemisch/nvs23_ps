@@ -144,7 +144,6 @@ elif version == 3:
                     if window_closed:
                         if seq_num == max_seq_num-1:
                             allDataReceived = True
-                            break
                         old_window_end = window_end
                         old_window_start = window_start
                         # Move the window
@@ -158,8 +157,6 @@ elif version == 3:
                             print(f'Sending cumulative ACK for {old_window_start}-{old_window_end}')
                         sendAckBySQN(old_window_end)
     print("All data received")
-    for i in range(1, max_seq_num):
-        data_output.write(packets_map[i])
 
 else:
     print("Invalid Version (can be 1-3)")
@@ -181,6 +178,10 @@ if id == transmID:
 
     sendAck()
 
+
+# Piecing the puzzle together
+for i in range(1, max_seq_num):
+    data_output.write(packets_map[i])
 ####
 #Finishing Up
 ####
