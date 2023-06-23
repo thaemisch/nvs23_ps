@@ -4,6 +4,13 @@ import hashlib
 import sys
 import argparse
 import io
+import signal
+
+class TimeoutException(Exception):
+    pass
+
+def timeout_handler(signum, frame):
+    raise TimeoutException("Function timed out")
 
 if len(sys.argv) > 1:
     if sys.argv[1] == '--help' or sys.argv[1] == '-h':
@@ -97,12 +104,13 @@ if version == 1 or version == 2:
             data_output.write(packet_data)
             if not quiet:
                 print(f'Packet {seq_num}: id={id}')
-                #print(f'data={packet_data}')
             if version == 2:
                 sendAck()
 elif version == 3:
     window_start = 1
     window_end = window_start + window_size - 1
+    if window_end = max_seq_num:
+        window_end = max_seq_num - 1
     received_packets = [False] * max_seq_num
     packets_map = {}
     missing_packet = 1
@@ -115,9 +123,17 @@ elif version == 3:
             sendDupAckBySQN(missing_packet-1)
             packet_missing = False
             packet_was_missing = True
-        data, addr = sock.recvfrom(max_pack)
-        id = int.from_bytes(data[0:2], byteorder='big')
-        seq_num = int.from_bytes(data[2:6], byteorder='big')
+
+        signal.signal(signal.SIGALRM, timeout_handler)
+        signal.alarm(1)
+        try:
+            data, addr = sock.recvfrom(max_pack)
+            id = int.from_bytes(data[0:2], byteorder='big')
+            seq_num = int.from_bytes(data[2:6], byteorder='big')
+        except TimeoutException:
+            sendDupAckBySQN(seq_num-1)
+            print(f'Packet {seq_num-1} is missing, sending duplicate ACK')
+            continue
         if id == transmID and seq_num >= window_start and seq_num <= window_end:
             # Test duplicate ACKs by skipping the 3rd packet once
             if seq_num == 3 and not skippedAlready:
