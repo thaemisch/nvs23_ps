@@ -188,7 +188,7 @@ void main(List<String> args) async {
   parser.addOption('port', abbr: 'p', defaultsTo: PORT.toString());
   parser.addOption('max', abbr: 'm', defaultsTo: MAX_PACKET_SIZE.toString());
   parser.addOption('file', abbr: 'f', defaultsTo: file);
-  parser.addOption('version', abbr: 'v', defaultsTo: '2');
+  parser.addOption('version', abbr: 'v', defaultsTo: '3');
   parser.addOption('sliding-window',abbr: 's',defaultsTo: '10' );
   parser.addFlag('quiet', abbr: 'q', defaultsTo: false);
   var results = parser.parse(args);
