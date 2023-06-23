@@ -161,7 +161,7 @@ async function waitForAckPacket(transmissionId, sequenceNumber) {
   }
   let timer;
   verboseLog(`Warte auf Bestätigung für Paket ${sequenceNumber}`);
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     function messageHandler(msg) {
       const receivedTransmissionId = msg.readUInt16BE(0);
       const receivedSequenceNumber = msg.readUInt32BE(2);
