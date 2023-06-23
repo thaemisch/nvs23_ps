@@ -20,10 +20,11 @@ jobs:
         python-version: "3.10"
     - name: run wordlCloud.py
       run: |
+        cd fun
         ls -la
         python -m pip install --upgrade pip
         pip install wordcloud
-        python fun/wordCloud.py
+        python wordCloud.py
         ls -la
         
     - name: Commit file
