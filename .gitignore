@@ -3,7 +3,7 @@
 
 TX/NodeJS/test.txt
 TX/NodeJS/node_modules
-*.txt
+test.txt
 RX/Python/md5.py
 RX/Python/100.file
 RX/Python/1400.file

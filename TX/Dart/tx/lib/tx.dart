@@ -123,7 +123,7 @@ Future<int> waitForAckandGetSeqNr(RawDatagramSocket socket, int port, int id, in
       } else {
         final data = datagram.data;
         if (data.length == 6) {
-          valid = _processAckPacket(data, seqNr, id, quiet);
+          valid = _processAckPacket(data, seqNr, id, quiet, version: version);
           if (valid) {
             seqNr = data.buffer.asByteData().getUint32(2);
             await sub.cancel();
@@ -188,7 +188,7 @@ void main(List<String> args) async {
   parser.addOption('port', abbr: 'p', defaultsTo: PORT.toString());
   parser.addOption('max', abbr: 'm', defaultsTo: MAX_PACKET_SIZE.toString());
   parser.addOption('file', abbr: 'f', defaultsTo: file);
-  parser.addOption('version', abbr: 'v', defaultsTo: '2');
+  parser.addOption('version', abbr: 'v', defaultsTo: '3');
   parser.addOption('sliding-window',abbr: 's',defaultsTo: '10' );
   parser.addFlag('quiet', abbr: 'q', defaultsTo: false);
   var results = parser.parse(args);
@@ -236,37 +236,70 @@ void main(List<String> args) async {
 
     int seqNum = 1;
   bool listen = true;
+  bool send = true;
   Set<int> possibleDupAck = {};
-    Future<void> getPacket(RawDatagramSocket socket, int id, Stream<RawSocketEvent> stream) async {
-      late final int ack;
-      ack = await waitForAckandGetSeqNr(socket,PORT, id, seqNum, stream, quiet, VERSION).then((value) {
-        if (listen) {
-          // Keep listening for Acks
-          getPacket(socket, id, stream);
+    Future<void> getPacket(
+        RawDatagramSocket socket,
+        int id,
+        Stream<RawSocketEvent> stream,
+        int maxSeqNum,
+        Uint8List fileBytes,
+        bool quiet,
+        int version,
+        ) async {
+      await for (var event in stream) {
+        if (!listen) {
+          break;
         }
-        if (possibleDupAck.contains(value)) {
-          possibleDupAck.remove(value);
-          // resend packet
-          seqNum++;
-          if (seqNum < maxSeqNum) {
-            final start = (seqNum - 1) * (MAX_PACKET_SIZE - 6);
-            final end = min(seqNum * (MAX_PACKET_SIZE - 6), fileBytes.length);
-            sendPacket(socket, id, seqNum, fileBytes.sublist(start, end), stream, quiet);
-            return value;
-          } else {
-            return value;
+
+        if (event == RawSocketEvent.read) {
+          Datagram? datagram = socket.receive();
+          if (datagram != null &&  datagram.data.length == 6) {
+            final int transmissionId = datagram.data.buffer.asByteData().getUint16(0);
+            final int seqNr = datagram.data.buffer.asByteData().getUint32(2);
+            if(transmissionId != id) {
+              continue;
+            }
+            if (possibleDupAck.contains(seqNr)) {
+              send = false;
+              printiffalse('Received DupAck: $seqNr', quiet);
+              possibleDupAck.remove(seqNr);
+
+              // Resend packet
+              int value = seqNr + 1;
+              if (value < maxSeqNum) {
+                final start = (value - 1) * (MAX_PACKET_SIZE - 6);
+                final end = min(value * (MAX_PACKET_SIZE - 6), fileBytes.length);
+                await sendPacket(socket, id, value, fileBytes.sublist(start, end), stream, quiet, version: version);
+              }
+              send = true;
+            } else {
+              printiffalse('Received Ack: $seqNr', quiet);
+              possibleDupAck.add(seqNr);
+            }
           }
-        } else {
-          possibleDupAck.add(ack);
-          return value;
-        }} );
+        }
+      }
     }
 // Start listening for acks
-  getPacket(socket, id, stream);
+  getPacket(socket, id, stream, maxSeqNum, fileBytes, quiet, VERSION);
 
   while (seqNum < maxSeqNum) {
-    seqNum = await sendNPackages(slidingWindow, id, seqNum, maxSeqNum, fileBytes, socket, stream);
-    printiffalse('Sliding window wait: ${seqNum - 1}', quiet);
+    if(send) {
+      printiffalse('Sliding window send: $seqNum', quiet);
+      seqNum = await sendNPackages(
+          slidingWindow,
+          id,
+          seqNum,
+          maxSeqNum,
+          fileBytes,
+          socket,
+          stream);
+      printiffalse('Sliding window wait: ${seqNum - 1}', quiet);
+      while(!possibleDupAck.contains(seqNum - 1)) {
+        await Future.delayed(Duration(milliseconds: 1));
+      }
+    }
   }
   }
   // Send the MD5 hash as the last packet
