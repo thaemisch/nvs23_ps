@@ -110,7 +110,6 @@ elif version == 3:
     packet_was_missing = False
     allDataReceived = False
     skippedAlready = False
-    old_window_end = 1
     while not allDataReceived:
         if packet_missing:
             sendDupAckBySQN(missing_packet-1)
@@ -147,6 +146,7 @@ elif version == 3:
                             allDataReceived = True
                             break
                         old_window_end = window_end
+                        old_window_start = window_start
                         # Move the window
                         window_start += window_size
                         window_end += window_size
@@ -154,8 +154,8 @@ elif version == 3:
                             window_end = max_seq_num - 1
                         # Send cumulative ACK
                         if not quiet:
-                            print(f'Window closed: {window_start}-{window_end}')
-                            print(f'Sending cumulative ACK for {window_start}-{window_end}')
+                            print(f'Window closed: {old_window_start}-{old_window_end}')
+                            print(f'Sending cumulative ACK for {old_window_start}-{old_window_end}')
                         sendAckBySQN(old_window_end)
     print("All data received")
     for i in range(1, max_seq_num):
