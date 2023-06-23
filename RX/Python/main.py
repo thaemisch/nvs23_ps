@@ -165,17 +165,12 @@ else:
     print("Invalid Version (can be 1-3)")
     print("Version 1: Basic")
     print("Version 2: + ACK")
-    print("Version 3: + Sliding Window + cumulative ACK")
+    print("Version 3: + Sliding Window")
     sys.exit(1)
 ####
 #
 ####
-
-# Receive the md5 packet
-#signal.signal(signal.SIGALRM, timeout_handler)
-#signal.alarm(20)
-
-#try:
+# Receive the last packet (md5)
 data, addr = sock.recvfrom(max_pack)
 id = int.from_bytes(data[0:2], byteorder='big')
 seq_num = int.from_bytes(data[2:6], byteorder='big')
@@ -185,10 +180,6 @@ if id == transmID:
         print(f'Packet {seq_num} (md5): id={id}, md5={md5}')
 
     sendAck()
-#except TimeoutException as ex:
-#    print("No MD5 packet received after 20 seconds")
-#    print("Exiting...")
-#    sys.exit(1)
 
 ####
 #Finishing Up
