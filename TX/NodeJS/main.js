@@ -283,7 +283,7 @@ async function sendFile(filename) {
     async function waitCumACK(seqNum) {
       await waitForAckPacket(id, seqNum-1).catch(async () => {
         // resend last packet
-        sendNPackages(1, id, seqNum, maxSeqNum, data);
+        sendNPackages(1, id, seqNum - 1, maxSeqNum, data);
         await waitCumACK(seqNum);
       });
       console.log(`seqNum: ${seqNum}`);
