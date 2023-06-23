@@ -22,7 +22,7 @@ jobs:
       run: |
         ls -la
         python -m pip install --upgrade pip
-        pip install -r fun/requirements.txt
+        pip install wordcloud
         python fun/wordCloud.py
         ls -la
         
