@@ -11,6 +11,7 @@ let quiet = false; // Flag, ob die Logausgabe unterdrückt werden soll
 let verbose = false; // Flag, ob die Logausgabe erweitert werden soll
 let version = 3; // Versionsnummer
 let sliding_window_n = 10; //
+let timeout = 1000; // Timeout in ms
 let fileSize, md5sum; // Variablen für die Dateigröße und den MD5-Hash
 
 let sendStats = [0, 0]; // Statistiken über die gesendeten Pakete
@@ -62,6 +63,10 @@ for (let i = 0; i < args.length; i++) {
     case '--sliding-window':
     case '-n':
       sliding_window_n = args[++i];
+      break;
+    case '--timeout':
+    case '-t':
+      timeout = args[++i];
       break;
     case '--help':
     case '-?':
@@ -154,6 +159,7 @@ async function waitForAckPacket(transmissionId, sequenceNumber) {
     // no acks
     return;
   }
+  let timer;
   verboseLog(`Warte auf Bestätigung für Paket ${sequenceNumber}`);
   return new Promise((resolve) => {
     function messageHandler(msg) {
@@ -162,51 +168,21 @@ async function waitForAckPacket(transmissionId, sequenceNumber) {
       if (receivedTransmissionId === transmissionId && receivedSequenceNumber === sequenceNumber) {
         socket.off('message', messageHandler);
         verboseLog(`Bestätigung für Paket ${sequenceNumber} erhalten`);
+        clearTimeout(timer);
         resolve();
       }
     }
-
     socket.on('message', messageHandler);
-  });
-  /*if (version == 3) {
-    // cumulative acks and sliding window with duplicate acks for packets in wrong order
-    verboseLog(`Warte auf Bestätigung für Paket ${sequenceNumber}`);
-    return new Promise((resolve, reject) => {
-      function messageHandler(msg) {
-        const receivedTransmissionId = msg.readUInt16BE(0);
-        const receivedSequenceNumber = msg.readUInt32BE(2);
-        if (receivedTransmissionId === transmissionId && receivedSequenceNumber === sequenceNumber) {
-          socket.off('message', messageHandler);
-          verboseLog(`Bestätigung für Paket ${sequenceNumber} erhalten`);
-          resolve();
-        }
-        else if(receivedTransmissionId === transmissionId /* && receivedSequenceNumber < sequenceNumber*//*) {
-          socket.off('message', messageHandler);
-          verboseLog(`Bestätigung für Paket ${receivedSequenceNumber} erhalten aber ${sequenceNumber} erwartet`);
-          reject(receivedSequenceNumber);
-        }
-      }
 
-      socket.on('message', messageHandler);
-    });
-  }*/
-}
-
-/*function waitForGeneralAckPacket(transmissionId) {
-  return new Promise((resolve) => {
-    function messageHandler(msg) {
-      const receivedTransmissionId = msg.readUInt16BE(0);
-      const receivedSequenceNumber = msg.readUInt32BE(2);
-      if (receivedTransmissionId === transmissionId) {
+    if (version ==  3) {
+      timer = setTimeout(() => {
         socket.off('message', messageHandler);
-        verboseLog(`ACK für ${receivedSequenceNumber} erhalten`);
-        resolve(receivedSequenceNumber);
-      }
+        verboseLog(`Timeout für ACK ${sequenceNumber} abgelaufen`);
+        reject();
+      }, timeout);
     }
-
-    socket.on('message', messageHandler);
   });
-}*/
+}
 
 function sendNPackages(n, id, seqNum, maxSeqNum, data) {
   for (; n > 0; n--) {
@@ -236,8 +212,13 @@ async function sendFile(filename) {
   md5sum = crypto.createHash('md5').update(data).digest('hex');
 
   // Senden des ersten Pakets
-  await sendfirstPacket(id, maxSeqNum, fileName);
-  await waitForAckPacket(id, 0);
+  async function sendFirst(){
+    await sendfirstPacket(id, maxSeqNum, fileName);
+    await waitForAckPacket(id, 0).catch(async () => {
+      await sendFirst();
+    });
+  }
+  await sendFirst();
 
   // Senden der Datei
   if(version != 3) {
@@ -253,7 +234,6 @@ async function sendFile(filename) {
 
   } else {
     // cumulative acks and sliding window with duplicate acks for packets in wrong order
-    let ack;
     let listen = true;
     let possibleDupAck = new Set();
     /*function getPacket(){
@@ -275,9 +255,9 @@ async function sendFile(filename) {
     }
     // start listening for acks
     getPacket();*/
-    function messageHandler(msg) {
+    function msgHandler(msg) {
       if (!listen) {
-        socket.off('message', messageHandler);
+        socket.off('message', msgHandler);
         return;
       }
       const receivedTransmissionId = msg.readUInt16BE(0);
@@ -298,15 +278,25 @@ async function sendFile(filename) {
         }
       }
     }
-    socket.on('message', messageHandler);
+    socket.on('message', msgHandler);
+
+    async function waitCumACK(seqNum) {
+      await waitForAckPacket(id, seqNum-1).catch(async () => {
+        // resend last packet
+        sendNPackages(1, id, seqNum, maxSeqNum, data);
+        await waitCumACK(seqNum);
+      });
+      console.log(`seqNum: ${seqNum}`);
+    }
 
     let seqNum = 1;
     while(seqNum <= maxSeqNum) {
       seqNum = sendNPackages(sliding_window_n, id, seqNum, maxSeqNum, data);
+      await waitCumACK(seqNum);
+      // naive approach by just sliding window when ack is received
       //waitForAckPacket(id, seqNum-1).catch((locseqNum) => {
       //  seqNum = locseqNum;
       //});
-      await waitForAckPacket(id, seqNum-1);
     }
   }
 
@@ -332,5 +322,6 @@ function printHelp() {
   console.log('  -q, --quiet             Suppress log output (overrides -v)');
   console.log('  -v, --verbose           Verbose log output');
   console.log('  -?, --help              Show this help'); 
+  console.log('  -t, --timeout           Timeout for acks (Only applicable if version = 3,default: 1000ms)');
   process.exit(0);
 }
