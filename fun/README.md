@@ -1,1 +1,1 @@
-![wordcloud](wordcloud.svg)
+![wordcloud](commitmsgs_wordcloud.png)
