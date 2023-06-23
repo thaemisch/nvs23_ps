@@ -106,7 +106,7 @@ elif version == 3:
     received_packets = [False] * max_seq_num
     packets_map = {}
     allDataReceived = False
-    while allDataReceived:
+    while not allDataReceived:
         data, addr = sock.recvfrom(max_pack)
         id = int.from_bytes(data[0:2], byteorder='big')
         seq_num = int.from_bytes(data[2:6], byteorder='big')
