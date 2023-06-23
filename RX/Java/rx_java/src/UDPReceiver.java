@@ -7,6 +7,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
@@ -45,14 +46,18 @@ public class UDPReceiver{
     private static int nextWindow;
     private static TreeMap<Integer, byte[]> windowPackets;
     private static ByteBuffer secondReceiverBuffer;
-
+    private static int receiveTimeOut = 10; //ms
+    private static int dupAckDelay = 0; //ms
     // packet variables
+    private static String senderHost;
+    private static int senderPort;
     private static short transmissionID;
+    private static int seqNr = -1;
     private static int maxSeqNr;
     private static String fileName = null;
     private static String MD5Hash;
 
-    public static void main(String[] args) throws SocketException, UnknownHostException{
+    public static void main(String[] args) throws SocketException, UnknownHostException, InterruptedException{
         String host = HOST;
         int bufferSize = BUFFER_SIZE;
         int port = PORT;
@@ -105,6 +110,16 @@ public class UDPReceiver{
                         slidingWindowSize = Integer.parseInt(args[i+1]);
                         i++;
                         break;
+                    case "-t":
+                    case "--timeout":
+                        receiveTimeOut = Integer.parseInt(args[i+1]);
+                        i++;
+                        break;
+                    case "-d":
+                    case "--dup-ack-delay":
+                        dupAckDelay = Integer.parseInt(args[i+1]);
+                        i++;
+                        break;
                     case "--help":
                     case "-?":
                         System.out.println("Options:");
@@ -113,6 +128,10 @@ public class UDPReceiver{
                         System.out.println("-m, --max <size>        Maximum packet size (default: 1472)");
                         System.out.println("-q, --quiet             Suppress log output (overrides -v)");
                         System.out.println("-v, --verbose           Verbose log output");
+                        System.out.println("-V, --version           Version of the protocol (default: 3)");
+                        System.out.println("-n, --sliding-window    Window site (default: 10)");
+                        System.out.println("-t, --timeout           Timeout for packets [ms] (default: 10 ms)");
+                        System.out.println("-d, --dup-ack-delay     Delay between DupAck [ms] (default: 0 ms)");
                         System.out.println("-?, --help              Show this help");
                         System.exit(0);
                     default:
@@ -122,18 +141,23 @@ public class UDPReceiver{
             }
         }
 
-        UDPReceiver.run(host, port, bufferSize);
+        try {
+            UDPReceiver.run(host, port, bufferSize);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
     /**
      * This method contains a loop that terminates once the last packet is received.
-     * @throws UnknownHostException if IP-address is unknown
-     * @throws SocketException if there is an error creating socket object
+     * @throws InterruptedException
+     * @throws IOException
      */
-    public static void run(String host, int port, int bufferSize) throws UnknownHostException, SocketException {
+    public static void run(String host, int port, int bufferSize) throws InterruptedException, IOException {
         IP = InetAddress.getByName(host);
         socket = new DatagramSocket(port, IP);
+        
         boolean done = false;
         byte[] buf = new byte[bufferSize]; // BUFFER_SIZE = data-size + 6Byte (Header)
         DatagramPacket packet = new DatagramPacket(buf, buf.length, IP, port);
@@ -147,14 +171,21 @@ public class UDPReceiver{
         while (!done) {
             try {
                 socket.receive(packet);
-                done = interpretPacket(packet);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
+            } catch (SocketTimeoutException e){
+                if (receivedPackets > 0){
+                    sendACKPacket(seqNr, senderPort, InetAddress.getByName(senderHost));
+                    Thread.sleep(dupAckDelay);
+                    sendACKPacket(seqNr, senderPort, InetAddress.getByName(senderHost));
+                    socket.receive(packet);
+                }
+            } catch (IOException e){
                 e.printStackTrace();
+            }
+            try {
+                done = interpretPacket(packet);
             } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -171,7 +202,7 @@ public class UDPReceiver{
      */
     private static boolean interpretPacket(DatagramPacket packet) throws IOException, NoSuchAlgorithmException, InterruptedException{
         receiverBuffer = ByteBuffer.wrap(packet.getData());
-        int seqNr = -1;
+        
         short receivedTransmissionID = receiverBuffer.getShort(); // get 2 Byte (short) transmission ID
         if(receivedPackets > 0 && receivedTransmissionID != transmissionID){
             return false;
@@ -181,7 +212,11 @@ public class UDPReceiver{
 
         if (seqNr == 0) { // first packet (containing maximum sequence number and file name)
             startTime = new Timestamp(System.currentTimeMillis());  // set start time stamp
-
+            if(userVersionChoice == version.VERSION_THREE){
+                socket.setSoTimeout(receiveTimeOut);
+            }
+            senderHost = packet.getAddress().getHostName();
+            senderPort = packet.getPort();
             maxSeqNr = receiverBuffer.getInt(); // get max. sequence number to know when to stop
             try{
                 fileName = new String(receiverBuffer.array(), 10, 11, "UTF8");  // extract file name
@@ -196,12 +231,11 @@ public class UDPReceiver{
             
             return false;
         } else if (seqNr == maxSeqNr) { // last packet (containing MD5 Checksum)
-            
             if(userVersionChoice == version.VERSION_THREE){
                 for (int i = 0; i < packetReceivedLog.length; i++) {
                     if (!packetReceivedLog[i] && i < windowPackets.size()) {
                         sendACKPacket(nextWindow - 1 - i, packet.getPort(), packet.getAddress());
-                        Thread.sleep(300);
+                        Thread.sleep(dupAckDelay);
                         sendACKPacket(nextWindow - 1 - i, packet.getPort(), packet.getAddress());
                         socket.receive(packet);
                         secondReceiverBuffer = ByteBuffer.wrap(packet.getData());
@@ -215,10 +249,8 @@ public class UDPReceiver{
                 }
                 while(!windowPackets.isEmpty()){
                     Map.Entry<Integer, byte[]> tmpEntry = windowPackets.pollFirstEntry();
-                    outputStream.write(tmpEntry.getValue());
-                   
+                    outputStream.write(tmpEntry.getValue());  
                 }
-                
                 sendACKPacket(maxSeqNr, packet.getPort(), packet.getAddress());
             }
             byte[] MD5Array = new byte[16];
@@ -257,7 +289,7 @@ public class UDPReceiver{
                     for (int i = 0; i < packetReceivedLog.length; i++) {
                         if (!packetReceivedLog[i]) {
                             sendACKPacket(nextWindow - i, packet.getPort(), packet.getAddress());
-                            Thread.sleep(300);
+                            Thread.sleep(dupAckDelay);
                             sendACKPacket(nextWindow - i, packet.getPort(), packet.getAddress());
                             socket.receive(packet);
                             receiverBuffer = ByteBuffer.wrap(packet.getData());
