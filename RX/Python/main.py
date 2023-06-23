@@ -6,30 +6,19 @@ import argparse
 import io
 import time
 
-if len(sys.argv) > 1:
-    if sys.argv[1] == '--help' or sys.argv[1] == '-h':
-        print('Options:')
-        print('  --version <version> Version of the protocol (default: 1)')
-        print('  --host <host>       Host to receive from (default: 127.0.0.1)')
-        print('  --port <port>       Port to receive from (default: 12345)')
-        print('  --max <size>        Maximum packet size (default: 1500)')
-        print('  --window <size>     Window size (default: 5)')
-        print('  --quiet             Do not print anything to the terminal')
-        print('  --save              Save the received file to disk')
-        print('  --help              Show this help')
-        sys.exit(0)
 
 # Create an argument parser
-parser = argparse.ArgumentParser(description='Process some command line arguments.')
+parser = argparse.ArgumentParser(description='command line arguments.')
 
-# Add arguments
-parser.add_argument('--version', type=int, default=3, help='Version of the protocol (default: 3)')
-parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to send to (default: 127.0.0.1)')
-parser.add_argument('--port', type=int, default=12345, help='Port to send to (default: 12345)')
-parser.add_argument('--max', type=int, default=1500, help='Maximum packet size (default: 1500)')
-parser.add_argument('--window', type=int, default=10, help='Window size (default: 10)')
-parser.add_argument('--quiet', action='store_true', help='Do not print anything to the terminal')
-parser.add_argument('--save', action='store_true', help='Save the received file to disk')
+# Add arguments to the parser
+parser.add_argument('-q', '--quiet', action='store_true', help='Do not print anything to the terminal')
+parser.add_argument('-s', '--save', action='store_true', help='Save the received file to disk')
+parser.add_argument('-v', '--version', metavar='$', type=int, default=3, help='Version of the protocol (default: 3)')
+parser.add_argument('-m', '--max', metavar='$', type=int, default=1500, help='Maximum packet size (default: 1500)')
+parser.add_argument('-n', '--window', metavar='$', type=int, default=10, help='Window size (default: 10)')
+parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to receive from (default: 127.0.0.1)')
+parser.add_argument('--port', type=int, default=12345, help='Port to receive from (default: 12345)')
+parser.add_argument('-w', '--windows', action='store_true', help='Adds delays, because windows is too slow')
 
 # Parse the arguments
 args = parser.parse_args()
@@ -42,6 +31,7 @@ max_pack = args.max
 quiet = args.quiet
 save = args.save
 window_size = args.window
+windows = args.windows
 
 # Define the variables
 seq_num = 0
@@ -68,7 +58,8 @@ def sendAckBySQN(sqn):
 
 def sendDupAckBySQN(sqn):
     sendAckBySQN(sqn)
-    time.sleep(0.5)
+    if windows:
+        time.sleep(0.5)
     sendAckBySQN(sqn)
 
 # Receive the first packet
@@ -119,7 +110,10 @@ elif version == 3:
             packet_missing = False
             packet_was_missing = True
         # Timeout for receiving packet
-        sock.settimeout(1)
+        if windows:
+            sock.settimeout(1)
+        else:
+            sock.settimeout(0.1)
         try:
             data, addr = sock.recvfrom(max_pack)
             id = int.from_bytes(data[0:2], byteorder='big')
