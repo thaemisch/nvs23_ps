@@ -97,11 +97,13 @@ public class UDPReceiver{
                         } else if (args[i+1] == "1") {
                             userVersionChoice = version.VERSION_ONE;
                         }
+                        i++;
                         break;
-                    case "n":
+                    case "-n":
                     case "--sliding-window":
                         userVersionChoice = version.VERSION_THREE;
                         slidingWindowSize = Integer.parseInt(args[i+1]);
+                        i++;
                         break;
                     case "--help":
                     case "-?":
@@ -152,6 +154,8 @@ public class UDPReceiver{
                 e.printStackTrace();
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
         socket.close();
@@ -163,8 +167,9 @@ public class UDPReceiver{
      * @throws NoSuchAlgorithmException
      * @return true if last packet is received
      * @return false if last transmission is still ongoing (last packet not received yet)
+     * @throws InterruptedException
      */
-    private static boolean interpretPacket(DatagramPacket packet) throws IOException, NoSuchAlgorithmException{
+    private static boolean interpretPacket(DatagramPacket packet) throws IOException, NoSuchAlgorithmException, InterruptedException{
         receiverBuffer = ByteBuffer.wrap(packet.getData());
         int seqNr = -1;
         short receivedTransmissionID = receiverBuffer.getShort(); // get 2 Byte (short) transmission ID
@@ -196,6 +201,7 @@ public class UDPReceiver{
                 for (int i = 0; i < packetReceivedLog.length; i++) {
                     if (!packetReceivedLog[i] && i < windowPackets.size()) {
                         sendACKPacket(nextWindow - 1 - i, packet.getPort(), packet.getAddress());
+                        Thread.sleep(300);
                         sendACKPacket(nextWindow - 1 - i, packet.getPort(), packet.getAddress());
                         socket.receive(packet);
                         secondReceiverBuffer = ByteBuffer.wrap(packet.getData());
@@ -251,6 +257,7 @@ public class UDPReceiver{
                     for (int i = 0; i < packetReceivedLog.length; i++) {
                         if (!packetReceivedLog[i]) {
                             sendACKPacket(nextWindow - i, packet.getPort(), packet.getAddress());
+                            Thread.sleep(300);
                             sendACKPacket(nextWindow - i, packet.getPort(), packet.getAddress());
                             socket.receive(packet);
                             receiverBuffer = ByteBuffer.wrap(packet.getData());
