@@ -4,8 +4,9 @@ import subprocess
 
 # Get all GitHub commit messages via command line
 # git log --pretty=format:%s > commitMessages.txt
-output = subprocess.check_output(['git', 'log', '--pretty=format:%s'])
-textParts = output.decode('utf-8').split('\n')
+subprocess.call(['git', 'log', '--pretty=format:%s', '>', 'commitmsgs.txt'])
+with open('commitmsgs.txt', 'r') as f:
+    textParts = f.read().split('\n')
 
 for textPart in textParts:
     if "merge" in textPart.lower():
