@@ -132,8 +132,6 @@ elif version == 3:
                     print(f'Packet {seq_num}: id={id}')
                 if seq_num == window_end or packet_was_missing:
                     packet_was_missing = False
-                    if not quiet:
-                        print(f'Window closed: {window_start}-{window_end}')
                     # Check if all packets in the window have been received
                     window_closed = True
                     for i in range(window_start, window_end+1):
@@ -156,6 +154,7 @@ elif version == 3:
                             window_end = max_seq_num - 1
                         # Send cumulative ACK
                         if not quiet:
+                            print(f'Window closed: {window_start}-{window_end}')
                             print(f'Sending cumulative ACK for {window_start}-{window_end}')
                         sendAckBySQN(old_window_end)
     print("All data received")
