@@ -4,14 +4,7 @@ import hashlib
 import sys
 import argparse
 import io
-import signal
 import time
-
-class TimeoutException(Exception):
-    pass
-
-def timeout_handler(signum, frame):
-    raise TimeoutException("Function timed out")
 
 if len(sys.argv) > 1:
     if sys.argv[1] == '--help' or sys.argv[1] == '-h':
@@ -126,15 +119,14 @@ elif version == 3:
             packet_missing = False
             packet_was_missing = True
         # Timeout for receiving packet
-        signal.signal(signal.SIGALRM, timeout_handler)
-        signal.alarm(1)
+        sock.settimeout(1)
         try:
             data, addr = sock.recvfrom(max_pack)
             id = int.from_bytes(data[0:2], byteorder='big')
             seq_num = int.from_bytes(data[2:6], byteorder='big')
-        except TimeoutException:
+        except socket.timeout:
             sendDupAckBySQN(seq_num-1)
-            print(f'Packet {seq_num-1} is missing, sending duplicate ACK')
+            print(f'Timeout: Packet {seq_num-1} is missing, sending duplicate ACK')
             continue
         if id == transmID and seq_num >= window_start and seq_num <= window_end:
             # Test duplicate ACKs by skipping the 3rd packet once
