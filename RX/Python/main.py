@@ -5,6 +5,7 @@ import sys
 import argparse
 import io
 import signal
+import time
 
 class TimeoutException(Exception):
     pass
@@ -74,6 +75,7 @@ def sendAckBySQN(sqn):
 
 def sendDupAckBySQN(sqn):
     sendAckBySQN(sqn)
+    time.sleep(0.5)
     sendAckBySQN(sqn)
 
 # Receive the first packet
