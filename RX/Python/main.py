@@ -6,30 +6,18 @@ import argparse
 import io
 import time
 
-if len(sys.argv) > 1:
-    if sys.argv[1] == '--help' or sys.argv[1] == '-h':
-        print('Options:')
-        print('  --version <version> Version of the protocol (default: 1)')
-        print('  --host <host>       Host to receive from (default: 127.0.0.1)')
-        print('  --port <port>       Port to receive from (default: 12345)')
-        print('  --max <size>        Maximum packet size (default: 1500)')
-        print('  --window <size>     Window size (default: 5)')
-        print('  --quiet             Do not print anything to the terminal')
-        print('  --save              Save the received file to disk')
-        print('  --help              Show this help')
-        sys.exit(0)
 
 # Create an argument parser
-parser = argparse.ArgumentParser(description='Process some command line arguments.')
+parser = argparse.ArgumentParser(description='command line arguments.')
 
-# Add arguments
-parser.add_argument('--version', type=int, default=3, help='Version of the protocol (default: 3)')
-parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to send to (default: 127.0.0.1)')
-parser.add_argument('--port', type=int, default=12345, help='Port to send to (default: 12345)')
-parser.add_argument('--max', type=int, default=1500, help='Maximum packet size (default: 1500)')
-parser.add_argument('--window', type=int, default=10, help='Window size (default: 10)')
-parser.add_argument('--quiet', action='store_true', help='Do not print anything to the terminal')
-parser.add_argument('--save', action='store_true', help='Save the received file to disk')
+# Add arguments to the parser
+parser.add_argument('-q', '--quiet', action='store_true', help='Do not print anything to the terminal')
+parser.add_argument('-s', '--save', action='store_true', help='Save the received file to disk')
+parser.add_argument('-v', '--version', metavar='$', type=int, default=3, help='Version of the protocol (default: 3)')
+parser.add_argument('-m', '--max', metavar='$', type=int, default=1500, help='Maximum packet size (default: 1500)')
+parser.add_argument('-n', '--window', metavar='$', type=int, default=10, help='Window size (default: 10)')
+parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to receive from (default: 127.0.0.1)')
+parser.add_argument('--port', type=int, default=12345, help='Port to receive from (default: 12345)')
 
 # Parse the arguments
 args = parser.parse_args()
