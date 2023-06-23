@@ -104,12 +104,13 @@ if version == 1 or version == 2:
             data_output.write(packet_data)
             if not quiet:
                 print(f'Packet {seq_num}: id={id}')
-                #print(f'data={packet_data}')
             if version == 2:
                 sendAck()
 elif version == 3:
     window_start = 1
     window_end = window_start + window_size - 1
+    if window_end = max_seq_num:
+        window_end = max_seq_num - 1
     received_packets = [False] * max_seq_num
     packets_map = {}
     missing_packet = 1
