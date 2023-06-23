@@ -1,1 +1,270 @@
+Update wordcloud.yml
+Add WorldCloud
 workflow test
+workflow test
+Update wordcloud.yml
+Update wordcloud.yml
+workflow test
+workflow test
+py auto os detect
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+new arguement --windows
+Update wordcloud.yml
+wordcloud cleanup
+Add WorldCloud
+args for dup ack delay and timeout
+Add WorldCloud
+Update wordcloud.yml
+Add WorldCloud
+Update wordcloud.yml
+Update wordcloud.yml
+Update wordcloud.yml
+Update wordcloud.yml
+test
+workflows
+Update wordcloud.yml
+Update wordcloud.yml
+Create wordcloud.yml
+save wordcloud
+funny fun restructure
+funny fun cleanup
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+added new script =)
+made it slower for windows (-w, --windows) skull emoji
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+beautified arg parser
+fixed sliding window parameter bug
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+Update tx.dart
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+added windoof support for timeout
+fix sliding window(hopefully)
+removed signal based timeout once again
+py readme & requirements.txt
+x
+x
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+fix for Timeout
+wordcloud lol
+increased timeout between dup acks to 0.5s because your windows fucking sucks
+E
+added sleep between dup acks
+fixed reject
+dummy fix
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+added timeout
+fix for first window being to big
+sliding window fix for last window packet missing
+fix not sending MD5 if 1 in window
+fixed no cum ack
+default version now 3
+clean up
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+new background listen and fixed socket not closing
+fixed wrong prints
+print was at the wrong place at the wrong time
+update
+sliding window: reloaded; now actually working
+gitignore drawio
+version 3 probably working?!?!?!? (only in combination with Dart TX)
+added debugging for duplicate acks
+delete debug print statements
+add support for sliding window (might work, might not work)
+fix
+fix
+wait for first Package ACK
+fixed sliding window even more
+dupAck will now send the nextPackage again
+fixes + flowchart
+fix sliding window to break out of while
+changed behaviour of sliding window
+removed timeout for md5 packet
+smol fix for sliding window
+smol fix in help output
+version as parameter, first try sliding window
+updated sliding window
+versionized
+wtf github
+frick js and methode overload
+definitly not bugged perfect V3 verusch 1
+mal so implementirt, dass sliding window exestiert und bei ack auf diese seqNummer zurückgesetzt wird
+parameterized & arged window size
+first try sliding window, might work, idk
+just some fix ups
+now with --version and -n
+version support (working only for small files for some reason, waiting for RX version support)
+ja
+fix: md5packet might not be received
+from MB to Mb
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+removed double try-catch
+only cancel when ack was right, improve name for file
+remove unnecessary if
+well apparently Im optimising Python now
+update
+switch from messung.md to README.md
+file structure updates
+update
+sth improvment
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+too much cleanup
+removed autorun overhead
+import cleanup
+removed script overhead timing
+cleanup
+cleanup + imporvments
+nicer output
+improvments
+update
+messung V2 1KB added
+msssung 2 added
+clean up + timeout function
+update
+ack now variable and seq_num can be what it wants
+update
+can show acks now
+functional overhall
+visual (cmd) improvement
+fixed -v and -q arguments bug
+improvments
+fix
+now with --size and --file
+new --file option
+now with file generation
+nicer formating
+improvment
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+added timer and optimised stufd
+improve debug print statements
+create wrapper for prints
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+await for last package now
+fix
+smol fix
+fixed output format
+output string fix
+last packet sends ACK now
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps + sqNr Fix in dart
+fix stop and wait, improve prints and more
+transmissionID check
+code cleanup / reduction
+python now handles wrong transmission ids
+implemented Stop/Wait, did some changes in code structure
+chance: now maxSeqNum is last package Number. Hopefully
+now with progressbar + some optimisation
+rework
+update
+für julian
+smooth brain moment
+--quiet for python, java pending
+added --quiet mode
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+fix error
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+now with --folder option
+ignored test and copy files
+now as a main plot.py with path option
+now with --quiet use
+ack added
+theoretischer fix
+readd stop and wait support
+add quiet option and more
+add support for stop and wait (might work, might not work)
+fix
+optimierungen
+now with ack
+more args
+added --quiet support
+fix
+jetzt mit Speed
+empty
+removed import
+no more errors
+chance to threading for sniffing reasons
+more resilient version
+new ploting
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+fix
+plots
+raw caputres
+fix
+more automatisation
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+chance runner to subsystem for better controll
+add dependency
+and you get a fix
+more fixes
+eeemootional daamage
+jes i forgor
+added autoRun.py v1
+commandline arguments support
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+fix
+leck oash
+even more customizability
+cmd fix
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+optimierung
+mate honestly
+whopsi c&p errrror
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+ups
+cmdl args
+add cmd support
+more customizability
+cleanup old messungen
+packet_size change
+ups
+better formating
+automated all plots
+bessere graphen
+Probleme sind immer relativ
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+added some comments and javadoc
+fix links
+md
+md
+updated messungen.md
+messungen dart -> java
+messungen node -> java
+fix md
+no delay needed in Dart TX?
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+No need for Delay in Dart TX?
+added messungen.md
+messungen dart -> python
+messungen node -> python
+Delete node_python.md
+Update node_python.md
+Update node_python.md
+md test
+plot.py now working
+ploter
+added graph plotter - 1st try
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+ByteBuffer instead of byte array, code cleanup
+added directories for packet captures
+code cleanup, make print statements more readable
+typo -_-
+typo
+improve prints and more
+fix dart tx bugs
+some modifications in output
+fixed split packages
+java receiver v1 i guess
+fixed: md5 check passes for single data packets
+added support for split packets, but fucked md5 check?
+fixed transimssion bug
+string to bytes
+bugfixes
+first try dart?
+higher buffer size
+Python RX added
+chanced to byte architecture
+Fix, the last packet did not send correctly
+upsi
+v1 Note: I have no clue if this is to spec
+Merge branch 'main' of https://github.com/haemtim/nvs23_ps
+npm init
+added gitignore
+init
