@@ -1,0 +1,46 @@
+name: Generate WordCloud
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: run wordlCloud.py
+      run: |
+        ls -la
+        python -m pip install --upgrade pip
+        pip install -r fun/requirements.txt
+        python fun/wordCloud.py
+        ls -la
+        
+    - name: Commit file
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "github-actions"
+        git add .
+        if [-z "$(git status --porcelain)"]; then
+          echo "::set-output name=push::false"
+        else
+          git commit -m "Add WorldCloud" -a
+          echo "::set-output name=push::true"
+        fi
+      shell: bash
+      
+    - name: Push changes
+      if: steps.commit.outputs.push == 'true'
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
