@@ -4,7 +4,9 @@ import subprocess
 
 # Get all GitHub commit messages via command line
 # git log --pretty=format:%s > commitMessages.txt
-subprocess.call(['git', 'log', '--pretty=format:%s', '>', 'commitmsgs.txt'])
+# Execute the git log command and redirect the output to a file
+with open('commitmsgs.txt', 'w') as f:
+    subprocess.run(['git', 'log', '--pretty=format:%s'], stdout=f)
 with open('commitmsgs.txt', 'r') as f:
     textParts = f.read().split('\n')
 
