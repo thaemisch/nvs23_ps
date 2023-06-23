@@ -14,6 +14,9 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class UDPReceiver{
 
@@ -30,14 +33,18 @@ public class UDPReceiver{
     private static ByteArrayOutputStream outputStream = new ByteArrayOutputStream();    // to write packet data to stream
     private static ByteBuffer receiverBuffer;   // simplifies extraction of header and data part in packet (byte array with lots of bitwise shifts could be used as well)
     private static boolean quiet = false;
-    private static boolean verbose = false;
+    private static boolean verbose = true;
     private static enum version{
         VERSION_ONE,
         VERSION_TWO,
         VERSION_THREE
     };
     private static version userVersionChoice = version.VERSION_THREE; //default
-    private static int slidingWindow = 10; 
+    private static int slidingWindowSize = 10;
+    private static boolean packetReceivedLog[];
+    private static int nextWindow;
+    private static TreeMap<Integer, byte[]> windowPackets;
+    private static ByteBuffer secondReceiverBuffer;
 
     // packet variables
     private static short transmissionID;
@@ -94,7 +101,7 @@ public class UDPReceiver{
                     case "n":
                     case "--sliding-window":
                         userVersionChoice = version.VERSION_THREE;
-                        slidingWindow = Integer.parseInt(args[i+1]);
+                        slidingWindowSize = Integer.parseInt(args[i+1]);
                         break;
                     case "--help":
                     case "-?":
@@ -112,23 +119,28 @@ public class UDPReceiver{
                 }
             }
         }
+
         UDPReceiver.run(host, port, bufferSize);
+
     }
 
     /**
-    * This method contains a loop that terminates once the last packet is received.
-    * @throws UnknownHostException if IP-address is unknown
-    * @throws SocketException if there is an error creating socket object
-    */
+     * This method contains a loop that terminates once the last packet is received.
+     * @throws UnknownHostException if IP-address is unknown
+     * @throws SocketException if there is an error creating socket object
+     */
     public static void run(String host, int port, int bufferSize) throws UnknownHostException, SocketException {
         IP = InetAddress.getByName(host);
         socket = new DatagramSocket(port, IP);
         boolean done = false;
         byte[] buf = new byte[bufferSize]; // BUFFER_SIZE = data-size + 6Byte (Header)
         DatagramPacket packet = new DatagramPacket(buf, buf.length, IP, port);
-        
+        nextWindow = slidingWindowSize;
+        windowPackets = new TreeMap<>();
+        packetReceivedLog = new boolean[slidingWindowSize];
+
         log("Receiver listening (IP: " + IP.getHostAddress() + ", port: " + port + ", buffer size: " + bufferSize + ")...", false);
-        
+
         // loop runs until done == false which means the last packet was received (see interpretPacket())
         while (!done) {
             try {
@@ -146,12 +158,12 @@ public class UDPReceiver{
     }
 
     /**
-    * This method interprets a packet.
-    * @throws IOException 
-    * @throws NoSuchAlgorithmException 
-    * @return true if last packet is received
-    * @return false if last transmission is still ongoing (last packet not received yet)
-    */
+     * This method interprets a packet.
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @return true if last packet is received
+     * @return false if last transmission is still ongoing (last packet not received yet)
+     */
     private static boolean interpretPacket(DatagramPacket packet) throws IOException, NoSuchAlgorithmException{
         receiverBuffer = ByteBuffer.wrap(packet.getData());
         int seqNr = -1;
@@ -160,7 +172,7 @@ public class UDPReceiver{
             return false;
         }
         transmissionID = receivedTransmissionID;
-        seqNr = receiverBuffer.getInt();    // get 4 Byte (Integer) sequence number 
+        seqNr = receiverBuffer.getInt();    // get 4 Byte (Integer) sequence number
 
         if (seqNr == 0) { // first packet (containing maximum sequence number and file name)
             startTime = new Timestamp(System.currentTimeMillis());  // set start time stamp
@@ -172,12 +184,42 @@ public class UDPReceiver{
                 e.printStackTrace();
             }
             verboseLog("Packet " + seqNr + " received");
+
+            receivedPackets++;
+            
+            sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
+            
+            return false;
         } else if (seqNr == maxSeqNr) { // last packet (containing MD5 Checksum)
+            
+            if(userVersionChoice == version.VERSION_THREE){
+                for (int i = 0; i < packetReceivedLog.length; i++) {
+                    if (!packetReceivedLog[i] && i < windowPackets.size()) {
+                        sendACKPacket(nextWindow - 1 - i, packet.getPort(), packet.getAddress());
+                        sendACKPacket(nextWindow - 1 - i, packet.getPort(), packet.getAddress());
+                        socket.receive(packet);
+                        secondReceiverBuffer = ByteBuffer.wrap(packet.getData());
+                        transmissionID = secondReceiverBuffer.getShort();
+                        seqNr = secondReceiverBuffer.getInt();
+                        byte dataArray[] = new byte[packet.getLength() - secondReceiverBuffer.position()];    // data byte array of packet size minus current position of ByteBuffer (will 6 Bytes)
+                        secondReceiverBuffer.get(dataArray);
+                        windowPackets.put(seqNr, dataArray);
+                        receivedPackets++;
+                    }
+                }
+                while(!windowPackets.isEmpty()){
+                    Map.Entry<Integer, byte[]> tmpEntry = windowPackets.pollFirstEntry();
+                    outputStream.write(tmpEntry.getValue());
+                   
+                }
+                
+                sendACKPacket(maxSeqNr, packet.getPort(), packet.getAddress());
+            }
             byte[] MD5Array = new byte[16];
             receiverBuffer = receiverBuffer.get(MD5Array);  // get MD5 hash and save in byte array
             MD5Hash = bytesToHex(MD5Array); // convert to hex-number as String
-            
-            outputStream.close();   // now the output-stream can be closed 
+
+            outputStream.close();   // now the output-stream can be closed
             verboseLog("Packet " + seqNr + " received");
             if(userVersionChoice != version.VERSION_ONE){
                 sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
@@ -198,29 +240,53 @@ public class UDPReceiver{
             //end of transmission
             return true;
         } else {
-            // normal data packet (containing only data)
             byte[] dataArray = new byte[packet.getLength() - receiverBuffer.position()];    // data byte array of packet size minus current position of ByteBuffer (will 6 Bytes)
             receiverBuffer.get(dataArray);  // get data
             verboseLog("Packet " + seqNr + " received");
-            outputStream.write(dataArray);  // write data to output-stream
-        }
-        receivedPackets++;
-        if(userVersionChoice == version.VERSION_TWO){
-            sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
-        } else if (userVersionChoice == version.VERSION_THREE){
-            if (seqNr > 0 && (seqNr + 1) % 10 == 0){
+
+            if(userVersionChoice == version.VERSION_THREE){
+                windowPackets.put(seqNr-1, dataArray);
+                packetReceivedLog[(seqNr-1) % slidingWindowSize] = true;
+                if (seqNr == nextWindow){
+                    for (int i = 0; i < packetReceivedLog.length; i++) {
+                        if (!packetReceivedLog[i]) {
+                            sendACKPacket(nextWindow - i, packet.getPort(), packet.getAddress());
+                            sendACKPacket(nextWindow - i, packet.getPort(), packet.getAddress());
+                            socket.receive(packet);
+                            receiverBuffer = ByteBuffer.wrap(packet.getData());
+                            transmissionID = receiverBuffer.getShort();
+                            seqNr = receiverBuffer.getInt();
+                            dataArray = new byte[packet.getLength() - receiverBuffer.position()];    // data byte array of packet size minus current position of ByteBuffer (will 6 Bytes)
+                            receiverBuffer.get(dataArray);
+                            windowPackets.put(seqNr, dataArray);
+                            receivedPackets++;
+                        }
+                    }
+                    Arrays.fill(packetReceivedLog, false);
+                    while(!windowPackets.isEmpty()){
+                        Map.Entry<Integer, byte[]> tmpEntry = windowPackets.pollFirstEntry();
+                        outputStream.write(tmpEntry.getValue());
+                    }
+                    sendACKPacket(nextWindow, packet.getPort(), packet.getAddress());
+                    nextWindow += slidingWindowSize;
+                }
+            } else {
+                outputStream.write(dataArray);  // write data to output-stream
+            }
+            receivedPackets++;
+            if (userVersionChoice == version.VERSION_TWO) {
                 sendACKPacket(seqNr, packet.getPort(), packet.getAddress());
             }
+            return false;
         }
-        return false;
     }
 
     /**
-    * Sends an ACK-packet to Transmitter after receiving a packet
-    * @param seqNr 
-    * @param port
-    * @param transmitterAddress
-    */
+     * Sends an ACK-packet to Transmitter after receiving a packet
+     * @param seqNr
+     * @param port
+     * @param transmitterAddress
+     */
     private static void sendACKPacket(int seqNr, int port, InetAddress transmitterAddress){
         try {
             ByteBuffer messageBuffer = ByteBuffer.allocate(6);
@@ -228,7 +294,7 @@ public class UDPReceiver{
             messageBuffer.putInt(seqNr);
 
             DatagramPacket packet = new DatagramPacket(messageBuffer.array(), messageBuffer.array().length, transmitterAddress, port);
-            
+
             socket.send(packet);
             verboseLog("ACK for packet " + seqNr + " sent");
 
@@ -238,31 +304,31 @@ public class UDPReceiver{
     }
 
     /**
-    * Converts byte array to hex-number as String. (used for MD5 Hash)
-    * @param hex-number as byte array
-    * @return hex-number as string
-    */
+     * Converts byte array to hex-number as String. (used for MD5 Hash)
+     * @param bytes: hex-number as byte array
+     * @return hex-number as string
+     */
     private static String bytesToHex(byte[] bytes) {
         return new BigInteger(1, bytes).toString(16);
     }
 
     /**
-    * writes output-stream to file.
-    * @throws IOException 
-    */
+     * writes output-stream to file.
+     * @throws IOException
+     */
     private static void writeToFile() throws IOException{
         FileOutputStream out = new FileOutputStream(fileName.trim(), false);
-        out.write(outputStream.toByteArray());  
+        out.write(outputStream.toByteArray());
         out.close();
     }
 
     /**
-    * creates MD5-sum of transmitted file and compares both.
-    * @throws IOException
-    * @throws NoSuchAlgorithmException 
-    * @return true if they are equal
-    * @return false otherwise
-    */
+     * creates MD5-sum of transmitted file and compares both.
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @return true if they are equal
+     * @return false otherwise
+     */
     private static boolean checkMD5Sum() throws IOException, NoSuchAlgorithmException{
         byte[] data = Files.readAllBytes(Paths.get(fileName.trim()));
         byte[] hash = MessageDigest.getInstance("MD5").digest(data);
@@ -282,7 +348,7 @@ public class UDPReceiver{
         if (!quiet) {
             if (error)
                 System.err.println(text);
-            else 
+            else
                 System.out.println(text);
         }
     }
