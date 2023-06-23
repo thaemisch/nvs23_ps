@@ -24,6 +24,7 @@ jobs:
         ls -la
         python -m pip install --upgrade pip
         pip install wordcloud
+        git log --pretty=format:"%s" > commitmsgs.txt
         python wordCloud.py
         ls -la
         
