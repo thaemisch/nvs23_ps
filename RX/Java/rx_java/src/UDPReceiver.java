@@ -120,6 +120,12 @@ public class UDPReceiver{
                         dupAckDelay = Integer.parseInt(args[i+1]);
                         i++;
                         break;
+                    case "--windows":
+                        dupAckDelay = Integer.parseInt(args[i+1]);
+                        i++;
+                        receiveTimeOut = Integer.parseInt(args[i+1]);
+                        i++;
+                        break;
                     case "--help":
                     case "-?":
                         System.out.println("Options:");
@@ -131,6 +137,7 @@ public class UDPReceiver{
                         System.out.println("-V, --version           Version of the protocol (default: 3)");
                         System.out.println("-n, --sliding-window    Window site (default: 10)");
                         System.out.println("-t, --timeout           Timeout for packets [ms] (default: 10 ms)");
+                        System.out.println("--windows               DupAck Delay [ms] and Timeout for packets [ms] (default: 0 ms and 10 ms)");
                         System.out.println("-d, --dup-ack-delay     Delay between DupAck [ms] (default: 0 ms)");
                         System.out.println("-?, --help              Show this help");
                         System.exit(0);
