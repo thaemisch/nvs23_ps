@@ -88,10 +88,8 @@ Future<void> waitForAck(RawDatagramSocket socket, int port, int seqNr, int id,
   late StreamSubscription<RawSocketEvent> sub;
   bool valid = false;
 
-  print(id);
   // Listen for data events on the socket
   sub = stream.listen((event) async {
-    print("id in waitforack: $id");
     if (event == RawSocketEvent.read) {
       final datagram = socket.receive();
       if (datagram == null) {
@@ -99,7 +97,6 @@ Future<void> waitForAck(RawDatagramSocket socket, int port, int seqNr, int id,
       } else {
         final data = datagram.data;
         if (data.length == 6) {
-          print("id in inner waitforack: $id");
           valid = _processAckPacket(data, seqNr, id, quiet);
           if (valid) {
             await sub.cancel();
@@ -117,7 +114,6 @@ Future<int> waitForAckandGetSeqNr(RawDatagramSocket socket, int port, int id, in
   final completer = Completer<int>(); // Completer to signal method completion
   late StreamSubscription<RawSocketEvent> sub;
   bool valid = false;
-  print("SeqNrwait: $id");
   // Listen for data events on the socket
   sub = stream.listen((event) async {
     if (event == RawSocketEvent.read) {
@@ -127,7 +123,6 @@ Future<int> waitForAckandGetSeqNr(RawDatagramSocket socket, int port, int id, in
       } else {
         final data = datagram.data;
         if (data.length == 6) {
-          print("id in inner waitforackseqNr: $id");
           valid = _processAckPacket(data, seqNr, id, quiet);
           if (valid) {
             seqNr = data.buffer.asByteData().getUint32(2);
@@ -272,7 +267,6 @@ void main(List<String> args) async {
   while (seqNum < maxSeqNum) {
     seqNum = await sendNPackages(slidingWindow, id, seqNum, maxSeqNum, fileBytes, socket, stream);
     printiffalse('Sliding window wait: ${seqNum - 1}', quiet);
-    print("id: $id");
   }
   }
   // Send the MD5 hash as the last packet
