@@ -109,7 +109,7 @@ if version == 1 or version == 2:
 elif version == 3:
     window_start = 1
     window_end = window_start + window_size - 1
-    if window_end = max_seq_num:
+    if window_end == max_seq_num:
         window_end = max_seq_num - 1
     received_packets = [False] * max_seq_num
     packets_map = {}
@@ -123,7 +123,7 @@ elif version == 3:
             sendDupAckBySQN(missing_packet-1)
             packet_missing = False
             packet_was_missing = True
-
+        # Timeout for receiving packet
         signal.signal(signal.SIGALRM, timeout_handler)
         signal.alarm(1)
         try:
@@ -172,7 +172,8 @@ elif version == 3:
                             print(f'Window closed: {old_window_start}-{old_window_end}')
                             print(f'Sending cumulative ACK for {old_window_start}-{old_window_end}')
                         sendAckBySQN(old_window_end)
-    print("All data received")
+    if not quiet:
+        print("All data received")
 
 else:
     print("Invalid Version (can be 1-3)")
