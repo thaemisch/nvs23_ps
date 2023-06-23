@@ -13,3 +13,5 @@ RX/Python/60000.file
 *tmp*
 *.class
 __pycache__
+
+*.drawio
