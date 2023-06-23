@@ -192,7 +192,7 @@ async function waitForAckPacket(transmissionId, sequenceNumber) {
   }*/
 }
 
-function waitForGeneralAckPacket(transmissionId) {
+/*function waitForGeneralAckPacket(transmissionId) {
   return new Promise((resolve) => {
     function messageHandler(msg) {
       const receivedTransmissionId = msg.readUInt16BE(0);
@@ -206,12 +206,13 @@ function waitForGeneralAckPacket(transmissionId) {
 
     socket.on('message', messageHandler);
   });
-}
+}*/
 
 function sendNPackages(n, id, seqNum, maxSeqNum, data) {
   for (; n > 0; n--) {
     if(seqNum == maxSeqNum){
       sendLastPacket(id, seqNum, md5sum);
+      seqNum++;
       break;
     } else {
       sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
@@ -255,7 +256,7 @@ async function sendFile(filename) {
     let ack;
     let listen = true;
     let possibleDupAck = new Set();
-    function getPacket(){
+    /*function getPacket(){
       ack = waitForGeneralAckPacket(id).then((seqNum) => {
         if(listen)
           // keep listening for acks 
@@ -273,7 +274,31 @@ async function sendFile(filename) {
       });
     }
     // start listening for acks
-    getPacket();
+    getPacket();*/
+    function messageHandler(msg) {
+      if (!listen) {
+        socket.off('message', messageHandler);
+        return;
+      }
+      const receivedTransmissionId = msg.readUInt16BE(0);
+      const receivedSequenceNumber = msg.readUInt32BE(2);
+      if (receivedTransmissionId === id) {
+        if (possibleDupAck.has(receivedSequenceNumber)) {
+          verboseLog(`DupAck für ${receivedSequenceNumber} erhalten`);
+          possibleDupAck.delete(receivedSequenceNumber);
+          // resend packet
+          const sendeSeqNum = receivedSequenceNumber + 1;
+          if(sendeSeqNum < maxSeqNum)
+            sendPacket(id , sendeSeqNum, data.subarray((sendeSeqNum-1)*(MAX_PACKET_SIZE-6), Math.min( sendeSeqNum*(MAX_PACKET_SIZE-6), fileSize)));
+          else
+            sendLastPacket(id , sendeSeqNum, md5sum);
+        } else {
+          verboseLog(`ACK für ${receivedSequenceNumber} erhalten`);
+          possibleDupAck.add(receivedSequenceNumber);
+        }
+      }
+    }
+    socket.on('message', messageHandler);
 
     let seqNum = 1;
     while(seqNum < maxSeqNum) {
@@ -281,7 +306,6 @@ async function sendFile(filename) {
       //waitForAckPacket(id, seqNum-1).catch((locseqNum) => {
       //  seqNum = locseqNum;
       //});
-      verboseLog(`Sliding window wait: ${seqNum - 1}`);
       await waitForAckPacket(id, seqNum-1);
     }
   }
