@@ -75,7 +75,7 @@ def sendAckBySQN(sqn):
 
 def sendDupAckBySQN(sqn):
     sendAckBySQN(sqn)
-    tim.sleep(0.01)
+    time.sleep(0.01)
     sendAckBySQN(sqn)
 
 # Receive the first packet
