@@ -5,6 +5,7 @@ import sys
 import argparse
 import io
 import time
+import platform
 
 
 # Create an argument parser
@@ -18,7 +19,6 @@ parser.add_argument('-m', '--max', metavar='$', type=int, default=1500, help='Ma
 parser.add_argument('-n', '--window', metavar='$', type=int, default=10, help='Window size (default: 10)')
 parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to receive from (default: 127.0.0.1)')
 parser.add_argument('--port', type=int, default=12345, help='Port to receive from (default: 12345)')
-parser.add_argument('-w', '--windows', action='store_true', help='Adds delays, because windows is too slow')
 
 # Parse the arguments
 args = parser.parse_args()
@@ -31,7 +31,6 @@ max_pack = args.max
 quiet = args.quiet
 save = args.save
 window_size = args.window
-windows = args.windows
 
 # Define the variables
 seq_num = 0
@@ -58,7 +57,7 @@ def sendAckBySQN(sqn):
 
 def sendDupAckBySQN(sqn):
     sendAckBySQN(sqn)
-    if windows:
+    if platform.system() == 'Windows':
         time.sleep(0.5)
     sendAckBySQN(sqn)
 
@@ -109,8 +108,8 @@ elif version == 3:
             sendDupAckBySQN(missing_packet-1)
             packet_missing = False
             packet_was_missing = True
-        # Timeout for receiving packet
-        if windows:
+        # Timeout for receiving packet        
+        if platform.system() == 'Windows':
             sock.settimeout(1)
         else:
             sock.settimeout(0.1)
