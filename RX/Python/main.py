@@ -106,12 +106,12 @@ elif version == 3:
     allDataReceived = False
     skippedAlready = False
     while not allDataReceived:
-        if seq_num == max_seq_num-1:
-            allDataReceived = True
-            break
         if packet_missing:
             sendDupAckBySQN(missing_packet-1)
             packet_missing = False
+        if seq_num == max_seq_num-1:
+            allDataReceived = True
+            break
         packet_was_missing = True
         data, addr = sock.recvfrom(max_pack)
         id = int.from_bytes(data[0:2], byteorder='big')
