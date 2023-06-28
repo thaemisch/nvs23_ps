@@ -34,7 +34,7 @@ public class UDPReceiver{
     private static ByteArrayOutputStream outputStream = new ByteArrayOutputStream();    // to write packet data to stream
     private static ByteBuffer receiverBuffer;   // simplifies extraction of header and data part in packet (byte array with lots of bitwise shifts could be used as well)
     private static boolean quiet = false;
-    private static boolean verbose = true;
+    private static boolean verbose = false;
     private static enum version{
         VERSION_ONE,
         VERSION_TWO,
@@ -48,6 +48,8 @@ public class UDPReceiver{
     private static ByteBuffer secondReceiverBuffer;
     private static int receiveTimeOut = 10; //ms
     private static int dupAckDelay = 0; //ms
+    private static int dupAckCounter = 0;
+    private static boolean throwAway = false;
     // packet variables
     private static String senderHost;
     private static int senderPort;
@@ -126,6 +128,9 @@ public class UDPReceiver{
                         receiveTimeOut = Integer.parseInt(args[i+1]);
                         i++;
                         break;
+                    case "--throwaway":
+                        throwAway = true;
+                        break;
                     case "--help":
                     case "-?":
                         System.out.println("Options:");
@@ -185,7 +190,15 @@ public class UDPReceiver{
                     sendACKPacket(seqNr, senderPort, InetAddress.getByName(senderHost));
                     Thread.sleep(dupAckDelay);
                     sendACKPacket(seqNr, senderPort, InetAddress.getByName(senderHost));
+                    dupAckCounter++;
                     socket.receive(packet);
+                    secondReceiverBuffer = ByteBuffer.wrap(packet.getData());
+                    transmissionID = secondReceiverBuffer.getShort();
+                    seqNr = secondReceiverBuffer.getInt();
+                    byte dataArray[] = new byte[packet.getLength() - secondReceiverBuffer.position()];    // data byte array of packet size minus current position of ByteBuffer (will 6 Bytes)
+                    secondReceiverBuffer.get(dataArray);
+                    windowPackets.put(seqNr, dataArray);
+                    receivedPackets++;
                 }
             } catch (IOException e){
                 e.printStackTrace();
@@ -216,6 +229,9 @@ public class UDPReceiver{
         }
         transmissionID = receivedTransmissionID;
         seqNr = receiverBuffer.getInt();    // get 4 Byte (Integer) sequence number
+        if(seqNr == 3 && userVersionChoice == version.VERSION_THREE && throwAway){
+            return false;
+        }
 
         if (seqNr == 0) { // first packet (containing maximum sequence number and file name)
             startTime = new Timestamp(System.currentTimeMillis());  // set start time stamp
@@ -245,6 +261,7 @@ public class UDPReceiver{
                         Thread.sleep(dupAckDelay);
                         sendACKPacket(nextWindow - 1 - i, packet.getPort(), packet.getAddress());
                         socket.receive(packet);
+                        dupAckCounter++;
                         secondReceiverBuffer = ByteBuffer.wrap(packet.getData());
                         transmissionID = secondReceiverBuffer.getShort();
                         seqNr = secondReceiverBuffer.getInt();
@@ -256,6 +273,7 @@ public class UDPReceiver{
                 }
                 while(!windowPackets.isEmpty()){
                     Map.Entry<Integer, byte[]> tmpEntry = windowPackets.pollFirstEntry();
+                    System.out.println(tmpEntry.getKey());
                     outputStream.write(tmpEntry.getValue());  
                 }
                 sendACKPacket(maxSeqNr, packet.getPort(), packet.getAddress());
@@ -282,6 +300,7 @@ public class UDPReceiver{
             log("Statistics:", false);
             log("\t" + receivedPackets + " packets received", false);
             log("\t" + (endTime.getTime() - startTime.getTime()) + "ms time", false);
+            log("dupAcksCounter = " + dupAckCounter, false);
             //end of transmission
             return true;
         } else {
@@ -290,18 +309,20 @@ public class UDPReceiver{
             verboseLog("Packet " + seqNr + " received");
 
             if(userVersionChoice == version.VERSION_THREE){
-                windowPackets.put(seqNr-1, dataArray);
+                windowPackets.put(seqNr, dataArray);
                 packetReceivedLog[(seqNr-1) % slidingWindowSize] = true;
                 if (seqNr == nextWindow){
                     for (int i = 0; i < packetReceivedLog.length; i++) {
                         if (!packetReceivedLog[i]) {
-                            sendACKPacket(nextWindow - i, packet.getPort(), packet.getAddress());
+                            sendACKPacket(nextWindow - (slidingWindowSize - i), packet.getPort(), packet.getAddress());
                             Thread.sleep(dupAckDelay);
-                            sendACKPacket(nextWindow - i, packet.getPort(), packet.getAddress());
+                            sendACKPacket(nextWindow - (slidingWindowSize - i), packet.getPort(), packet.getAddress());
                             socket.receive(packet);
+                            dupAckCounter++;
                             receiverBuffer = ByteBuffer.wrap(packet.getData());
                             transmissionID = receiverBuffer.getShort();
                             seqNr = receiverBuffer.getInt();
+                            verboseLog("Packet " + seqNr + " received");
                             dataArray = new byte[packet.getLength() - receiverBuffer.position()];    // data byte array of packet size minus current position of ByteBuffer (will 6 Bytes)
                             receiverBuffer.get(dataArray);
                             windowPackets.put(seqNr, dataArray);
@@ -311,6 +332,7 @@ public class UDPReceiver{
                     Arrays.fill(packetReceivedLog, false);
                     while(!windowPackets.isEmpty()){
                         Map.Entry<Integer, byte[]> tmpEntry = windowPackets.pollFirstEntry();
+                        System.out.println(tmpEntry.getKey());
                         outputStream.write(tmpEntry.getValue());
                     }
                     sendACKPacket(nextWindow, packet.getPort(), packet.getAddress());
