@@ -31,7 +31,7 @@ PORT = args.port
 max_pack = args.max
 quiet = args.quiet
 save = args.save
-window_size = args.window
+window_size = args.sliding_window
 throwaway = args.throwaway
 
 # Define the variables
