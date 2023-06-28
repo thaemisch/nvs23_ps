@@ -121,7 +121,8 @@ elif version == 3:
             seq_num = int.from_bytes(data[2:6], byteorder='big')
         except socket.timeout:
             sendDupAckBySQN(seq_num-1)
-            print(f'Timeout: Packet {seq_num-1} is missing, sending duplicate ACK')
+            if not quiet:
+                print(f'Timeout: Packet {seq_num-1} is missing, sending duplicate ACK')
             continue
         if id == transmID and seq_num >= window_start and seq_num <= window_end:
             # Test duplicate ACKs by skipping the 3rd packet once
