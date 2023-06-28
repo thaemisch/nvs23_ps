@@ -111,8 +111,8 @@ async function sendfirstPacket(id, maxSeqNum, fileName) {
       sendStats[1]++;
     } else {
       verboseLog(`Erstes Paket gesendet`);
-      socket.setSendBufferSize(MAX_PACKET_SIZE);
-      socket.setRecvBufferSize(6 * 4); // 6 Byte für ein ACK-Paket
+      //socket.setSendBufferSize(MAX_PACKET_SIZE);
+      //socket.setRecvBufferSize(6 * 4); // 6 Byte für ein ACK-Paket
       sendStats[0]++;
     }
   });
@@ -174,7 +174,7 @@ async function waitForAckPacket(transmissionId, sequenceNumber) {
     }
     socket.on('message', messageHandler);
 
-    if (version ==  3) {
+    if (version ==  3 && sequenceNumber == 0) {
       timer = setTimeout(() => {
         socket.off('message', messageHandler);
         verboseLog(`Timeout für ACK ${sequenceNumber} abgelaufen`);
@@ -286,7 +286,6 @@ async function sendFile(filename) {
         sendNPackages(1, id, seqNum - 1, maxSeqNum, data);
         await waitCumACK(seqNum);
       });
-      console.log(`seqNum: ${seqNum}`);
     }
 
     let seqNum = 1;

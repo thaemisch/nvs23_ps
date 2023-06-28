@@ -96,9 +96,7 @@ if version == 1 or version == 2:
 elif version == 3:
     window_start = 1
     window_end = window_start + window_size - 1
-    if window_end == max_seq_num:
-        window_end = max_seq_num - 1
-    received_packets = [False] * max_seq_num
+    received_packets = [False] * (max_seq_num+1)
     packets_map = {}
     missing_packet = 1
     packet_missing = False
@@ -123,21 +121,21 @@ elif version == 3:
                         print(f'Packet {i} is missing, sending duplicate ACK')
                     continue
             if window_closed:
-                if seq_num == max_seq_num-1:
+                if seq_num == max_seq_num:
                     allDataReceived = True
                 old_window_end = window_end
                 old_window_start = window_start
                 # Move the window
                 window_start += window_size
                 window_end += window_size
-                if window_end >= max_seq_num:
-                    window_end = max_seq_num - 1
+                if window_end > max_seq_num:
+                    window_end = max_seq_num
                 # Send cumulative ACK
                 if not quiet:
                     print(f'Window closed: {old_window_start}-{old_window_end}')
                     print(f'Sending cumulative ACK for {old_window_start}-{old_window_end}')
                 sendAckBySQN(old_window_end)
-        if seq_num == max_seq_num-1:
+        if seq_num == max_seq_num:
             allDataReceived = True
             break
         data, addr = sock.recvfrom(max_pack)
@@ -168,15 +166,15 @@ elif version == 3:
                                 print(f'Packet {i} is missing, sending duplicate ACK')
                             continue
                     if window_closed:
-                        if seq_num == max_seq_num-1:
+                        if seq_num == max_seq_num:
                             allDataReceived = True
                         old_window_end = window_end
                         old_window_start = window_start
                         # Move the window
                         window_start += window_size
                         window_end += window_size
-                        if window_end >= max_seq_num:
-                            window_end = max_seq_num - 1
+                        if window_end > max_seq_num:
+                            window_end = max_seq_num
                         # Send cumulative ACK
                         if not quiet:
                             print(f'Window closed: {old_window_start}-{old_window_end}')
@@ -194,19 +192,21 @@ else:
 ####
 #
 ####
-# Receive the last packet (md5)
-data, addr = sock.recvfrom(max_pack)
-id = int.from_bytes(data[0:2], byteorder='big')
-seq_num = int.from_bytes(data[2:6], byteorder='big')
-if id == transmID:
-    md5 = data[6:22].hex()
-    if not quiet:
-        print(f'Packet {seq_num} (md5): id={id}, md5={md5}')
-
-    sendAck()
+if version == 1 or version == 2:
+    # Receive the last packet (md5)
+    data, addr = sock.recvfrom(max_pack)
+    id = int.from_bytes(data[0:2], byteorder='big')
+    seq_num = int.from_bytes(data[2:6], byteorder='big')
+    if id == transmID:
+        md5 = data[6:22].hex()
+        if not quiet:
+            print(f'Packet {seq_num} (md5): id={id}, md5={md5}')
+        if version == 2:
+            sendAck()
 
 # Piecing the puzzle together
 if version == 3:
+    md5 = packets_map[max_seq_num][0:16].hex()
     for i in range(1, max_seq_num):
         data_output.write(packets_map[i])
 ####

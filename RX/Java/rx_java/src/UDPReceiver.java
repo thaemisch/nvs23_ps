@@ -257,9 +257,9 @@ public class UDPReceiver{
             if(userVersionChoice == version.VERSION_THREE){
                 for (int i = 0; i < packetReceivedLog.length; i++) {
                     if (!packetReceivedLog[i] && i < windowPackets.size()) {
-                        sendACKPacket(nextWindow - 1 - i, packet.getPort(), packet.getAddress());
+                        sendACKPacket(nextWindow - (slidingWindowSize - i), packet.getPort(), packet.getAddress());
                         Thread.sleep(dupAckDelay);
-                        sendACKPacket(nextWindow - 1 - i, packet.getPort(), packet.getAddress());
+                        sendACKPacket(nextWindow - (slidingWindowSize - i), packet.getPort(), packet.getAddress());
                         socket.receive(packet);
                         dupAckCounter++;
                         secondReceiverBuffer = ByteBuffer.wrap(packet.getData());
@@ -273,7 +273,7 @@ public class UDPReceiver{
                 }
                 while(!windowPackets.isEmpty()){
                     Map.Entry<Integer, byte[]> tmpEntry = windowPackets.pollFirstEntry();
-                    System.out.println(tmpEntry.getKey());
+                    //System.out.println(tmpEntry.getKey());
                     outputStream.write(tmpEntry.getValue());  
                 }
                 sendACKPacket(maxSeqNr, packet.getPort(), packet.getAddress());
@@ -332,7 +332,7 @@ public class UDPReceiver{
                     Arrays.fill(packetReceivedLog, false);
                     while(!windowPackets.isEmpty()){
                         Map.Entry<Integer, byte[]> tmpEntry = windowPackets.pollFirstEntry();
-                        System.out.println(tmpEntry.getKey());
+                        //System.out.println(tmpEntry.getKey());
                         outputStream.write(tmpEntry.getValue());
                     }
                     sendACKPacket(nextWindow, packet.getPort(), packet.getAddress());
