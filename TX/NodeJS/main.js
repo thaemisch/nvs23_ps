@@ -234,32 +234,8 @@ async function sendFile(filename) {
 
   } else {
     // cumulative acks and sliding window with duplicate acks for packets in wrong order
-    //let listen = true;
     let possibleDupAck = new Set();
-    /*function getPacket(){
-      ack = waitForGeneralAckPacket(id).then((seqNum) => {
-        if(listen)
-          // keep listening for acks 
-          getPacket();
-        if (possibleDupAck.has(seqNum)) {
-          possibleDupAck.delete(seqNum);
-          // resend packet
-          seqNum++;
-          if(seqNum < maxSeqNum)
-            sendPacket(id , seqNum, data.subarray((seqNum-1)*(MAX_PACKET_SIZE-6), Math.min( seqNum*(MAX_PACKET_SIZE-6), fileSize)));
-          else
-            sendLastPacket(id , seqNum, md5sum);
-        } else 
-          possibleDupAck.add(seqNum);
-      });
-    }
-    // start listening for acks
-    getPacket();*/
     async function msgHandler(msg) {
-      /*if (!listen) {
-        socket.off('message', msgHandler);
-        return;
-      }*/
       const receivedTransmissionId = msg.readUInt16BE(0);
       const receivedSequenceNumber = msg.readUInt32BE(2);
       if (receivedTransmissionId === id) {
@@ -292,11 +268,8 @@ async function sendFile(filename) {
     while(seqNum <= maxSeqNum) {
       seqNum = sendNPackages(sliding_window_n, id, seqNum, maxSeqNum, data);
       await waitCumACK(seqNum);
-      // naive approach by just sliding window when ack is received
-      //waitForAckPacket(id, seqNum-1).catch((locseqNum) => {
-      //  seqNum = locseqNum;
-      //});
     }
+    socket.off('message', msgHandler);
   }
 
   socket.close();
