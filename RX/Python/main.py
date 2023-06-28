@@ -178,10 +178,10 @@ if id == transmID:
 
     sendAck()
 
-
 # Piecing the puzzle together
-for i in range(1, max_seq_num):
-    data_output.write(packets_map[i])
+if version == 3:
+    for i in range(1, max_seq_num):
+        data_output.write(packets_map[i])
 ####
 #Finishing Up
 ####
