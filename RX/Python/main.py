@@ -106,6 +106,9 @@ elif version == 3:
     allDataReceived = False
     skippedAlready = False
     while not allDataReceived:
+        if seq_num == max_seq_num-1:
+            allDataReceived = True
+            break
         if packet_missing:
             sendDupAckBySQN(missing_packet-1)
             packet_missing = False
