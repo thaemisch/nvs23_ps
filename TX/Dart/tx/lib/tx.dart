@@ -216,9 +216,10 @@ void main(List<String> args) async {
 
 }
 
-Future<int> sendNPackages(int n, int id, int seqNum, int maxSeqNum,
-    Uint8List data, RawDatagramSocket socket, Stream<RawSocketEvent> stream,
-    {bool quiet = false, int VERSION = 3}) async {
+Future<int> sendNPackages(int seqNum, int maxSeqNum,
+    Uint8List data,
+    {bool quiet = false}) async {
+  int n = slidingWindow;
   while (n > 0) {
     final start = (seqNum - 1) * (MAX_PACKET_SIZE - 6);
     final end = min(seqNum * (MAX_PACKET_SIZE - 6), data.length);
@@ -234,8 +235,7 @@ Future<int> sendNPackages(int n, int id, int seqNum, int maxSeqNum,
 }
 
 Future<void> sendFile() async{
-
-  if (version != 3) {
+  if (version < 3) {
     for (int seqNum = 1; seqNum < maxSeqNum; seqNum++) {
       // Send the data packets
       final start = (seqNum - 1) * (MAX_PACKET_SIZE - 6);
@@ -281,19 +281,15 @@ Future<void> sendFile() async{
       }
     }
 
-// Start listening for acks
+    // Start listening for acks
     getPacket(maxSeqNum, fileBytes);
 
     while (seqNum < maxSeqNum) {
       printiffalse('Sliding window send: $seqNum', quiet);
       seqNum = await sendNPackages(
-          slidingWindow,
-          id,
           seqNum,
           maxSeqNum,
-          fileBytes,
-          socket,
-          stream);
+          fileBytes, quiet: quiet);
       printiffalse('Sliding window wait: ${seqNum - 1}', quiet);
       while(!possibleDupAck.contains(seqNum - 1)) {
         await Future.delayed(Duration(milliseconds: 1));
