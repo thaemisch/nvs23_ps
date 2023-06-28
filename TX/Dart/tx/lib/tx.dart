@@ -27,6 +27,7 @@ late final Uint8List md5Hash;
 late final int slidingWindow;
 late final int version;
 late final bool quiet;
+bool send = true;
 
 
 Future<void> sendFirstPacket(int maxSeqNum,
@@ -58,7 +59,13 @@ Future<void> sendFirstPacket(int maxSeqNum,
   } else {
     printiffalse('Paket 0 (init) erfolgreich gesendet', quiet);
   }
-  if (version > 1) await waitForAck(0);
+  if (version > 1){
+    try {
+      await waitForAck(0).timeout(Duration(seconds: 2));
+    } catch (e) {
+      return sendFirstPacket(maxSeqNum, fileName);
+    }
+  }
 }
 
 Future<void> sendPacket(int seqNum,
@@ -186,7 +193,7 @@ void main(List<String> args) async {
   id = Random().nextInt(65535); // Random transmission ID (0-65535)
   fileBytes = await File(file).readAsBytes(); // File as bytes
   maxSeqNum = (fileBytes.length / (MAX_PACKET_SIZE - 6)).ceil() + 1;
-  final md5Hash = md5.convert(fileBytes).bytes; // MD5 hash of the file
+  md5Hash = md5.convert(fileBytes).bytes as Uint8List; // MD5 hash of the file
   RegExpMatch? fileameForPrint = RegExp(r"(?<=/)[^/]*$").firstMatch(file
       .replaceAll("\\\\", "/")
       .replaceAll("\\", "/")); // Filename after last slash
@@ -203,11 +210,9 @@ void main(List<String> args) async {
 
   await sendFile(); // Send the file
 
-  // Send the MD5 hash as the last packet
-  final md5Packet = Uint8List.fromList(md5Hash);
-  await sendPacket(maxSeqNum, md5Packet,
-      md5: true);
-
+  if(version != 3) {
+    await sendLastPacket(); // Send the last packet
+  }
   printiffalse(
       '-------------------------- File sent --------------------------\n',
       quiet);
@@ -216,20 +221,30 @@ void main(List<String> args) async {
 
 }
 
+Future<void> sendLastPacket() async {
+  // Send the MD5 hash as the last packet
+  final lastPacket = Uint8List.fromList(md5Hash);
+  await sendPacket(maxSeqNum, lastPacket);
+}
+
 Future<int> sendNPackages(int seqNum, int maxSeqNum,
     Uint8List data,
     {bool quiet = false}) async {
   int n = slidingWindow;
   while (n > 0) {
+    if(!send) {
+      continue;
+    }
     final start = (seqNum - 1) * (MAX_PACKET_SIZE - 6);
     final end = min(seqNum * (MAX_PACKET_SIZE - 6), data.length);
     final packetData = data.sublist(start, end);
     await sendPacket(seqNum, packetData);
     seqNum++;
+    n--;
     if (seqNum == maxSeqNum) {
       break;
     }
-    n--;
+
   }
   return seqNum;
 }
@@ -262,6 +277,7 @@ Future<void> sendFile() async{
               continue;
             }
             if (possibleDupAck.contains(seqNr)) {
+              send = false;
               printiffalse('Received DupAck: $seqNr', quiet);
               possibleDupAck.remove(seqNr);
 
@@ -272,6 +288,13 @@ Future<void> sendFile() async{
                 final end = min(value * (MAX_PACKET_SIZE - 6), fileBytes.length);
                 await sendPacket(value, fileBytes.sublist(start, end));
               }
+              else {
+                // Send the MD5 hash as the last packet again
+                final md5Packet = Uint8List.fromList(md5Hash);
+                await sendPacket(maxSeqNum, md5Packet,
+                    md5: true);
+              }
+              send = true;
             } else {
               printiffalse('Received Ack: $seqNr', quiet);
               possibleDupAck.add(seqNr);
@@ -291,8 +314,14 @@ Future<void> sendFile() async{
           maxSeqNum,
           fileBytes, quiet: quiet);
       printiffalse('Sliding window wait: ${seqNum - 1}', quiet);
+      if(seqNum == maxSeqNum && maxSeqNum % slidingWindow != 0) {
+        sendLastPacket();
+      }
       while(!possibleDupAck.contains(seqNum - 1)) {
         await Future.delayed(Duration(milliseconds: 1));
+      }
+      if(seqNum == maxSeqNum && maxSeqNum % slidingWindow == 0) {
+        sendLastPacket();
       }
     }
   }
