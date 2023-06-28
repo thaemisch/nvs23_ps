@@ -17,6 +17,7 @@ parser.add_argument('-s', '--save', action='store_true', help='Save the received
 parser.add_argument('-v', '--version', metavar='$', type=int, default=3, help='Version of the protocol (default: 3)')
 parser.add_argument('-m', '--max', metavar='$', type=int, default=1500, help='Maximum packet size (default: 1500)')
 parser.add_argument('-n', '--window', metavar='$', type=int, default=10, help='Window size (default: 10)')
+parser.add_argument("-t", "--throwaway", action="store_true", help="Throw away the 3rd packet on first time")
 parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to receive from (default: 127.0.0.1)')
 parser.add_argument('--port', type=int, default=12345, help='Port to receive from (default: 12345)')
 
@@ -31,6 +32,7 @@ max_pack = args.max
 quiet = args.quiet
 save = args.save
 window_size = args.window
+throwaway = args.throwaway
 
 # Define the variables
 seq_num = 0
@@ -123,9 +125,10 @@ elif version == 3:
             continue
         if id == transmID and seq_num >= window_start and seq_num <= window_end:
             # Test duplicate ACKs by skipping the 3rd packet once
-            if seq_num == 3 and not skippedAlready:
-                skippedAlready = True
-                continue
+            if throwaway:
+                if seq_num == 3 and not skippedAlready:
+                    skippedAlready = True
+                    continue
             else:
                 packet_data = (data[6:])
                 packets_map[seq_num] = packet_data
