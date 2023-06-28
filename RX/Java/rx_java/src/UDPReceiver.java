@@ -46,7 +46,7 @@ public class UDPReceiver{
     private static int nextWindow;
     private static TreeMap<Integer, byte[]> windowPackets;
     private static ByteBuffer secondReceiverBuffer;
-    private static int receiveTimeOut = 10; //ms
+    private static int receiveTimeOut = 1000; //ms
     private static int dupAckDelay = 0; //ms
     private static int dupAckCounter = 0;
     private static boolean throwAway = false;
