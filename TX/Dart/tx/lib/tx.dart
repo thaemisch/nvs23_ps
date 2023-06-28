@@ -70,7 +70,7 @@ Future<void> sendFirstPacket(int maxSeqNum,
 
 Future<void> sendPacket(int seqNum,
     Uint8List data,
-    {bool md5 = false}) async {
+    {bool md5 = false, bool wait = true}) async {
   final buffer = Uint8List(6 + data.length);
   ByteData.view(buffer.buffer)
     ..setUint16(0, id)
@@ -93,7 +93,7 @@ Future<void> sendPacket(int seqNum,
     printpaketstatus(seqNum, md5, quiet, sent: false);
   } else {
     printpaketstatus(seqNum, md5, quiet, sent: true);
-    if (version == 2) await waitForAck(seqNum);
+    if (version == 2 && wait) await waitForAck(seqNum);
   }
 }
 
@@ -292,7 +292,7 @@ Future<void> sendFile() async{
                 // Send the MD5 hash as the last packet again
                 final md5Packet = Uint8List.fromList(md5Hash);
                 await sendPacket(maxSeqNum, md5Packet,
-                    md5: true);
+                    md5: true, wait: false);
               }
               send = true;
             } else {
