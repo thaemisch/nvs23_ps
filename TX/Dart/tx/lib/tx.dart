@@ -18,9 +18,19 @@ const int MAXTRYCOUNT =
 const Duration INTERVAL =
     Duration(milliseconds: 1); // the interval between tries
 
-Future<void> sendFirstPacket(RawDatagramSocket socket, int id, int maxSeqNum,
-    String fileName, Stream<RawSocketEvent> stream, quiet,
-    {version = 2}) async {
+late final RawDatagramSocket socket;
+late final Stream<RawSocketEvent> stream;
+late final int id;
+late final Uint8List fileBytes;
+late final int maxSeqNum;
+late final Uint8List md5Hash;
+late final int slidingWindow;
+late final int version;
+late final bool quiet;
+
+
+Future<void> sendFirstPacket(int maxSeqNum,
+    String fileName) async {
   final fileNameBytes = utf8.encode(fileName);
   final buffer = Uint8List(10 + fileNameBytes.length);
   ByteData.view(buffer.buffer)
@@ -48,12 +58,12 @@ Future<void> sendFirstPacket(RawDatagramSocket socket, int id, int maxSeqNum,
   } else {
     printiffalse('Paket 0 (init) erfolgreich gesendet', quiet);
   }
-  if (version > 1) await waitForAck(socket, PORT, 0, id, stream, quiet);
+  if (version > 1) await waitForAck(0);
 }
 
-Future<void> sendPacket(RawDatagramSocket socket, int id, int seqNum,
-    Uint8List data, Stream<RawSocketEvent> stream, bool quiet,
-    {bool md5 = false, version = 2}) async {
+Future<void> sendPacket(int seqNum,
+    Uint8List data,
+    {bool md5 = false}) async {
   final buffer = Uint8List(6 + data.length);
   ByteData.view(buffer.buffer)
     ..setUint16(0, id)
@@ -76,14 +86,11 @@ Future<void> sendPacket(RawDatagramSocket socket, int id, int seqNum,
     printpaketstatus(seqNum, md5, quiet, sent: false);
   } else {
     printpaketstatus(seqNum, md5, quiet, sent: true);
-    if (version == 2) await waitForAck(socket, PORT, seqNum, id, stream, quiet);
+    if (version == 2) await waitForAck(seqNum);
   }
 }
 
-
-
-Future<void> waitForAck(RawDatagramSocket socket, int port, int seqNr, int id,
-    Stream<RawSocketEvent> stream, bool quiet) async {
+Future<void> waitForAck(int seqNr) async {
   final completer = Completer<void>(); // Completer to signal method completion
   late StreamSubscription<RawSocketEvent> sub;
   bool valid = false;
@@ -97,7 +104,7 @@ Future<void> waitForAck(RawDatagramSocket socket, int port, int seqNr, int id,
       } else {
         final data = datagram.data;
         if (data.length == 6) {
-          valid = _processAckPacket(data, seqNr, id, quiet);
+          valid = _processAckPacket(data, seqNr);
           if (valid) {
             await sub.cancel();
             completer.complete();
@@ -109,38 +116,10 @@ Future<void> waitForAck(RawDatagramSocket socket, int port, int seqNr, int id,
   await completer.future;
 }
 
-Future<int> waitForAckandGetSeqNr(RawDatagramSocket socket, int port, int id, int seqNr,
-    Stream<RawSocketEvent> stream, bool quiet, int version) async {
-  final completer = Completer<int>(); // Completer to signal method completion
-  late StreamSubscription<RawSocketEvent> sub;
-  bool valid = false;
-  // Listen for data events on the socket
-  sub = stream.listen((event) async {
-    if (event == RawSocketEvent.read) {
-      final datagram = socket.receive();
-      if (datagram == null) {
-        return;
-      } else {
-        final data = datagram.data;
-        if (data.length == 6) {
-          valid = _processAckPacket(data, seqNr, id, quiet, version: version);
-          if (valid) {
-            seqNr = data.buffer.asByteData().getUint32(2);
-            await sub.cancel();
-            completer.complete(seqNr);
-          }
-        }
-      }
-    }
-  });
-  await completer.future;
-  return seqNr;
-}
-
-bool _processAckPacket(Uint8List data, int seqNr, int id, bool quiet, {int version = 2}) {
+bool _processAckPacket(Uint8List data, int seqNr) {
   final transmissionId = data.buffer.asByteData().getUint16(0);
   final sequenceNumber = data.buffer.asByteData().getUint32(2);
-  if(version == 3) {
+  if (version == 3) {
     return true;
   }
   if (transmissionId != id) {
@@ -196,19 +175,19 @@ void main(List<String> args) async {
   PORT = int.parse(results['port'] as String);
   MAX_PACKET_SIZE = int.parse(results['max'] as String);
   file = (results['file'] as String).replaceAll('\\', '/');
-  int VERSION = int.parse(results['version'] as String);
-  bool quiet = results['quiet'] as bool;
-  final slidingWindow = int.parse(results['sliding-window'] as String);
+  version = int.parse(results['version'] as String);
+  quiet = results['quiet'] as bool;
+  slidingWindow = int.parse(results['sliding-window'] as String);
 
   // ------------------- initialize Variables -------------------
-  final socket =
+  socket =
       await RawDatagramSocket.bind(InternetAddress(HOST), 0 /*PORT*/);
-  final stream = socket.asBroadcastStream();
-  final id = Random().nextInt(65535); // Random transmission ID (0-65535)
-  final fileBytes = await File(file).readAsBytes(); // File as bytes
-  final maxSeqNum = (fileBytes.length / (MAX_PACKET_SIZE - 6)).ceil() + 1;
+  stream = socket.asBroadcastStream();
+  id = Random().nextInt(65535); // Random transmission ID (0-65535)
+  fileBytes = await File(file).readAsBytes(); // File as bytes
+  maxSeqNum = (fileBytes.length / (MAX_PACKET_SIZE - 6)).ceil() + 1;
   final md5Hash = md5.convert(fileBytes).bytes; // MD5 hash of the file
-  final RegExpMatch? fileameForPrint = RegExp(r"(?<=/)[^/]*$").firstMatch(file
+  RegExpMatch? fileameForPrint = RegExp(r"(?<=/)[^/]*$").firstMatch(file
       .replaceAll("\\\\", "/")
       .replaceAll("\\", "/")); // Filename after last slash
   file = fileameForPrint != null
@@ -220,38 +199,60 @@ void main(List<String> args) async {
       '\n-------------------------- Sending file: $file with Transmission ID: $id --------------------------\n',
       quiet);
 
-  await sendFirstPacket(socket, id, maxSeqNum, file, stream, quiet,
-      version: VERSION); // Send the first packet
+  await sendFirstPacket(maxSeqNum, file); // Send the first packet
 
-  if(VERSION != 3) {
+  await sendFile(); // Send the file
+
+  // Send the MD5 hash as the last packet
+  final md5Packet = Uint8List.fromList(md5Hash);
+  await sendPacket(maxSeqNum, md5Packet,
+      md5: true);
+
+  printiffalse(
+      '-------------------------- File sent --------------------------\n',
+      quiet);
+
+  socket.close();
+
+}
+
+Future<int> sendNPackages(int n, int id, int seqNum, int maxSeqNum,
+    Uint8List data, RawDatagramSocket socket, Stream<RawSocketEvent> stream,
+    {bool quiet = false, int VERSION = 3}) async {
+  while (n > 0) {
+    final start = (seqNum - 1) * (MAX_PACKET_SIZE - 6);
+    final end = min(seqNum * (MAX_PACKET_SIZE - 6), data.length);
+    final packetData = data.sublist(start, end);
+    await sendPacket(seqNum, packetData);
+    seqNum++;
+    if (seqNum == maxSeqNum) {
+      break;
+    }
+    n--;
+  }
+  return seqNum;
+}
+
+Future<void> sendFile() async{
+
+  if (version != 3) {
     for (int seqNum = 1; seqNum < maxSeqNum; seqNum++) {
       // Send the data packets
       final start = (seqNum - 1) * (MAX_PACKET_SIZE - 6);
       final end = min(seqNum * (MAX_PACKET_SIZE - 6), fileBytes.length);
       final data = fileBytes.sublist(start, end);
-      await sendPacket(
-          socket, id, seqNum, data, stream, quiet, version: VERSION);
+      await sendPacket(seqNum, data);
     }
   } else {
 
     int seqNum = 1;
-  bool listen = true;
-  bool send = true;
-  Set<int> possibleDupAck = {};
+    Set<int> possibleDupAck = {};
+
     Future<void> getPacket(
-        RawDatagramSocket socket,
-        int id,
-        Stream<RawSocketEvent> stream,
         int maxSeqNum,
-        Uint8List fileBytes,
-        bool quiet,
-        int version,
+        Uint8List fileBytes
         ) async {
       await for (var event in stream) {
-        if (!listen) {
-          break;
-        }
-
         if (event == RawSocketEvent.read) {
           Datagram? datagram = socket.receive();
           if (datagram != null &&  datagram.data.length == 6) {
@@ -261,7 +262,6 @@ void main(List<String> args) async {
               continue;
             }
             if (possibleDupAck.contains(seqNr)) {
-              send = false;
               printiffalse('Received DupAck: $seqNr', quiet);
               possibleDupAck.remove(seqNr);
 
@@ -270,9 +270,8 @@ void main(List<String> args) async {
               if (value < maxSeqNum) {
                 final start = (value - 1) * (MAX_PACKET_SIZE - 6);
                 final end = min(value * (MAX_PACKET_SIZE - 6), fileBytes.length);
-                await sendPacket(socket, id, value, fileBytes.sublist(start, end), stream, quiet, version: version);
+                await sendPacket(value, fileBytes.sublist(start, end));
               }
-              send = true;
             } else {
               printiffalse('Received Ack: $seqNr', quiet);
               possibleDupAck.add(seqNr);
@@ -281,11 +280,11 @@ void main(List<String> args) async {
         }
       }
     }
-// Start listening for acks
-  getPacket(socket, id, stream, maxSeqNum, fileBytes, quiet, VERSION);
 
-  while (seqNum < maxSeqNum) {
-    if(send) {
+// Start listening for acks
+    getPacket(maxSeqNum, fileBytes);
+
+    while (seqNum < maxSeqNum) {
       printiffalse('Sliding window send: $seqNum', quiet);
       seqNum = await sendNPackages(
           slidingWindow,
@@ -301,60 +300,4 @@ void main(List<String> args) async {
       }
     }
   }
-  }
-  // Send the MD5 hash as the last packet
-  final md5Packet = Uint8List.fromList(md5Hash);
-  await sendPacket(socket, id, maxSeqNum, md5Packet, stream, quiet,
-      md5: true, version: VERSION);
-
-  printiffalse(
-      '-------------------------- File sent --------------------------\n',
-      quiet);
-
-  socket.close();
-
 }
-
-Future<int> sendNPackages(int n, int id, int seqNum, int maxSeqNum,
-    Uint8List data, RawDatagramSocket socket, Stream<RawSocketEvent> stream,
-    {bool quiet = false, int VERSION = 3}) async {
-  while(n > 0){
-    final start = (seqNum - 1) * (MAX_PACKET_SIZE - 6);
-    final end = min(seqNum * (MAX_PACKET_SIZE - 6), data.length);
-    final packetData = data.sublist(start, end);
-    await sendPacket(socket, id, seqNum, packetData, stream, quiet, version: VERSION);
-    seqNum++;
-    if (seqNum == maxSeqNum) {
-      break;
-    }
-    n--;
-  }
-  return seqNum;
-}
-
-Future<int> waitForGeneralAckPacket(
-    RawDatagramSocket socket, int transmissionId, Stream<RawSocketEvent> stream) async {
-  final completer = Completer<int>();
-  late StreamSubscription<RawSocketEvent> sub;
-
-  void messageHandler(RawSocketEvent event) {
-    if (event == RawSocketEvent.read) {
-      final datagram = socket.receive();
-      if (datagram == null) {
-        return;
-      } else {
-        final data = datagram.data;
-        final receivedTransmissionId = data.buffer.asByteData().getUint16(0);
-        final receivedSequenceNumber = data.buffer.asByteData().getUint32(2);
-        if (receivedTransmissionId == transmissionId) {
-          sub.cancel();
-          completer.complete(receivedSequenceNumber);
-        }
-      }
-    }
-  }
-
-  sub = stream.listen(messageHandler);
-  return await completer.future;
-}
-
