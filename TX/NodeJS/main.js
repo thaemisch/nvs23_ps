@@ -112,7 +112,7 @@ async function sendfirstPacket(id, maxSeqNum, fileName) {
     } else {
       verboseLog(`Erstes Paket gesendet`);
       socket.setSendBufferSize(MAX_PACKET_SIZE);
-      socket.setRecvBufferSize(6); // mehr brauchen wir für ACKs nicht
+      socket.setRecvBufferSize(6 * 4); // 6 Byte für ein ACK-Paket
       sendStats[0]++;
     }
   });
@@ -234,7 +234,7 @@ async function sendFile(filename) {
 
   } else {
     // cumulative acks and sliding window with duplicate acks for packets in wrong order
-    let listen = true;
+    //let listen = true;
     let possibleDupAck = new Set();
     /*function getPacket(){
       ack = waitForGeneralAckPacket(id).then((seqNum) => {
@@ -255,11 +255,11 @@ async function sendFile(filename) {
     }
     // start listening for acks
     getPacket();*/
-    function msgHandler(msg) {
-      if (!listen) {
+    async function msgHandler(msg) {
+      /*if (!listen) {
         socket.off('message', msgHandler);
         return;
-      }
+      }*/
       const receivedTransmissionId = msg.readUInt16BE(0);
       const receivedSequenceNumber = msg.readUInt32BE(2);
       if (receivedTransmissionId === id) {
