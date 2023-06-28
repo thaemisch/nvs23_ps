@@ -129,8 +129,8 @@ elif version == 3:
             continue
         if id == transmID and seq_num >= window_start and seq_num <= window_end:
             # Test duplicate ACKs by skipping the 3rd packet once
-            if throwaway:
-                if seq_num == 3 and not skippedAlready:
+
+            if throwaway and seq_num == 3 and not skippedAlready:
                     skippedAlready = True
                     continue
             else:
