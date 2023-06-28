@@ -22,11 +22,13 @@ parser = argparse.ArgumentParser(description='Process some command line argument
 # Add arguments
 parser.add_argument('--tx', type=str)
 parser.add_argument('--rx', type=str)
-parser.add_argument('--max', type=str, default="1500")
+parser.add_argument('--max', type=int, default=1500)
 parser.add_argument('--amount', type=int, default=10)
 parser.add_argument('--timeout', type=int, default=10)
 parser.add_argument('--file', type=str, default="test.txt")
-
+parser.add_argument('--version', type=int, default=3)
+parser.add_argument('--sliding-window', type=int, default=10)
+                    
 # Parse the arguments
 args = parser.parse_args()
 
@@ -39,6 +41,8 @@ max_pack = args.max
 amount = args.amount
 timeout = args.timeout
 file_path = os.path.abspath(args.file)
+version = args.version
+sliding_window = args.sliding_window
 
 # TX-Variables
 dart_path = "TX/Dart/tx/lib/tx.dart"
@@ -50,7 +54,7 @@ java_path = "RX/Java/rx_java/src/UDPReceiver"
 
 totalTimeouts = 0
 successes = 0
-rx_sleep = 0.1
+rx_sleep = 0.5
 
 # Execute the TX/RX scripts
 i = 0
@@ -59,10 +63,10 @@ while i < amount and totalTimeouts < 10:
         
     # Execute the RX script
     if rx == "python":
-        rx_proc = subprocess.Popen(['python', python_path, '--max', max_pack, '--quiet'])
+        rx_proc = subprocess.Popen(['python', python_path, '--max', str(max_pack), '--quiet', '--version', str(version), '--sliding-window', str(sliding_window)])
     elif rx == " java ":
         os.system("javac " + java_path + ".java")
-        rx_proc = subprocess.Popen(['java', '-classpath', 'RX/Java/rx_java/src', 'UDPReceiver', '--max', max_pack, '--quiet'])
+        rx_proc = subprocess.Popen(['java', '-classpath', 'RX/Java/rx_java/src', 'UDPReceiver', '--max', str(max_pack), '--quiet', '--version', str(version), '--sliding-window', str(sliding_window)])
     else:
         print("Invalid RX name entered")
         exit()
@@ -73,9 +77,9 @@ while i < amount and totalTimeouts < 10:
 
     # Execute the TX script
     if tx == "dart":
-        tx_proc = subprocess.Popen(['dart', 'run', dart_path, '--max', max_pack, '--quiet', '--file', file_path])
+        tx_proc = subprocess.Popen(['dart', 'run', dart_path, '--max', str(max_pack), '--quiet', '--file', file_path, '--version', str(version), '--sliding-window', str(sliding_window)])
     elif tx == "node":
-        tx_proc = subprocess.Popen(['node', node_path, '--max', max_pack, '--quiet' , '--file', file_path])
+        tx_proc = subprocess.Popen(['node', node_path, '--max', str(max_pack), '--quiet', '--file', file_path, '--version', str(version), '--sliding-window', str(sliding_window)])
     else:
         print("Invalid TX name entered")
         break
