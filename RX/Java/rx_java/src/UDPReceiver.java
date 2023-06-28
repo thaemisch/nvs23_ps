@@ -256,7 +256,7 @@ public class UDPReceiver{
         } else if (seqNr == maxSeqNr) { // last packet (containing MD5 Checksum)
             if(userVersionChoice == version.VERSION_THREE){
                 for (int i = 0; i < packetReceivedLog.length; i++) {
-                    if (!packetReceivedLog[i] && i < windowPackets.size()) {
+                    if (!packetReceivedLog[i] && i < windowPackets.size()-1) {
                         sendACKPacket(nextWindow - (slidingWindowSize - i), packet.getPort(), packet.getAddress());
                         Thread.sleep(dupAckDelay);
                         sendACKPacket(nextWindow - (slidingWindowSize - i), packet.getPort(), packet.getAddress());
