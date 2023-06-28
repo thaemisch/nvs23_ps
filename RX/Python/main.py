@@ -16,7 +16,7 @@ parser.add_argument('-q', '--quiet', action='store_true', help='Do not print any
 parser.add_argument('-s', '--save', action='store_true', help='Save the received file to disk')
 parser.add_argument('-v', '--version', metavar='$', type=int, default=3, help='Version of the protocol (default: 3)')
 parser.add_argument('-m', '--max', metavar='$', type=int, default=1500, help='Maximum packet size (default: 1500)')
-parser.add_argument('-n', '--window', metavar='$', type=int, default=10, help='Window size (default: 10)')
+parser.add_argument('-n', '--sliding-window', metavar='$', type=int, default=10, help='Window size (default: 10)')
 parser.add_argument("-t", "--throwaway", action="store_true", help="Throw away the 3rd packet on first time")
 parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to receive from (default: 127.0.0.1)')
 parser.add_argument('--port', type=int, default=12345, help='Port to receive from (default: 12345)')
