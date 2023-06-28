@@ -112,21 +112,10 @@ elif version == 3:
         if packet_missing:
             sendDupAckBySQN(missing_packet-1)
             packet_missing = False
-            packet_was_missing = True
-        # Timeout for receiving packet        
-        if platform.system() == 'Windows':
-            sock.settimeout(1)
-        else:
-            sock.settimeout(0.1)
-        try:
-            data, addr = sock.recvfrom(max_pack)
-            id = int.from_bytes(data[0:2], byteorder='big')
-            seq_num = int.from_bytes(data[2:6], byteorder='big')
-        except socket.timeout:
-            sendDupAckBySQN(seq_num-1)
-            if not quiet:
-                print(f'Timeout: Packet {seq_num-1} is missing, sending duplicate ACK')
-            continue
+        packet_was_missing = True
+        data, addr = sock.recvfrom(max_pack)
+        id = int.from_bytes(data[0:2], byteorder='big')
+        seq_num = int.from_bytes(data[2:6], byteorder='big')
         if id == transmID and seq_num >= window_start and seq_num <= window_end:
             # Test duplicate ACKs by skipping the 3rd packet once
 
