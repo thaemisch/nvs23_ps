@@ -138,12 +138,14 @@ elif version == 3:
         if seq_num == max_seq_num:
             allDataReceived = True
             break
+        timeout = time.time() + 5
         data, addr = sock.recvfrom(max_pack)
         id = int.from_bytes(data[0:2], byteorder='big')
         seq_num = int.from_bytes(data[2:6], byteorder='big')
-        if id == transmID and seq_num >= window_start and seq_num <= window_end:
-            # Test duplicate ACKs by skipping the 3rd packet once
-
+        while id == transmID and seq_num >= window_start and seq_num <= window_end:
+            if time.time() > timeout:
+                sendDupAckBySQN(seq_num)
+                break
             if throwaway and seq_num == 3 and not skippedAlready:
                 skippedAlready = True
                 continue
@@ -180,6 +182,7 @@ elif version == 3:
                             print(f'Window closed: {old_window_start}-{old_window_end}')
                             print(f'Sending cumulative ACK for {old_window_start}-{old_window_end}')
                         sendAckBySQN(old_window_end)
+                        break
     if not quiet:
         print("All data received")
 
