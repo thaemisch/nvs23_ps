@@ -314,13 +314,12 @@ Future<void> sendFile() async{
           maxSeqNum,
           fileBytes, quiet: quiet);
       printiffalse('Sliding window wait: ${seqNum - 1}', quiet);
-      if(seqNum == maxSeqNum && maxSeqNum % slidingWindow != 0) {
-        sendLastPacket();
+      if(seqNum != maxSeqNum) {
+        while(!possibleDupAck.contains(seqNum - 1)) {
+          await Future.delayed(Duration(milliseconds: 1));
+        }
       }
-      while(!possibleDupAck.contains(seqNum - 1)) {
-        await Future.delayed(Duration(milliseconds: 1));
-      }
-      if(seqNum == maxSeqNum && maxSeqNum % slidingWindow == 0) {
+      else {
         sendLastPacket();
       }
     }
