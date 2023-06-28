@@ -106,44 +106,61 @@ elif version == 3:
     allDataReceived = False
     skippedAlready = False
     while not allDataReceived:
-        print("1")
         if packet_missing:
-            print("2")
             sendDupAckBySQN(missing_packet-1)
             packet_missing = False
+            packet_was_missing = True
             missing_packet = window_end-1
+        if packet_was_missing:
+            packet_was_missing = False
+            window_closed = True
+            for i in range(window_start, window_end+1):
+                if not received_packets[i]:
+                    window_closed = False
+                    missing_packet = i
+                    packet_missing = True
+                    if not quiet:
+                        print(f'Packet {i} is missing, sending duplicate ACK')
+                    continue
+            if window_closed:
+                if seq_num == max_seq_num-1:
+                    allDataReceived = True
+                old_window_end = window_end
+                old_window_start = window_start
+                # Move the window
+                window_start += window_size
+                window_end += window_size
+                if window_end >= max_seq_num:
+                    window_end = max_seq_num - 1
+                # Send cumulative ACK
+                if not quiet:
+                    print(f'Window closed: {old_window_start}-{old_window_end}')
+                    print(f'Sending cumulative ACK for {old_window_start}-{old_window_end}')
+                sendAckBySQN(old_window_end)
         if seq_num == max_seq_num-1:
-            print("3")
             allDataReceived = True
             break
         data, addr = sock.recvfrom(max_pack)
         id = int.from_bytes(data[0:2], byteorder='big')
         seq_num = int.from_bytes(data[2:6], byteorder='big')
-        print("4")
         if id == transmID and seq_num >= window_start and seq_num <= window_end:
-            print("5")
             # Test duplicate ACKs by skipping the 3rd packet once
 
             if throwaway and seq_num == 3 and not skippedAlready:
-                print("6")
                 skippedAlready = True
                 continue
             else:
-                print("7")
                 packet_data = (data[6:])
                 packets_map[seq_num] = packet_data
                 received_packets[seq_num] = True
                 if not quiet:
                     print(f'Packet {seq_num}: id={id}')
                 if seq_num == window_end or packet_was_missing:
-                    print("8")
                     packet_was_missing = False
                     # Check if all packets in the window have been received
                     window_closed = True
                     for i in range(window_start, window_end+1):
-                        print("9")
                         if not received_packets[i]:
-                            print("10")
                             window_closed = False
                             missing_packet = i
                             packet_missing = True
@@ -151,7 +168,6 @@ elif version == 3:
                                 print(f'Packet {i} is missing, sending duplicate ACK')
                             continue
                     if window_closed:
-                        print("11")
                         if seq_num == max_seq_num-1:
                             allDataReceived = True
                         old_window_end = window_end
@@ -165,7 +181,6 @@ elif version == 3:
                         if not quiet:
                             print(f'Window closed: {old_window_start}-{old_window_end}')
                             print(f'Sending cumulative ACK for {old_window_start}-{old_window_end}')
-                        print("12")
                         sendAckBySQN(old_window_end)
     if not quiet:
         print("All data received")
