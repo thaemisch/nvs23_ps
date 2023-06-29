@@ -205,6 +205,7 @@ if version == 1 or version == 2:
             sendAck()
 
 # Piecing the puzzle together
+sendAckBySQN(max_seq_num)
 if version == 3:
     md5 = packets_map[max_seq_num][0:16].hex()
     for i in range(1, max_seq_num):
