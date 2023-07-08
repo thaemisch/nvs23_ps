@@ -150,6 +150,9 @@ function sendLastPacket(id, seqNum, md5) {
       verboseLog(`Paket ${seqNum} (MD5) gesendet`);
       sendStats[0]++;
     }
+    if (version == 1) {
+      socket.close();
+    }
   });
 }
 
@@ -271,9 +274,11 @@ async function sendFile(filename) {
     }
     socket.off('message', msgHandler);
   }
-
-  socket.close();
-  verboseLog('UDP-Socket geschlossen');
+  
+  if (version != 1) {
+    socket.close();
+    verboseLog('UDP-Socket geschlossen');
+  }
 }
 
 // Funktion zum Loggen von Nachrichten
