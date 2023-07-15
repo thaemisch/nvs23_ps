@@ -89,7 +89,7 @@ Future<void> sendPacket(int seqNum, Uint8List data,
     printpaketstatus(seqNum, md5, quiet, sent: false);
   } else {
     printpaketstatus(seqNum, md5, quiet, sent: true);
-    if ((version == 2 && wait) || (version == 3 && seqNum == maxSeqNum)) {
+    if (version == 2 && wait)  {
       await waitForAck(seqNum);
     }
   }
@@ -302,6 +302,9 @@ Future<void> sendFile() async {
         }
       } else {
         await sendLastPacket();
+        while (!possibleDupAck.contains(maxSeqNum)) {
+          await Future.delayed(Duration(microseconds: 1));
+        }
       }
     }
   }
