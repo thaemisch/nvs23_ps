@@ -1,5 +1,9 @@
 # Dokumentation für NodeJS
 
+## Code Location
+
+Der Code befindet sich im Ordner [/TX/NodeJS/main.js](/TX/NodeJS/main.js)
+
 ## Voraussetzungen für die Ausführung
 
 - NodeJS installiert (https://nodejs.org/de/download/)
