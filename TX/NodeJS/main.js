@@ -259,12 +259,16 @@ async function sendFile(filename) {
     }
     socket.on('message', msgHandler);
 
-    async function waitCumACK(seqNum) {
+    // this part is a relic from a implementation with a Sender Timeout
+    /*async function waitCumACK(seqNum) {
       await waitForAckPacket(id, seqNum-1).catch(async () => {
         // resend last packet
         sendNPackages(1, id, seqNum - 1, maxSeqNum, data);
         await waitCumACK(seqNum);
       });
+    }*/
+    async function waitCumACK(seqNum) {
+      await waitForAckPacket(id, seqNum-1);
     }
 
     let seqNum = 1;
