@@ -20,14 +20,14 @@ def progressBar(i, step):
 parser = argparse.ArgumentParser(description='Process some command line arguments.')
 
 # Add arguments
-parser.add_argument('--tx', type=str)
-parser.add_argument('--rx', type=str)
-parser.add_argument('--max', type=int, default=1500)
-parser.add_argument('--amount', type=int, default=10)
-parser.add_argument('--timeout', type=int, default=10)
-parser.add_argument('--file', type=str, default="test.txt")
-parser.add_argument('--version', type=int, default=3)
-parser.add_argument('--sliding-window', type=int, default=10)
+parser.add_argument('--tx', type=str, help="The sender to use")
+parser.add_argument('--rx', type=str, help="The receiver to use")
+parser.add_argument('--max', type=int, default=1500, help="The maximum packet length to use")
+parser.add_argument('--amount', type=int, default=10, help="The amount of packets to send")
+parser.add_argument('--timeout', type=int, default=10, help="The timeout for a single file transfer")
+parser.add_argument('--file', type=str, default="test.txt", help="The file to send")
+parser.add_argument('--version', type=int, default=3, help="The version of the protocol to use")
+parser.add_argument('--sliding-window', type=int, default=10, help="The size of the sliding window, only used for version 3")
                     
 # Parse the arguments
 args = parser.parse_args()
@@ -54,7 +54,7 @@ java_path = "RX/Java/rx_java/src/UDPReceiver"
 
 totalTimeouts = 0
 successes = 0
-rx_sleep = 0.5
+rx_sleep = 0.1
 
 # Execute the TX/RX scripts
 i = 0

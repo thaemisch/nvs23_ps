@@ -11,19 +11,25 @@ start = time.time()
 parser = argparse.ArgumentParser(description='Process some command line arguments.')
 
 # Add arguments
-parser.add_argument('--folder', type=str, default="messungen/test/1MB")
-parser.add_argument('--size', type=str, default="1MB")
-parser.add_argument('--file', type=str, default="test.txt")
-parser.add_argument('--timeout', type=int, default=10)
+parser.add_argument('--folder', type=str, default="", help="The folder to save the measurements in")
+parser.add_argument('--size', type=str, default="1MB", help="The size of the file to send")
+parser.add_argument('--file', type=str, default="test.txt", help="The file to send")
+parser.add_argument('--timeout', type=int, default=10, help="The timeout for a single file transfer")
+parser.add_argument('--version', type=int, default=3, help="The version of the protocol to use")
+parser.add_argument('--sliding-window', type=int, default=10, help="The size of the sliding window, only used for version 3")
+parser.add_argument('--interface', type=str, default="Adapter for loopback traffic capture", help="The interface to capture on")
 
 # Parse the arguments
 args = parser.parse_args()
 
 # Set the variables
-messungs_folder = args.folder
 size = args.size
 file = args.file
 capture_timeout = args.timeout
+version = args.version
+sliding_window = args.sliding_window
+messungs_folder = args.folder or f'messungen/V{version}/{size}'
+interface = args.interface
 
 # Check if size is valid
 size_in_bytes = createFile.convert_size_to_bytes(size)
@@ -40,9 +46,10 @@ createFile.create_random_file(f"test.txt", size)
 
 tx_list = ["Dart", "Node"] # List of all senders
 rx_list = ["Java", "Python"] # List of all receivers
+#tx_list = ["Node"]
+#rx_list = ["Python"]
 pktlen_list = [100, 1400, 60_000] # List of all packet lengths
 amount = 10 # Amount of packets to send
-interface = "Adapter for loopback traffic capture" # Interface to capture on
 capture_filter = "udp port 12345" # Filter for the capture
 
 # clear last output
@@ -58,7 +65,7 @@ for tx in tx_list:
             capture = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             time.sleep(1)
 
-            proc = subprocess.Popen(['python', 'autoRun.py', "--tx", tx, "--rx", rx, "--max", str(pktlen), "--amount", str(amount), "--timeout", str(capture_timeout), "--file", file])
+            proc = subprocess.Popen(['python', 'autoRun.py', "--tx", tx, "--rx", rx, "--max", str(pktlen), "--amount", str(amount), "--timeout", str(capture_timeout), "--file", file, "--version", str(version), "--sliding-window", str(sliding_window)])
             proc.wait() # Wait for the process to finish
 
             time.sleep(1)

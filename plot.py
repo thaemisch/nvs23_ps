@@ -19,6 +19,8 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
     for directFolder in folders:
         if(filePath != ''):
             folder = filePath + '/' + directFolder
+        else:
+            folder = directFolder
         for number in numbers:
             start = time.time()
             # Check if the capture file exists
@@ -66,9 +68,6 @@ def plot(filePath, fileSize = 90_000, with_ack = False):
             # Get the maximum packet number across all transmissions
             max_seq_num = max([max(data['seq_num']) for seq, data in transmissions.items()]) + 1
             max_packet_num = max([len(data['packets']) for seq, data in transmissions.items()])
-            if with_ack:
-                if(max_seq_num * 2 != max_packet_num):
-                    print(f"Missing ACKs for {max_packet_num - max_seq_num} packets")
             # save the max time for the fastest and slowest transmission
             relative_times = [+math.inf, -math.inf]
 
