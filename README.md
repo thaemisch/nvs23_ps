@@ -1,8 +1,8 @@
 # Netze PS 2023 <br> Ahmad Waleed, Hämisch Tim, Lankes Manuel, Oberhofer Julian
 
-## Dokumentation der einzelnen Protokolle
+## Dokumentation der einzelnen Programme
 
-Die Dokumentation der einzelnen Protokolle befindet sich in den jeweiligen Ordnern als `README.md` Datei.
+Die Dokumentation der einzelnen Programme befindet sich in den jeweiligen Ordnern als `README.md` Datei.
 
 ## Automatisches Testen
 
