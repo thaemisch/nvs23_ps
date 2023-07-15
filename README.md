@@ -1,4 +1,5 @@
-# Netze PS 2023 <br> Ahmad Waleed, Hämisch Tim, Lankes Manuel, Oberhofer Julian
+# Netze PS 2023 
+### Ahmad Waleed, Hämisch Tim, Lankes Manuel, Oberhofer Julian
 
 ## Dokumentation der einzelnen Programme
 
