@@ -29,8 +29,8 @@ public class UDPReceiver {
         VERSION_THREE
     }
 
-    private static boolean verbose = false;  // detailed logging
-    private static boolean quiet = false;   // no output
+    private static boolean verbose = false; // detailed logging
+    private static boolean quiet = false; // no output
 
     public static void main(String[] args) {
         // set defaults
@@ -51,37 +51,37 @@ public class UDPReceiver {
                 switch (arg) {
                     case "--host":
                     case "-h":
-                        host = args[i+1];
+                        host = args[i + 1];
                         i++;
                         break;
                     case "--port":
                     case "-p":
-                        port = Integer.parseInt(args[i+1]);
+                        port = Integer.parseInt(args[i + 1]);
                         i++;
                         break;
                     case "--max":
-                    case  "-m":
-                        bufferSize = Integer.parseInt(args[i+1]);
+                    case "-m":
+                        bufferSize = Integer.parseInt(args[i + 1]);
                         i++;
                         break;
                     case "--quiet":
                     case "-q":
                         quiet = true;
-                        if(verbose){
+                        if (verbose) {
                             verbose = false;
                         }
                         break;
                     case "--verbose":
                     case "-v":
-                        if (!quiet){
+                        if (!quiet) {
                             verbose = true;
                         }
                         break;
                     case "-V":
                     case "--version":
-                        if ("2".equals(args[i+1])){
+                        if ("2".equals(args[i + 1])) {
                             userVersionChoice = Version.VERSION_TWO;
-                        } else if ("1".equals(args[i+1])) {
+                        } else if ("1".equals(args[i + 1])) {
                             userVersionChoice = Version.VERSION_ONE;
                         }
                         i++;
@@ -89,23 +89,23 @@ public class UDPReceiver {
                     case "-n":
                     case "--sliding-window":
                         userVersionChoice = Version.VERSION_THREE;
-                        slidingWindowSize = Integer.parseInt(args[i+1]);
+                        slidingWindowSize = Integer.parseInt(args[i + 1]);
                         i++;
                         break;
                     case "-t":
                     case "--timeout":
-                        receiveTimeOut = Integer.parseInt(args[i+1]);
+                        receiveTimeOut = Integer.parseInt(args[i + 1]);
                         i++;
                         break;
                     case "-d":
                     case "--dup-ack-delay":
-                        dupAckDelay = Integer.parseInt(args[i+1]);
+                        dupAckDelay = Integer.parseInt(args[i + 1]);
                         i++;
                         break;
                     case "--windows":
-                        dupAckDelay = Integer.parseInt(args[i+1]);
+                        dupAckDelay = Integer.parseInt(args[i + 1]);
                         i++;
-                        receiveTimeOut = Integer.parseInt(args[i+1]);
+                        receiveTimeOut = Integer.parseInt(args[i + 1]);
                         i++;
                         break;
                     case "--throwaway":
@@ -125,8 +125,9 @@ public class UDPReceiver {
         }
 
         try {
-            log("Receiver started with host=" + host + ", port=" + port + ", version=" + userVersionChoice + " and buffer-size=" + bufferSize, false);
-            if(userVersionChoice == Version.VERSION_THREE){
+            log("Receiver started with host=" + host + ", port=" + port + ", version=" + userVersionChoice
+                    + " and buffer-size=" + bufferSize, false);
+            if (userVersionChoice == Version.VERSION_THREE) {
                 log("window-size=" + slidingWindowSize, false);
             }
             run(host, port, bufferSize, slidingWindowSize, userVersionChoice, throwAway, receiveTimeOut, dupAckDelay);
@@ -135,7 +136,7 @@ public class UDPReceiver {
         }
     }
 
-    private static void printHelp(){
+    private static void printHelp() {
         System.out.println("Options:");
         System.out.println("-h, --host <host>                           Host to receive from (default: 127.0.0.1)");
         System.out.println("-p, --port <port>                           Port (default: 12345)");
@@ -146,13 +147,15 @@ public class UDPReceiver {
         System.out.println("-n, --sliding-window <window-size>          Window site (default: 10)");
         System.out.println("--throwaway                                 Throw away some packets on purpose (testing)");
         System.out.println("-t, --timeout <timeout [ms]>                Timeout for packets [ms] (default: 1000 ms)");
-        System.out.println("-w, --windows <delay [ms]> <timeout [ms]>   DupAck delay [ms] and timeout for packets [ms] (default: 0 ms and 1000 ms)");
+        System.out.println(
+                "-w, --windows <delay [ms]> <timeout [ms]>   DupAck delay [ms] and timeout for packets [ms] (default: 0 ms and 1000 ms)");
         System.out.println("-d, --dup-ack-delay <delay [ms]>            Delay between DupAck [ms] (default: 0 ms)");
         System.out.println("-?, --help                                  Show this help");
     }
 
-    public static void run(String host, int port, int bufferSize, int slidingWindowSize, Version userVersionChoice, boolean throwaway,
-                           int timeout, int dupAckDelay) throws IOException, InterruptedException, NoSuchAlgorithmException {
+    public static void run(String host, int port, int bufferSize, int slidingWindowSize, Version userVersionChoice,
+            boolean throwaway,
+            int timeout, int dupAckDelay) throws IOException, InterruptedException, NoSuchAlgorithmException {
         InetAddress IP = InetAddress.getByName(host);
         DatagramSocket socket = new DatagramSocket(port, IP);
         byte[] buf = new byte[bufferSize];
@@ -191,24 +194,28 @@ public class UDPReceiver {
                 throwAwayPacket = true;
             }
             if (!throwAwayPacket) {
+                verboseLog("Packet " + seqNr + " received");
                 if (seqNr == 0) {
                     if (userVersionChoice == Version.VERSION_THREE) {
                         socket.setSoTimeout(timeout);
                     }
                     maxSeqNr = receiverBuffer.getInt(); // get max. sequence number to know when to stop
                     try {
-                        fileName = new String(receiverBuffer.array(), 10, 11, StandardCharsets.UTF_8);  // extract file name
+                        fileName = new String(receiverBuffer.array(), 10, 11, StandardCharsets.UTF_8); // extract file
+                                                                                                       // name
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    verboseLog("Packet " + seqNr + " received");
                     receivedPackets++;
                     if (userVersionChoice != Version.VERSION_ONE)
                         sendACKPacket(seqNr, transmissionID, socket, packet.getPort(), packet.getAddress());
                 } else {
-                    byte[] dataArray = new byte[packet.getLength() - receiverBuffer.position()];    // data byte array of packet size minus current position of ByteBuffer (will 6 Bytes)
-                    receiverBuffer.get(dataArray);  // get data
-                    verboseLog("Packet " + seqNr + " received");
+                    byte[] dataArray = new byte[packet.getLength() - receiverBuffer.position()]; // data byte array of
+                                                                                                 // packet size minus
+                                                                                                 // current position of
+                                                                                                 // ByteBuffer (will 6
+                                                                                                 // Bytes)
+                    receiverBuffer.get(dataArray); // get data
 
                     if (userVersionChoice == Version.VERSION_THREE) {
                         windowPackets.put(seqNr, dataArray);
@@ -216,7 +223,8 @@ public class UDPReceiver {
                         if (seqNr == nextWindow) {
                             for (int i = 0; i < packetReceivedLog.length; i++) {
                                 if (!packetReceivedLog[i]) {
-                                    sendDupAckAndReceivePacket(nextWindow - (slidingWindowSize - i), transmissionID, socket, packet, dupAckDelay, windowPackets);
+                                    sendDupAckAndReceivePacket(nextWindow - (slidingWindowSize - i), transmissionID,
+                                            socket, packet, dupAckDelay, windowPackets);
                                     dupAckCounter++;
                                     receivedPackets++;
                                 }
@@ -230,7 +238,7 @@ public class UDPReceiver {
                             nextWindow += slidingWindowSize;
                         }
                     } else {
-                        outputStream.write(dataArray);  // write data to output-stream
+                        outputStream.write(dataArray); // write data to output-stream
                     }
                     if (userVersionChoice == Version.VERSION_TWO) {
                         sendACKPacket(seqNr, transmissionID, socket, packet.getPort(), packet.getAddress());
@@ -250,27 +258,33 @@ public class UDPReceiver {
             } catch (SocketTimeoutException e) {
                 for (int i = 0; i < packetReceivedLog.length; i++) {
                     if (!packetReceivedLog[i]) {
-                        sendDupAckAndReceivePacket(nextWindow - (slidingWindowSize - i), transmissionID, socket, packet, dupAckDelay, windowPackets);
+                        sendDupAckAndReceivePacket(nextWindow - (slidingWindowSize - i), transmissionID, socket, packet,
+                                dupAckDelay, windowPackets);
                         dupAckCounter++;
                         receivedPackets++;
                     }
                 }
-                Arrays.fill(packetReceivedLog, false);
-                while (!windowPackets.isEmpty()) {
-                    Map.Entry<Integer, byte[]> tmpEntry = windowPackets.pollFirstEntry();
-                    outputStream.write(tmpEntry.getValue());
+                if (seqNr == nextWindow) {
+                    Arrays.fill(packetReceivedLog, false);
+                    while (!windowPackets.isEmpty()) {
+                        Map.Entry<Integer, byte[]> tmpEntry = windowPackets.pollFirstEntry();
+                        outputStream.write(tmpEntry.getValue());
+                    }
+                    nextWindow += slidingWindowSize;
+                    sendACKPacket(seqNr, transmissionID, socket, packet.getPort(), packet.getAddress());
                 }
-                nextWindow += slidingWindowSize;
-                sendACKPacket(seqNr, transmissionID, socket, packet.getPort(), packet.getAddress());
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         if (seqNr == maxSeqNr) {
+            verboseLog("Packet " + seqNr + " received");
             if (userVersionChoice == Version.VERSION_THREE) {
                 for (int i = 0; i < windowPackets.size(); i++) {
                     if (!packetReceivedLog[i]) {
-                        sendDupAckAndReceivePacket(nextWindow - (slidingWindowSize - i), transmissionID, socket, packet, dupAckDelay, windowPackets);
+                        sendDupAckAndReceivePacket(nextWindow - (slidingWindowSize - i), transmissionID, socket, packet,
+                                dupAckDelay, windowPackets);
                         dupAckCounter++;
                         receivedPackets++;
                     }
@@ -281,18 +295,18 @@ public class UDPReceiver {
                 }
             }
             byte[] MD5Array = new byte[16];
-            receiverBuffer = receiverBuffer.get(MD5Array);  // get MD5 hash and save in byte array
+            receiverBuffer = receiverBuffer.get(MD5Array); // get MD5 hash and save in byte array
             MD5Sum = bytesToHex(MD5Array); // convert to hex-number as String
 
-            outputStream.close();   // now the output-stream can be closed
-            verboseLog("Packet " + seqNr + " received");
+            outputStream.close(); // now the output-stream can be closed
             if (userVersionChoice != Version.VERSION_ONE) {
                 sendACKPacket(seqNr, transmissionID, socket, packet.getPort(), packet.getAddress());
             }
-            writeToFile(outputStream, fileName);  // write data to file (data is written to file after the transmission is complete)
+            writeToFile(outputStream, fileName); // write data to file (data is written to file after the transmission
+                                                 // is complete)
             verboseLog("");
 
-            if (checkMD5Sum(fileName, MD5Sum)) {    // check the MD5 hash
+            if (checkMD5Sum(fileName, MD5Sum)) { // check the MD5 hash
                 log("MD5 Checksums are equal.", false);
             } else {
                 log("MD5 Checksums are different! Files might not be the same.", true);
@@ -304,13 +318,15 @@ public class UDPReceiver {
         }
     }
 
-    private static void sendACKPacket(int seqNr, short transmissionID, DatagramSocket socket, int port, InetAddress transmitterAddress) {
+    private static void sendACKPacket(int seqNr, short transmissionID, DatagramSocket socket, int port,
+            InetAddress transmitterAddress) {
         try {
             ByteBuffer messageBuffer = ByteBuffer.allocate(6);
             messageBuffer.putShort(transmissionID);
             messageBuffer.putInt(seqNr);
 
-            DatagramPacket packet = new DatagramPacket(messageBuffer.array(), messageBuffer.array().length, transmitterAddress, port);
+            DatagramPacket packet = new DatagramPacket(messageBuffer.array(), messageBuffer.array().length,
+                    transmitterAddress, port);
 
             socket.send(packet);
             verboseLog("ACK for packet " + seqNr + " sent");
@@ -320,8 +336,9 @@ public class UDPReceiver {
         }
     }
 
-    private static void sendDupAckAndReceivePacket(int seqNr, short transmissionID, DatagramSocket socket, DatagramPacket packet,
-                                                   int dupAckDelay, TreeMap<Integer, byte[]> windowPackets) throws InterruptedException, IOException {
+    private static void sendDupAckAndReceivePacket(int seqNr, short transmissionID, DatagramSocket socket,
+            DatagramPacket packet,
+            int dupAckDelay, TreeMap<Integer, byte[]> windowPackets) throws InterruptedException, IOException {
         sendACKPacket(seqNr, transmissionID, socket, packet.getPort(), packet.getAddress());
         Thread.sleep(dupAckDelay);
         sendACKPacket(seqNr, transmissionID, socket, packet.getPort(), packet.getAddress());
