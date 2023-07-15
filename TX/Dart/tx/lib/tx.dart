@@ -27,11 +27,8 @@ late final Uint8List md5Hash;
 late final int slidingWindow;
 late final int version;
 late final bool quiet;
-bool send = true;
 
-
-Future<void> sendFirstPacket(int maxSeqNum,
-    String fileName) async {
+Future<void> sendFirstPacket(int maxSeqNum, String fileName) async {
   final fileNameBytes = utf8.encode(fileName);
   final buffer = Uint8List(10 + fileNameBytes.length);
   ByteData.view(buffer.buffer)
@@ -59,7 +56,7 @@ Future<void> sendFirstPacket(int maxSeqNum,
   } else {
     printiffalse('Paket 0 (init) erfolgreich gesendet', quiet);
   }
-  if (version > 1){
+  if (version > 1) {
     try {
       await waitForAck(0).timeout(Duration(seconds: 2));
     } catch (e) {
@@ -68,8 +65,7 @@ Future<void> sendFirstPacket(int maxSeqNum,
   }
 }
 
-Future<void> sendPacket(int seqNum,
-    Uint8List data,
+Future<void> sendPacket(int seqNum, Uint8List data,
     {bool md5 = false, bool wait = true}) async {
   final buffer = Uint8List(6 + data.length);
   ByteData.view(buffer.buffer)
@@ -93,7 +89,9 @@ Future<void> sendPacket(int seqNum,
     printpaketstatus(seqNum, md5, quiet, sent: false);
   } else {
     printpaketstatus(seqNum, md5, quiet, sent: true);
-    if ((version == 2 && wait) || (version == 3 && seqNum == maxSeqNum)) await waitForAck(seqNum);
+    if ((version == 2 && wait) || (version == 3 && seqNum == maxSeqNum)) {
+      await waitForAck(seqNum);
+    }
   }
 }
 
@@ -175,7 +173,7 @@ void main(List<String> args) async {
   parser.addOption('max', abbr: 'm', defaultsTo: MAX_PACKET_SIZE.toString());
   parser.addOption('file', abbr: 'f', defaultsTo: file);
   parser.addOption('version', abbr: 'v', defaultsTo: '3');
-  parser.addOption('sliding-window',abbr: 's',defaultsTo: '10' );
+  parser.addOption('sliding-window', abbr: 's', defaultsTo: '10');
   parser.addFlag('quiet', abbr: 'q', defaultsTo: false);
   var results = parser.parse(args);
   HOST = results['host'] as String;
@@ -187,8 +185,7 @@ void main(List<String> args) async {
   slidingWindow = int.parse(results['sliding-window'] as String);
 
   // ------------------- initialize Variables -------------------
-  socket =
-      await RawDatagramSocket.bind(InternetAddress(HOST), 0);
+  socket = await RawDatagramSocket.bind(InternetAddress(HOST), 0);
   stream = socket.asBroadcastStream();
   id = Random().nextInt(65535); // Random transmission ID (0-65535)
   fileBytes = await File(file).readAsBytes(); // File as bytes
@@ -210,7 +207,7 @@ void main(List<String> args) async {
 
   await sendFile(); // Send the file
 
-  if(version != 3) {
+  if (version != 3) {
     await sendLastPacket(); // Send the last packet
   }
   printiffalse(
@@ -218,7 +215,6 @@ void main(List<String> args) async {
       quiet);
 
   socket.close();
-
 }
 
 Future<void> sendLastPacket() async {
@@ -227,14 +223,10 @@ Future<void> sendLastPacket() async {
   await sendPacket(maxSeqNum, lastPacket, md5: true);
 }
 
-Future<int> sendNPackages(int seqNum, int maxSeqNum,
-    Uint8List data,
+Future<int> sendNPackages(int seqNum, int maxSeqNum, Uint8List data,
     {bool quiet = false}) async {
   int n = slidingWindow;
   while (n > 0) {
-    if(!send) {
-      continue;
-    }
     final start = (seqNum - 1) * (MAX_PACKET_SIZE - 6);
     final end = min(seqNum * (MAX_PACKET_SIZE - 6), data.length);
     final packetData = data.sublist(start, end);
@@ -244,12 +236,11 @@ Future<int> sendNPackages(int seqNum, int maxSeqNum,
     if (seqNum == maxSeqNum) {
       break;
     }
-
   }
   return seqNum;
 }
 
-Future<void> sendFile() async{
+Future<void> sendFile() async {
   if (version < 3) {
     for (int seqNum = 1; seqNum < maxSeqNum; seqNum++) {
       // Send the data packets
@@ -259,25 +250,21 @@ Future<void> sendFile() async{
       await sendPacket(seqNum, data);
     }
   } else {
-
     int seqNum = 1;
     Set<int> possibleDupAck = {};
 
-    Future<void> getPacket(
-        int maxSeqNum,
-        Uint8List fileBytes
-        ) async {
+    Future<void> getPacket(int maxSeqNum, Uint8List fileBytes) async {
       await for (var event in stream) {
         if (event == RawSocketEvent.read) {
           Datagram? datagram = socket.receive();
-          if (datagram != null &&  datagram.data.length == 6) {
-            final int transmissionId = datagram.data.buffer.asByteData().getUint16(0);
+          if (datagram != null && datagram.data.length == 6) {
+            final int transmissionId =
+                datagram.data.buffer.asByteData().getUint16(0);
             final int seqNr = datagram.data.buffer.asByteData().getUint32(2);
-            if(transmissionId != id) {
+            if (transmissionId != id) {
               continue;
             }
             if (possibleDupAck.contains(seqNr)) {
-              send = false;
               printiffalse('Received DupAck: $seqNr', quiet);
               possibleDupAck.remove(seqNr);
 
@@ -285,16 +272,14 @@ Future<void> sendFile() async{
               int value = seqNr + 1;
               if (value < maxSeqNum) {
                 final start = (value - 1) * (MAX_PACKET_SIZE - 6);
-                final end = min(value * (MAX_PACKET_SIZE - 6), fileBytes.length);
+                final end =
+                    min(value * (MAX_PACKET_SIZE - 6), fileBytes.length);
                 await sendPacket(value, fileBytes.sublist(start, end));
-              }
-              else {
+              } else {
                 // Send the MD5 hash as the last packet again
                 final md5Packet = Uint8List.fromList(md5Hash);
-                await sendPacket(maxSeqNum, md5Packet,
-                    md5: true, wait: false);
+                await sendPacket(maxSeqNum, md5Packet, md5: true, wait: false);
               }
-              send = true;
             } else {
               printiffalse('Received Ack: $seqNr', quiet);
               possibleDupAck.add(seqNr);
@@ -308,19 +293,15 @@ Future<void> sendFile() async{
     getPacket(maxSeqNum, fileBytes);
 
     while (seqNum < maxSeqNum) {
-      printiffalse('Sliding window send: $seqNum', quiet);
-      seqNum = await sendNPackages(
-          seqNum,
-          maxSeqNum,
-          fileBytes, quiet: quiet);
-      if(seqNum != maxSeqNum) {
+      printiffalse('Sliding window send: $seqNum - ${seqNum - 1 + min(maxSeqNum - seqNum + 1, slidingWindow)}', quiet);
+      seqNum = await sendNPackages(seqNum, maxSeqNum, fileBytes, quiet: quiet);
+      if (seqNum != maxSeqNum) {
         printiffalse('Sliding window wait: ${seqNum - 1}', quiet);
-        while(!possibleDupAck.contains(seqNum - 1)) {
+        while (!possibleDupAck.contains(seqNum - 1)) {
           await Future.delayed(Duration(microseconds: 1));
         }
-      }
-      else {
-       await sendLastPacket();
+      } else {
+        await sendLastPacket();
       }
     }
   }
