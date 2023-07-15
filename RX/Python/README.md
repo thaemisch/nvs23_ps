@@ -46,4 +46,32 @@ Die version kann mit `-v` oder `--version` spezifiziert werden.
     3. Version 3
         1. `window_start = 1` und `window_end = window_start + window_size - 1` werden gesetzt
         2. während noch nicht alle Datenpackete empfangen wurden
-            1. 
+            1. wenn im aktuellen window ein Packet fehlt
+                - Duplicate ACK
+            2. wenn ein Packet gefehlt hat
+                - Überprüfung, ob immernoch ein Packet fehlt
+                    - wenn ja: aktuelle while-schleife wird übersprungen
+                    - wenn nein: window wird verschoben
+            3. wenn `seq_num == max_seq_num`
+                - alle Datenpackete & MD5-Packet wurden empfangen
+                - while-Schleife wird gebrochen
+            4. Packet wird empfangen
+                - Überprüfung, ob transmission ID übereinstimmt & die sequence number im aktuellen window liegt
+            5. (optional) wenn `--throwaway` activiert ist, wird das 3. Packet absichtlich 'weggeworfen' und die aktuelle Iteration der while-Schleife wird übersprungen, dies dient lediglich zu Testzwecken, ob dupACKs funktionieren
+            6. packet data wird in eine Map mit der `seq_num` als Key gespeichert
+            7. Überprüfung, ob immernoch ein Packet fehlt
+                - wenn ja: aktuelle while-schleife wird übersprungen
+                - wenn nein: window wird verschoben
+5. MD5-Packet
+    1. Version 1:
+        - MD5-Packet wird empfangen
+    2. Version 2:
+        - wie Version 1, aber es wird ein ACK gesendet
+6. Zusammenstzung der Daten-Packete aus der Map
+    - md5-hash hat den Key `max_seq_num`
+    - Daten werden in for-Schleife conkateniert
+7. Socket wird geschlossen
+8. Übermittelter Hash wir mit Hash der zusammengesetzten Daten verglichen
+    - wenn übereinstimmend: Datei wird mit in Pack1 übermitteltem `filename` gespeichert
+    - wenn nicht übereinstimmend: Datei wird nicht gespeichert
+9. Programm schließt
