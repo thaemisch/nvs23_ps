@@ -175,6 +175,11 @@ void main(List<String> args) async {
   parser.addOption('version', abbr: 'v', defaultsTo: '3');
   parser.addOption('sliding-window', abbr: 's', defaultsTo: '10');
   parser.addFlag('quiet', abbr: 'q', defaultsTo: false);
+  parser.addFlag('help', abbr: '?', defaultsTo: false);
+  if (args.contains('-?') || args.contains('--help')) {
+    print(parser.usage);
+    return;
+  }
   var results = parser.parse(args);
   HOST = results['host'] as String;
   PORT = int.parse(results['port'] as String);
