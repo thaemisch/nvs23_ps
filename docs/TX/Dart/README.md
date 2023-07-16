@@ -7,17 +7,17 @@ Der Code befindet sich im Ordner [/TX/Dart/tx/lib/](/TX/Dart/tx/lib/)
 ## Prerequisites
 
 - Dart installiert (https://dart.dev/get-dart)
-- Falls beim ausführen des TX eine Fehlermeldung kommt, dass ein Modul nicht gefunden wurde, einmal `dart pub get` im Ordner [/TX/Dart/tx/](/TX/Dart/tx/) ausführen
+- Falls beim Ausführen des TX eine Fehlermeldung auftritt, dass ein Package nicht gefunden wurde, einmal `dart pub get` im Ordner [/TX/Dart/tx/](/TX/Dart/tx/) ausführen
 
-##Ausführen
+## Ausführen
 
-Vom root Ordner des Projekts aus:
+Vom Root-Ordner des Projekts aus:
 
     dart run dart run .\TX\Dart\tx\lib\tx.dart -f <your-file-path> [options]
     oder 
     dart run .\TX\Dart\tx\lib\tx.dart -? for help
 
-Es kann sein, dass relative Pfade nicht funktionieren, dann bitte den absoluten Pfad angeben.
+Für den Fall, dass relative Pfade nicht funktionieren, kann auch der absolute Pfad verwendet werden.
 
 ## Optionen
 
@@ -27,7 +27,7 @@ Es kann sein, dass relative Pfade nicht funktionieren, dann bitte den absoluten 
 - `-f` or `--file` <filename>: File to send
 - `-v` or `--version`: TX version to use (default: 3)
 - `-n` or `--sliding-window`: Sliding windows size (Only applicable if version is 3, default is 10)
-- `-t` or `--timeout`: Timeout for the first ack in seconds (Only applicable if version is 3,default: 1s)
+- `-t` or `--timeout`: Timeout for the first ack in seconds (Only applicable if version is 3, default: 1s)
 
 ## Flags
 
@@ -44,11 +44,11 @@ Es kann sein, dass relative Pfade nicht funktionieren, dann bitte den absoluten 
 
 ## Funktionsweise des Senders
 
-Zu Beginn werden alle CLI-Argumente geparsed bevor die Variablen entsprechend gesetzt werden. Danach wird der Socket geöffnet und die Datei wird eingelesen und in ein Byte-Array umgewandelt. Ebenso wird die `maxSeqNum` und der md5-Hashwert berechnet. 
+Zu Beginn werden alle CLI-Argumente geparst, bevor die Variablen entsprechend gesetzt werden. Danach wird der Socket geöffnet und die Datei wird eingelesen und in ein Byte-Array umgewandelt. Ebenso wird die `maxSeqNum` und der md5-Hashwert berechnet. 
 
-Danach wird das initiale Paket gesendet. In Version 1 wird auf eine Antwort nicht gewartet. In Version 2 und 3 wird jedoch nach dem Senden solange gewartet bis ein ACK empfangen wurde. Im Fall von Version 3 gibt es einen Timeout, der das Paket erneut sendet, falls nach dieser Zeit kein ACK empfangen wurde. Das erste Paket befindet sich also nicht in einem Sliding Window, sondern es wird seperat behandelt.
+Danach wird das initiale Paket gesendet. In Version 1 wird auf eine Antwort nicht gewartet. In Version 2 und 3 wird jedoch nach dem Senden solange gewartet, bis ein ACK empfangen wurde. Im Fall von Version 3 gibt es einen Timeout, der das Paket erneut sendet, falls nach dieser Zeit kein ACK empfangen wurde. Das erste Paket befindet sich also nicht in einem Sliding Window, sondern wird separat behandelt.
 
-Nachdem das erste Paket gesendet wurde, werden die Daten des Files übertragen. Für das Senden eines Pakets ist folgende Methode zuständig:
+Nachdem das erste Paket gesendet wurde, werden die Daten der Datei übertragen. Für das Senden eines Pakets ist folgende Methode zuständig:
 
 ```dart
 Future<void> sendPacket(int seqNum, Uint8List data,
@@ -116,7 +116,7 @@ Dabei wird ein Completer verwendet, der das Ende der Methode signalisiert. Diese
 
 Bei Version 3 wird das Ganze ein wenig komplexer. Hier wird vor dem Senden die Methode `getPacket()` aufgerufen, die während dem gesamten Sendeprozess parallel läuft und auf ACKs wartet bzw. bei DupACKs das fehlende Paket erneut sendet. Die ACKs werden dabei in einem Set gespeichert. Wird ein ACK mit einer SeqNum empfangen, die sich schon im Set befindet, handelt es sich um ein DupACK und das entsprechende Paket wird erneut gesendet und die SeqNum wird aus dem Set entfernt. Nun werden jeweils `slidingWindow` viele Pakete gesendet. Danach wird solange gewartet, bis das entsprechende CumACK empfangen wurde. Dies wird solange wiederholt, bis alle Datenpakete gesendet wurden.
 
-Nun ist noch das letze Paket mit dem md5-Hash zu Senden. Bei Version 1 wird das letzte Paket gesendet ohne auf ein ACK zu warten. Bei Version 2 und 3 wird jeweils auf ein ACK gewartet. Wichtig ist, dass das letzte Paket bei Version 3 nicht seperat behandelt wird, sondern im Sliding Window gesendet wird.
+Nun ist noch das letzte Paket mit dem md5-Hash zu senden. Bei Version 1 wird das letzte Paket gesendet ohne auf ein ACK zu warten. Bei Version 2 und 3 wird jeweils auf ein ACK gewartet. Wichtig ist, dass das letzte Paket bei Version 3 nicht separat behandelt wird, sondern im Sliding Window gesendet wird.
 
 
     
