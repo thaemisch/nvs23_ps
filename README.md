@@ -3,7 +3,7 @@
 
 ## Dokumentation der einzelnen Programme
 
-Die Dokumentation der einzelnen Programme befindet sich in den jeweiligen Docu Ordnern als `README.md` Datei.
+Die Dokumentation der einzelnen Programme befindet sich in den jeweiligen [docs](docs) Ordnern als `README.md` Datei.
 
 - TX
     - [Dart](docs/TX/Dart/README.md)
@@ -36,7 +36,7 @@ Die Dokumentation der einzelnen Programme befindet sich in den jeweiligen Docu O
 Eine Messreihe mit 10 Messungen zwischen allen TX und RX mit Paketgröße 100, 1400 und 60000 Bytes. (Standard und kann nicht parametrisiert werden) \
 Jede Messung überträgt jeweils eine 1MB große Datei, mit Version 3 des Protokolls, sliding window größe 10 und einer timeout Zeit von 60 Sekunden:
 
-```python mainMessung.py --folder messungen/V3/1MB --size 1MB --version 3 --sliding-window 10 --timeout 60 --interface eth0```
+```python mainMessung.py --folder --size 1MB --version 3 --sliding-window 10 --timeout 60 --interface eth0```
 
 Alles was jetzt noch zu tun ist, ist zu warten, bis die Messungen fertig sind. \
 Je nach Parameter kann das einige Zeit dauern.
