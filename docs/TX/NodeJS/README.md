@@ -103,9 +103,9 @@ Im Fall von Version 1 wird als ACK einfach ein Promise zurückgegeben, das autom
 Über das Senden von Packeten:
 - Für das Initialisierungspaket: `sendfirstPacket(id, maxSeqNum, fileName)`
 - Für Datenpakete: `sendPacket(id, seqNum, data)`
-- Für das letzte Paket: `sendLastPacket(id, seqNum, md5)`
-Die Logik ist im Endeffekt immer gleich:
-- neuen Buffer (unsafe) erstellen\
+- Für das letzte Paket: `sendLastPacket(id, seqNum, md5)`\
+Die logik ist im Enddefekt immer gleich: \
+- neunen Buffer (unsafe) erstellen\
 Unsafe deshalb weil schneller und wir alle Bytes beschreiben werden, also kein Problem mit alten Daten im Buffer
 - Daten in Buffer schreiben\
 JS gibt uns dafür die Methode `Buffer.writeXXX`, XXX steht für den Datentyp, z.B. `UInt16BE` ("Unsigned Integer 16 Bit Big Endian") oder `UInt32BE` ("Unsigned Integer 32 Bit Big Endian"). Damit wüssen wir uns keine Gedanken über die Byteorder machen, oder ob wir die richtige Anzahl an Bytes an der richtigen Stelle schreiben.\
