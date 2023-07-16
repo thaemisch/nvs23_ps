@@ -2,7 +2,7 @@
 
 ## Code Location
 
-Der Code befindet sich im Ordner [/TX/NodeJS/main.js](/TX/NodeJS/main.js)
+Der Code befindet sich in der Datei [/TX/NodeJS/main.js](/TX/NodeJS/main.js)
 
 ## Voraussetzungen für die Ausführung
 
