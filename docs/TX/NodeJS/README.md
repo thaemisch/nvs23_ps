@@ -103,8 +103,8 @@ Im Fall von Version 1 wird als ACK einfach ein Promise zurückgegeben, das autom
 Über das Senden von Packeten:
 - Für das Initialisierungspaket: `sendfirstPacket(id, maxSeqNum, fileName)`
 - Für Datenpakete: `sendPacket(id, seqNum, data)`
-- Für das letzte Paket: `sendLastPacket(id, seqNum, md5)`
-Die logik ist im Enddefekt immer gleich: \\
+- Für das letzte Paket: `sendLastPacket(id, seqNum, md5)`\
+Die logik ist im Enddefekt immer gleich: \
 - neunen Buffer (unsafe) erstellen\
 Unsafe deshalb weil schneller und wir alle Bytes beschreiben werden, also kein Problem mit alten Daten im Buffer
 - Daten in Buffer schreiben\
