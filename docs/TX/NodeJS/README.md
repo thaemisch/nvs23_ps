@@ -10,7 +10,7 @@ Der Code befindet sich in der Datei [/TX/NodeJS/main.js](/TX/NodeJS/main.js)
 - Falls beim ausführen des TX eine Fehlermeldung kommt, dass ein Modul nicht gefunden wurde, einmal `npm install` im Ordner des JS TX ausführen. (Sollte nicht passieren, da nur Standardmodule verwendet werden)
 
 ## Ausführen
-Im Verzeichnis [/TX/NodeJS](/TX/NodeJS)
+Im Verzeichnis [/TX/NodeJS](/TX/NodeJS)\
     node main.js --help
      oder
     node . --help
