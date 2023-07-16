@@ -190,7 +190,7 @@ public class UDPReceiver {
         seqNr = receiverBuffer.getInt();
 
         while (seqNr != maxSeqNr) {
-            if (throwaway && (seqNr == 3 || seqNr == 66 || seqNr == 70 || seqNr == 450)) {
+            if (userVersionChoice == Version.VERSION_THREE && throwaway && (seqNr == 3 || seqNr == 66 || seqNr == 70 || seqNr == 450)) {
                 throwAwayPacket = true;
             }
             if (!throwAwayPacket) {
