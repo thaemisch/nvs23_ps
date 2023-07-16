@@ -74,7 +74,7 @@ Der Sender kann in drei Versionen betrieben werden.
 
 ## Funktionsweise des Senders
 
-An anfang werden alle Variablen initialisiert und gegebenenfalls von den Parameter aus der Kommandozeile überschrieben.
+An Anfang werden alle Variablen initialisiert und gegebenenfalls von den Parameter aus der Kommandozeile überschrieben.
 
 Danach wird der Socket geöffnet `const socket = dgram.createSocket('udp4')` und die Methode `sendFile(FILE)` aufgerufen.
 
@@ -104,17 +104,17 @@ Im Fall von Version 1 wird als ACK einfach ein Promise zurückgegeben, das autom
 - Für das Initialisierungspaket: `sendfirstPacket(id, maxSeqNum, fileName)`
 - Für Datenpakete: `sendPacket(id, seqNum, data)`
 - Für das letzte Paket: `sendLastPacket(id, seqNum, md5)`
-Die logik ist im Enddefekt immer gleich: \\
-- neunen Buffer (unsafe) erstellen\
+Die Logik ist im Endeffekt immer gleich:
+- neuen Buffer (unsafe) erstellen\
 Unsafe deshalb weil schneller und wir alle Bytes beschreiben werden, also kein Problem mit alten Daten im Buffer
 - Daten in Buffer schreiben\
 JS gibt uns dafür die Methode `Buffer.writeXXX`, XXX steht für den Datentyp, z.B. `UInt16BE` ("Unsigned Integer 16 Bit Big Endian") oder `UInt32BE` ("Unsigned Integer 32 Bit Big Endian"). Damit wüssen wir uns keine Gedanken über die Byteorder machen, oder ob wir die richtige Anzahl an Bytes an der richtigen Stelle schreiben.\
 Was wir beachten müssen ist die der Offset, also die Stelle im Buffer, an der wir anfangen zu schreiben. (`buffer.writeUInt16BE(id, 0)`)
 - Buffer senden\
-Wen wir Daten senden wissen wie per se nicht wie viele Bytes wir senden werden, hierfür hilft uns aber die Methode `socket.send` die uns erlaubt mehrere Buffer zu senden. (`socket.send([buffer, data], PORT, HOST)`) Damit kopieren wir auch nicht unnötig Daten.
+Wenn wir Daten senden, wissen wir per se nicht wie viele Bytes wir senden werden, hierfür hilft uns aber die Methode `socket.send` die uns erlaubt mehrere Buffer zu senden. (`socket.send([buffer, data], PORT, HOST)`) Damit kopieren wir auch nicht unnötig Daten.
 - Beim Senden übergeben wir auch eine Callback Funktion, damit wir im Log ausgeben können, ob ein Paket erfolgreich vergesendet wurde oder nicht.
 
-Im Fall von Version 3 wir zu beginn der Übertragung eine Methode rekursiv aufgerufen, bis wir ein Ack für das Initialisierungspaket erhalten.\ Das `waitForAckPacket` wird hierfür mit einem Timeout versehen, das das Promise nach Ablauf des Timeouts rejected.\
+Im Fall von Version 3 wir zu beginn der Übertragung eine Methode rekursiv aufgerufen, bis wir ein Ack für das Initialisierungspaket erhalten. Das `waitForAckPacket` wird hierfür mit einem Timeout versehen, das das Promise nach Ablauf des Timeouts rejected.
 
 ```javascript
 async function sendFirst(){
@@ -129,10 +129,10 @@ await sendFirst();
 > - `catch` erkennen wenn das Promise rejected wurde. Falls wir erkennen wollen, ob das Promise resolved wurde, können wir `then` verwenden.
 > - Die Funktion baut einen Callstack auf, sollte aber in der Praxis nicht zu einem Problem führen, da wir nicht davon ausgehen, dass die Initialisierungspakete sehr oft in Folge verloren gehen.
 
-Danach wird solage ein Window an Paketen gesendet, bis wir das ganze Paket gesendet haben.\
+Danach wird solage ein Window an Paketen gesendet, bis wir das ganze Paket gesendet haben.
 > Hinweis: Das letzte Paket wird als teil eines Windows gesendet, das Initialisierungspaket nicht.
 
-Bevor das erste Packt gesendet wird, wir ein neune empty Set (`possibleDupAck`) erstellt, indem alle Angekommenen ACKs gespeichert werden.\
+Bevor das erste Paket gesendet wird, wird ein neues empty Set (`possibleDupAck`) erstellt, indem alle Angekommenen ACKs gespeichert werden.\
 Dann wird eine Funktion definiert die, die Paralel zum Senden der Pakete läuft und auf ACKs wartet.\
 Sobald ein neues ACK empfangen wird, wird geprüft ob es sich um ein DupACK handelt, indem im Set nach der Sequence Number gesucht wird. Falls die Sequence Number im Set ist wird das ACK als DupACK interpretiert und das Paket erneut gesendet und die Sequence Number aus dem Set entfernt. Wenn das ACK nicht im Set vorhanden ist, wird es hinzugefügt.
 Diese Funktion wird als Callback für den Event `message` des Sockets registriert. (`socket.on('message', messageHandler)`)

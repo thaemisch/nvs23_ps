@@ -27,6 +27,7 @@ late final Uint8List md5Hash;
 late final int slidingWindow;
 late final int version;
 late final bool quiet;
+late final int timeout;
 
 Future<void> sendFirstPacket(int maxSeqNum, String fileName) async {
   final fileNameBytes = utf8.encode(fileName);
@@ -57,10 +58,14 @@ Future<void> sendFirstPacket(int maxSeqNum, String fileName) async {
     printiffalse('Paket 0 (init) erfolgreich gesendet', quiet);
   }
   if (version > 1) {
-    try {
-      await waitForAck(0).timeout(Duration(seconds: 2));
-    } catch (e) {
-      return sendFirstPacket(maxSeqNum, fileName);
+    if(version == 2) {
+      await waitForAck(0);
+    } else {
+      try {
+        await waitForAck(0).timeout(Duration(seconds: timeout));
+      } catch (e) {
+        return sendFirstPacket(maxSeqNum, fileName);
+      }
     }
   }
 }
@@ -174,6 +179,7 @@ void main(List<String> args) async {
   parser.addOption('file', abbr: 'f', defaultsTo: file);
   parser.addOption('version', abbr: 'v', defaultsTo: '3');
   parser.addOption('sliding-window', abbr: 's', defaultsTo: '10');
+  parser.addOption('timeout', abbr: 't', defaultsTo: '2');
   parser.addFlag('quiet', abbr: 'q', defaultsTo: false);
   parser.addFlag('help', abbr: '?', defaultsTo: false);
   if (args.contains('-?') || args.contains('--help')) {
@@ -188,6 +194,7 @@ void main(List<String> args) async {
   version = int.parse(results['version'] as String);
   quiet = results['quiet'] as bool;
   slidingWindow = int.parse(results['sliding-window'] as String);
+  timeout = int.parse(results['timeout'] as String);
 
   // ------------------- initialize Variables -------------------
   socket = await RawDatagramSocket.bind(InternetAddress(HOST), 0);
