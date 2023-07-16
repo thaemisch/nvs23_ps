@@ -74,7 +74,7 @@ Der Sender kann in drei Versionen betrieben werden.
 
 ## Funktionsweise des Senders
 
-An Anfang werden alle Variablen initialisiert und gegebenenfalls von den Parameter aus der Kommandozeile überschrieben.
+Am Anfang werden alle Variablen initialisiert und gegebenenfalls von den Parameter aus der Kommandozeile überschrieben.
 
 Danach wird der Socket geöffnet `const socket = dgram.createSocket('udp4')` und die Methode `sendFile(FILE)` aufgerufen.
 
