@@ -13,7 +13,7 @@ Der Code befindet sich im Ordner [/TX/Dart/tx/lib/](/TX/Dart/tx/lib/)
 
 Vom Root-Ordner des Projekts aus:
 
-    dart run dart run .\TX\Dart\tx\lib\tx.dart -f <your-file-path> [options]
+    dart run .\TX\Dart\tx\lib\tx.dart -f <your-file-path> [options]
     oder 
     dart run .\TX\Dart\tx\lib\tx.dart -? for help
 
